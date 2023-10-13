@@ -561,7 +561,8 @@ export async function offerToInstallLatestGoVersion() {
 			'go.promptforgoinstall',
 			'A newer version of Go is available'
 		);
-		vscode.commands.registerCommand('go.promptforgoinstall', () => {
+		// goxls: conflicts fix
+		vscode.commands.registerCommand('gop.promptforgoinstall', () => {
 			const download = {
 				title: 'Download',
 				async command() {

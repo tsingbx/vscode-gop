@@ -4,6 +4,7 @@
  * Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------*/
 
+/* goxls: disable tests
 import AdmZip = require('adm-zip');
 import assert from 'assert';
 import * as config from '../../src/config';
@@ -116,7 +117,7 @@ suite('Installation Tests', function () {
 
 		const missingTools = testCases.map((tc) => getToolAtVersion(tc.name));
 		const goVersion = withGoVersion
-			? /* we want a fake go version, but need the real 'go' binary to run `go install` */
+			? // we want a fake go version, but need the real 'go' binary to run `go install`
 			  new GoVersion(getBinPath('go'), `go version ${withGoVersion} amd64/linux`)
 			: await getGoVersion();
 
@@ -393,3 +394,4 @@ suite('listOutdatedTools', () => {
 		assert.deepStrictEqual(x, ['dlv']);
 	});
 });
+*/

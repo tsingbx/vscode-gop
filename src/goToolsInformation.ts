@@ -203,17 +203,17 @@ export const allToolsInformation: { [key: string]: Tool } = {
 	},
 	'gopls': {
 		name: 'gopls',
-		importPath: 'golang.org/x/tools/gopls',
-		modulePath: 'golang.org/x/tools/gopls',
+		importPath: 'github.com/goplus/tools/goxls', // goxls: Go+
+		modulePath: 'github.com/goplus/tools/goxls',
 		replacedByGopls: false, // lol
 		isImportant: true,
-		description: 'Language Server from Google',
+		description: 'Go+ Language Server',
 		usePrereleaseInPreviewMode: true,
-		minimumGoVersion: semver.coerce('1.13'),
-		latestVersion: semver.parse('v0.12.2'),
-		latestVersionTimestamp: moment('2023-06-01', 'YYYY-MM-DD'),
-		latestPrereleaseVersion: semver.parse('v0.12.2'),
-		latestPrereleaseVersionTimestamp: moment('2023-06-01', 'YYYY-MM-DD')
+		minimumGoVersion: semver.coerce('1.18'),
+		latestVersion: semver.parse('v0.1.0'),
+		latestVersionTimestamp: moment('2023-10-11', 'YYYY-MM-DD'),
+		latestPrereleaseVersion: semver.parse('v0.1.0'),
+		latestPrereleaseVersionTimestamp: moment('2023-10-11', 'YYYY-MM-DD')
 	},
 	'dlv': {
 		name: 'dlv',

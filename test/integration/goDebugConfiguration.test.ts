@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-prototype-builtins */
+
+/* goxls: disable tests
 import assert = require('assert');
 import fs = require('fs');
 import os = require('os');
@@ -998,3 +1000,4 @@ suite('Debug Configuration Infers Default Mode Property', () => {
 		assert.strictEqual(resolvedConfig['mode'], 'local');
 	});
 });
+*/

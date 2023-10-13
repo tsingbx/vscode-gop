@@ -40,8 +40,9 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 			vscode.debug.registerDebugConfigurationProvider('go', new GoDebugConfigurationProvider('go'))
 		);
 		const registerCommand = createRegisterCommand(ctx, goCtx);
-		registerCommand('go.debug.pickProcess', () => pickProcess);
-		registerCommand('go.debug.pickGoProcess', () => pickGoProcess);
+		// goxls: conflicts fix
+		registerCommand('gop.debug.pickProcess', () => pickProcess);
+		registerCommand('gop.debug.pickGoProcess', () => pickGoProcess);
 	}
 
 	constructor(private defaultDebugAdapterType: string = 'go') {}
