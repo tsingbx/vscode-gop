@@ -50,9 +50,9 @@ export class GoTestExplorer {
 		// goxls: conflicts fix (registerTreeDataProvider)
 		context.subscriptions.push(vscode.window.registerTreeDataProvider('gop.test.profile', inst.profiler.view));
 
+		// goxls: conflicts fix
 		context.subscriptions.push(
-				// goxls: conflicts fix
-				vscode.commands.registerCommand('gop.test.refresh', async (item) => {
+			vscode.commands.registerCommand('gop.test.refresh', async (item) => {
 				if (!item) {
 					await vscode.window.showErrorMessage('No test selected');
 					return;
