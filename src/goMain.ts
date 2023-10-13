@@ -102,14 +102,16 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<ExtensionA
 	offerToInstallTools();
 
 	const registerCommand = commands.createRegisterCommand(ctx, goCtx);
-	registerCommand('go.languageserver.restart', commands.startLanguageServer);
-	registerCommand('go.languageserver.maintain', commands.startGoplsMaintainerInterface);
+	// goxls: conflicts fix
+	registerCommand('gop.languageserver.restart', commands.startLanguageServer);
+	registerCommand('gop.languageserver.maintain', commands.startGoplsMaintainerInterface);
 
 	await commands.startLanguageServer(ctx, goCtx)(RestartReason.ACTIVATION);
 
 	initCoverageDecorators(ctx);
 
-	registerCommand('go.builds.run', commands.runBuilds);
+	// goxls: conflicts fix
+	registerCommand('gop.builds.run', commands.runBuilds);
 
 	const activeDoc = vscode.window.activeTextEditor?.document;
 	if (!goCtx.languageServerIsRunning && activeDoc?.languageId === 'go' && isGoPathSet()) {
@@ -119,7 +121,8 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<ExtensionA
 		});
 	}
 
-	registerCommand('go.environment.status', expandGoStatusBar);
+	// goxls: conflicts fix
+	registerCommand('gop.environment.status', expandGoStatusBar);
 
 	GoRunTestCodeLensProvider.activate(ctx, goCtx);
 	GoDebugConfigurationProvider.activate(ctx, goCtx);
@@ -134,36 +137,38 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<ExtensionA
 	goCtx.vetDiagnosticCollection = vscode.languages.createDiagnosticCollection('go-vet');
 	ctx.subscriptions.push(goCtx.vetDiagnosticCollection);
 
-	registerCommand('go.gopath', commands.getCurrentGoPath);
-	registerCommand('go.goroot', commands.getCurrentGoRoot);
-	registerCommand('go.locate.tools', commands.getConfiguredGoTools);
-	registerCommand('go.add.tags', commands.addTags);
-	registerCommand('go.remove.tags', commands.removeTags);
-	registerCommand('go.fill.struct', commands.runFillStruct);
-	registerCommand('go.impl.cursor', commands.implCursor);
-	registerCommand('go.godoctor.extract', commands.extractFunction);
-	registerCommand('go.godoctor.var', commands.extractVariable);
-	registerCommand('go.test.cursor', commands.testAtCursor('test'));
-	registerCommand('go.test.cursorOrPrevious', commands.testAtCursorOrPrevious('test'));
-	registerCommand('go.subtest.cursor', commands.subTestAtCursor('test'));
-	registerCommand('go.debug.cursor', commands.testAtCursor('debug'));
-	registerCommand('go.debug.subtest.cursor', commands.subTestAtCursor('debug'));
-	registerCommand('go.benchmark.cursor', commands.testAtCursor('benchmark'));
-	registerCommand('go.test.package', commands.testCurrentPackage(false));
-	registerCommand('go.benchmark.package', commands.testCurrentPackage(true));
-	registerCommand('go.test.file', commands.testCurrentFile(false));
-	registerCommand('go.benchmark.file', commands.testCurrentFile(true));
-	registerCommand('go.test.workspace', commands.testWorkspace);
-	registerCommand('go.test.previous', commands.testPrevious);
-	registerCommand('go.debug.previous', commands.debugPrevious);
+	// goxls: conflicts fix
+	registerCommand('gop.gopath', commands.getCurrentGoPath);
+	registerCommand('gop.goroot', commands.getCurrentGoRoot);
+	registerCommand('gop.locate.tools', commands.getConfiguredGoTools);
+	registerCommand('gop.add.tags', commands.addTags);
+	registerCommand('gop.remove.tags', commands.removeTags);
+	registerCommand('gop.fill.struct', commands.runFillStruct);
+	registerCommand('gop.impl.cursor', commands.implCursor);
+	registerCommand('gop.godoctor.extract', commands.extractFunction);
+	registerCommand('gop.godoctor.var', commands.extractVariable);
+	registerCommand('gop.test.cursor', commands.testAtCursor('test'));
+	registerCommand('gop.test.cursorOrPrevious', commands.testAtCursorOrPrevious('test'));
+	registerCommand('gop.subtest.cursor', commands.subTestAtCursor('test'));
+	registerCommand('gop.debug.cursor', commands.testAtCursor('debug'));
+	registerCommand('gop.debug.subtest.cursor', commands.subTestAtCursor('debug'));
+	registerCommand('gop.benchmark.cursor', commands.testAtCursor('benchmark'));
+	registerCommand('gop.test.package', commands.testCurrentPackage(false));
+	registerCommand('gop.benchmark.package', commands.testCurrentPackage(true));
+	registerCommand('gop.test.file', commands.testCurrentFile(false));
+	registerCommand('gop.benchmark.file', commands.testCurrentFile(true));
+	registerCommand('gop.test.workspace', commands.testWorkspace);
+	registerCommand('gop.test.previous', commands.testPrevious);
+	registerCommand('gop.debug.previous', commands.debugPrevious);
 
-	registerCommand('go.test.coverage', toggleCoverageCurrentPackage);
-	registerCommand('go.test.showOutput', () => showTestOutput);
-	registerCommand('go.test.cancel', () => cancelRunningTests);
-	registerCommand('go.import.add', addImport);
-	registerCommand('go.add.package.workspace', addImportToWorkspace);
-	registerCommand('go.tools.install', commands.installTools);
-	registerCommand('go.browse.packages', browsePackages);
+	// goxls: conflicts fix
+	registerCommand('gop.test.coverage', toggleCoverageCurrentPackage);
+	registerCommand('gop.test.showOutput', () => showTestOutput);
+	registerCommand('gop.test.cancel', () => cancelRunningTests);
+	registerCommand('gop.import.add', addImport);
+	registerCommand('gop.add.package.workspace', addImportToWorkspace);
+	registerCommand('gop.tools.install', commands.installTools);
+	registerCommand('gop.browse.packages', browsePackages);
 
 	if (isVscodeTestingAPIAvailable && cfg.get<boolean>('testExplorer.enable')) {
 		GoTestExplorer.setup(ctx, goCtx);
@@ -171,35 +176,38 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<ExtensionA
 
 	GoExplorerProvider.setup(ctx);
 
-	registerCommand('go.test.generate.package', goGenerateTests.generateTestCurrentPackage);
-	registerCommand('go.test.generate.file', goGenerateTests.generateTestCurrentFile);
-	registerCommand('go.test.generate.function', goGenerateTests.generateTestCurrentFunction);
-	registerCommand('go.toggle.test.file', goGenerateTests.toggleTestFile);
-	registerCommand('go.debug.startSession', commands.startDebugSession);
-	registerCommand('go.show.commands', commands.showCommands);
-	registerCommand('go.get.package', goGetPackage);
-	registerCommand('go.playground', playgroundCommand);
-	registerCommand('go.lint.package', lintCode('package'));
-	registerCommand('go.lint.workspace', lintCode('workspace'));
-	registerCommand('go.lint.file', lintCode('file'));
-	registerCommand('go.vet.package', vetCode(false));
-	registerCommand('go.vet.workspace', vetCode(true));
-	registerCommand('go.build.package', buildCode(false));
-	registerCommand('go.build.workspace', buildCode(true));
-	registerCommand('go.install.package', installCurrentPackage);
-	registerCommand('go.run.modinit', goModInit);
-	registerCommand('go.extractServerChannel', showServerOutputChannel);
-	registerCommand('go.workspace.resetState', resetWorkspaceState);
-	registerCommand('go.global.resetState', resetGlobalState);
-	registerCommand('go.toggle.gc_details', commands.toggleGCDetails);
-	registerCommand('go.apply.coverprofile', commands.applyCoverprofile);
+	// goxls: conflicts fix
+	registerCommand('gop.test.generate.package', goGenerateTests.generateTestCurrentPackage);
+	registerCommand('gop.test.generate.file', goGenerateTests.generateTestCurrentFile);
+	registerCommand('gop.test.generate.function', goGenerateTests.generateTestCurrentFunction);
+	registerCommand('gop.toggle.test.file', goGenerateTests.toggleTestFile);
+	registerCommand('gop.debug.startSession', commands.startDebugSession);
+	registerCommand('gop.show.commands', commands.showCommands);
+	registerCommand('gop.get.package', goGetPackage);
+	registerCommand('gop.playground', playgroundCommand);
+	registerCommand('gop.lint.package', lintCode('package'));
+	registerCommand('gop.lint.workspace', lintCode('workspace'));
+	registerCommand('gop.lint.file', lintCode('file'));
+	registerCommand('gop.vet.package', vetCode(false));
+	registerCommand('gop.vet.workspace', vetCode(true));
+	registerCommand('gop.build.package', buildCode(false));
+	registerCommand('gop.build.workspace', buildCode(true));
+	registerCommand('gop.install.package', installCurrentPackage);
+	registerCommand('gop.run.modinit', goModInit);
+	registerCommand('gop.extractServerChannel', showServerOutputChannel);
+	registerCommand('gop.workspace.resetState', resetWorkspaceState);
+	registerCommand('gop.global.resetState', resetGlobalState);
+	registerCommand('gop.toggle.gc_details', commands.toggleGCDetails);
+	registerCommand('gop.apply.coverprofile', commands.applyCoverprofile);
 
-	// Go Environment switching commands
-	registerCommand('go.environment.choose', chooseGoEnvironment);
+	// Go+ Environment switching commands
+	// goxls: conflicts fix
+	registerCommand('gop.environment.choose', chooseGoEnvironment);
 
 	// Survey related commands
-	registerCommand('go.survey.showConfig', showSurveyConfig);
-	registerCommand('go.survey.resetConfig', resetSurveyConfigs);
+	// goxls: conflicts fix
+	registerCommand('gop.survey.showConfig', showSurveyConfig);
+	registerCommand('gop.survey.resetConfig', resetSurveyConfigs);
 
 	addOnDidChangeConfigListeners(ctx);
 	addOnChangeTextDocumentListeners(ctx);
@@ -214,7 +222,8 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<ExtensionA
 
 	// Vulncheck output link provider.
 	VulncheckOutputLinkProvider.activate(ctx);
-	registerCommand('go.vulncheck.toggle', toggleVulncheckCommandFactory);
+	// goxls: conflicts fix
+	registerCommand('gop.vulncheck.toggle', toggleVulncheckCommandFactory);
 
 	return extensionAPI;
 }

@@ -47,10 +47,12 @@ export class GoTestExplorer {
 		});
 
 		context.subscriptions.push(ctrl);
-		context.subscriptions.push(vscode.window.registerTreeDataProvider('go.test.profile', inst.profiler.view));
+		// goxls: conflicts fix (registerTreeDataProvider)
+		context.subscriptions.push(vscode.window.registerTreeDataProvider('gop.test.profile', inst.profiler.view));
 
 		context.subscriptions.push(
-			vscode.commands.registerCommand('go.test.refresh', async (item) => {
+				// goxls: conflicts fix
+				vscode.commands.registerCommand('gop.test.refresh', async (item) => {
 				if (!item) {
 					await vscode.window.showErrorMessage('No test selected');
 					return;
@@ -69,7 +71,8 @@ export class GoTestExplorer {
 		);
 
 		context.subscriptions.push(
-			vscode.commands.registerCommand('go.test.showProfiles', async (item) => {
+			// goxls: conflicts fix
+			vscode.commands.registerCommand('gop.test.showProfiles', async (item) => {
 				if (!item) {
 					await vscode.window.showErrorMessage('No test selected');
 					return;
@@ -87,7 +90,8 @@ export class GoTestExplorer {
 		);
 
 		context.subscriptions.push(
-			vscode.commands.registerCommand('go.test.captureProfile', async (item) => {
+			// goxls: conflicts fix
+			vscode.commands.registerCommand('gop.test.captureProfile', async (item) => {
 				if (!item) {
 					await vscode.window.showErrorMessage('No test selected');
 					return;
@@ -111,7 +115,8 @@ export class GoTestExplorer {
 		);
 
 		context.subscriptions.push(
-			vscode.commands.registerCommand('go.test.deleteProfile', async (file) => {
+			// goxls: conflicts fix
+			vscode.commands.registerCommand('gop.test.deleteProfile', async (file) => {
 				if (!file) {
 					await vscode.window.showErrorMessage('No profile selected');
 					return;
@@ -130,7 +135,8 @@ export class GoTestExplorer {
 		);
 
 		context.subscriptions.push(
-			vscode.commands.registerCommand('go.test.showProfileFile', async (file: Uri) => {
+			// goxls: conflicts fix
+			vscode.commands.registerCommand('gop.test.showProfileFile', async (file: Uri) => {
 				return inst.profiler.showFile(file.fsPath);
 			})
 		);

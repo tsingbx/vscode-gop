@@ -596,7 +596,8 @@ export async function offerToInstallTools() {
 			'go.promptforinstall',
 			'Not all Go tools are available on the GOPATH'
 		);
-		vscode.commands.registerCommand('go.promptforinstall', () => {
+		// goxls: conflicts fix
+		vscode.commands.registerCommand('gop.promptforinstall', () => {
 			const installItem = {
 				title: 'Install',
 				async command() {
