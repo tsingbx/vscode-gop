@@ -27,7 +27,7 @@ suite('getCheckForToolUpdatesConfig tests', () => {
 		assert.deepStrictEqual(
 			{ key, defaultValue, globalValue, workspaceValue },
 			{
-				key: `go.${CHECK_FOR_UPDATES}`,
+				key: `gop.${CHECK_FOR_UPDATES}`,
 				defaultValue: 'proxy',
 				globalValue: undefined,
 				workspaceValue: undefined
