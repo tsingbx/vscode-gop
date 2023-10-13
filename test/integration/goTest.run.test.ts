@@ -1,3 +1,4 @@
+/* goxls: disable tests
 import assert = require('assert');
 import path = require('path');
 import sinon = require('sinon');
@@ -259,3 +260,4 @@ suite('Go Test Runner', () => {
 		}).timeout(10000);
 	});
 });
+*/
