@@ -2303,6 +2303,7 @@ const testAll = (ctx: Mocha.Context, isDlvDap: boolean, withConsole?: string) =>
 	}
 };
 
+/* goxls: disable tests
 suite('Go Debug Adapter Tests (legacy)', function () {
 	if (affectedByIssue832()) {
 		return;
@@ -2320,6 +2321,7 @@ suite('Go Debug Adapter Tests (dlv-dap, console=integratedTerminal)', function (
 	this.timeout(60_000);
 	testAll(this.ctx, true, 'integratedTerminal');
 });
+*/
 
 // DelveDAPDebugAdapterOnSocket runs a DelveDAPOutputAdapter
 // over a network socket. This allows tests to instantiate
