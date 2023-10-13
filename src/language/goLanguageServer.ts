@@ -164,6 +164,9 @@ export function scheduleGoplsSuggestions(goCtx: GoExtensionContext) {
 	const usingGo = (): boolean => {
 		return vscode.workspace.textDocuments.some((doc) => doc.languageId === 'go');
 	};
+	const usingGop = (): boolean => { // goxls: Go+
+		return vscode.workspace.textDocuments.some((doc) => doc.languageId === 'gop');
+	};
 	const installGopls = async (cfg: LanguageServerConfig) => {
 		const tool = getTool('gopls');
 		const versionToUpdate = await shouldUpdateLanguageServer(tool, cfg);
@@ -423,6 +426,8 @@ export async function buildLanguageClient(
 	const documentSelector = [
 		// gopls handles only file URIs.
 		{ language: 'go', scheme: 'file' },
+		{ language: 'gop', scheme: 'file' }, // goxls: Go+
+		{ language: 'gop.mod', scheme: 'file' }, // goxls: Go+
 		{ language: 'go.mod', scheme: 'file' },
 		{ language: 'go.sum', scheme: 'file' },
 		{ language: 'go.work', scheme: 'file' },

@@ -1,12 +1,12 @@
 {
-  "name": "go",
-  "displayName": "Go",
-  "version": "0.40.0-dev",
+  "name": "gop",
+  "displayName": "Go+",
+  "version": "0.1.0-dev",
   "preview": true,
-  "publisher": "golang",
-  "description": "Rich Go language support for Visual Studio Code",
+  "publisher": "goplus",
+  "description": "Rich Go/Go+ language support for Visual Studio Code",
   "author": {
-    "name": "Go Team at Google"
+    "name": "GoPlus Team"
   },
   "license": "MIT",
   "icon": "media/go-logo-blue.png",
@@ -25,15 +25,15 @@
   "private": true,
   "repository": {
     "type": "git",
-    "url": "https://github.com/golang/vscode-go"
+    "url": "https://github.com/goplus/vscode-gop"
   },
   "bugs": {
-    "url": "https://github.com/golang/vscode-go/issues"
+    "url": "https://github.com/goplus/vscode-gop/issues"
   },
   "keywords": [
     "multi-root ready",
-    "golang",
-    "gopls"
+    "goplus",
+    "goxls"
   ],
   "scripts": {
     "clean": "rm -rf ./dist/* && rm *.vsix",
@@ -95,9 +95,13 @@
   },
   "activationEvents": [
     "onLanguage:go",
+    "onLanguage:gop",
     "workspaceContains:*.go",
     "workspaceContains:*/*.go",
     "workspaceContains:*/*/*.go",
+    "workspaceContains:**/*.gop",
+    "workspaceContains:**/*.spx",
+    "workspaceContains:**/*.rdx",
     "onCommand:go.gopath",
     "onCommand:go.goroot",
     "onCommand:go.tools.install",
@@ -137,6 +141,19 @@
         ]
       },
       {
+        "id": "gop",
+        "extensions": [
+          ".gop",
+          ".spx",
+          ".rdx",
+          ".gmx",
+          ".gox"
+        ],
+        "aliases": [
+          "Goplus"
+        ]
+      },
+      {
         "id": "go.mod",
         "filenames": [
           "go.mod",
@@ -144,6 +161,16 @@
         ],
         "aliases": [
           "Go Module File"
+        ],
+        "configuration": "./languages/go.mod.language-configuration.json"
+      },
+      {
+        "id": "gop.mod",
+        "filenames": [
+          "gop.mod"
+        ],
+        "aliases": [
+          "Go+ Module File"
         ],
         "configuration": "./languages/go.mod.language-configuration.json"
       },
@@ -190,6 +217,11 @@
         "path": "./syntaxes/go.mod.tmGrammar.json"
       },
       {
+        "language": "gop.mod",
+        "scopeName": "gop.mod",
+        "path": "./syntaxes/go.mod.tmGrammar.json"
+      },
+      {
         "language": "go.work",
         "scopeName": "go.mod",
         "path": "./syntaxes/go.mod.tmGrammar.json"
@@ -209,6 +241,10 @@
       {
         "language": "go",
         "path": "./snippets/go.json"
+      },
+      {
+        "language": "gop",
+        "path": "./snippets/gop.json"
       }
     ],
     "configurationDefaults": {
