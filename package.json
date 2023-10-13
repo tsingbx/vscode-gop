@@ -1141,12 +1141,12 @@
       "type": "object",
       "title": "Go+",
       "properties": {
-        "go.showWelcome": {
+        "gop.showWelcome": {
           "type": "boolean",
           "default": true,
           "description": "Specifies whether to show the Welcome experience on first install"
         },
-        "go.buildOnSave": {
+        "gop.buildOnSave": {
           "type": "string",
           "enum": [
             "package",
@@ -1158,7 +1158,7 @@
           "scope": "resource",
           "markdownDeprecationMessage": "Enable the Go language server (`#go.useLanguageServer#`) to diagnose compile errors."
         },
-        "go.buildFlags": {
+        "gop.buildFlags": {
           "type": "array",
           "items": {
             "type": "string"
@@ -1167,13 +1167,13 @@
           "description": "Flags to `go build`/`go test` used during build-on-save or running tests. (e.g. [\"-ldflags='-s'\"]) This is propagated to the language server if `gopls.build.buildFlags` is not specified.",
           "scope": "resource"
         },
-        "go.buildTags": {
+        "gop.buildTags": {
           "type": "string",
           "default": "",
           "description": "The Go build tags to use for all commands, that support a `-tags '...'` argument. When running tests, go.testTags will be used instead if it was set. This is propagated to the language server if `gopls.build.buildFlags` is not specified.",
           "scope": "resource"
         },
-        "go.testTags": {
+        "gop.testTags": {
           "type": [
             "string",
             "null"
@@ -1182,19 +1182,19 @@
           "description": "The Go build tags to use for when running tests. If null, then buildTags will be used.",
           "scope": "resource"
         },
-        "go.disableConcurrentTests": {
+        "gop.disableConcurrentTests": {
           "type": "boolean",
           "default": false,
           "description": "If true, tests will not run concurrently. When a new test run is started, the previous will be cancelled.",
           "scope": "resource"
         },
-        "go.installDependenciesWhenBuilding": {
+        "gop.installDependenciesWhenBuilding": {
           "type": "boolean",
           "default": false,
           "description": "If true, then `-i` flag will be passed to `go build` everytime the code is compiled. Since Go 1.10, setting this may be unnecessary unless you are in GOPATH mode and do not use the language server.",
           "scope": "resource"
         },
-        "go.lintOnSave": {
+        "gop.lintOnSave": {
           "type": "string",
           "enum": [
             "file",
@@ -1212,7 +1212,7 @@
           "description": "Lints code on file save using the configured Lint tool. Options are 'file', 'package', 'workspace' or 'off'.",
           "scope": "resource"
         },
-        "go.lintTool": {
+        "gop.lintTool": {
           "type": "string",
           "default": "staticcheck",
           "description": "Specifies Lint tool name.",
@@ -1224,7 +1224,7 @@
             "revive"
           ]
         },
-        "go.lintFlags": {
+        "gop.lintFlags": {
           "type": "array",
           "items": {
             "type": "string"
@@ -1233,7 +1233,7 @@
           "description": "Flags to pass to Lint tool (e.g. [\"-min_confidence=.8\"])",
           "scope": "resource"
         },
-        "go.vetOnSave": {
+        "gop.vetOnSave": {
           "type": "string",
           "enum": [
             "package",
@@ -1249,7 +1249,7 @@
           "description": "Vets code on file save using 'go tool vet'. Not applicable when using the language server's diagnostics. See 'go.languageServerExperimentalFeatures.diagnostics' setting.",
           "scope": "resource"
         },
-        "go.vetFlags": {
+        "gop.vetFlags": {
           "type": "array",
           "items": {
             "type": "string"
@@ -1258,7 +1258,7 @@
           "description": "Flags to pass to `go tool vet` (e.g. [\"-all\", \"-shadow\"])",
           "scope": "resource"
         },
-        "go.formatTool": {
+        "gop.formatTool": {
           "type": "string",
           "default": "default",
           "markdownDescription": "When the language server is enabled and one of `default`/`gofmt`/`goimports`/`gofumpt` is chosen, the language server will handle formatting. If `custom` tool is selected, the extension will use the `customFormatter` tool in the `#go.alternateTools#` section.",
@@ -1280,7 +1280,7 @@
             "Formats using the custom tool specified as `customFormatter` in the `#go.alternateTools#` setting. The tool should take the input as STDIN and output the formatted code as STDOUT."
           ]
         },
-        "go.formatFlags": {
+        "gop.formatFlags": {
           "type": "array",
           "items": {
             "type": "string"
@@ -1289,13 +1289,13 @@
           "description": "Flags to pass to format tool (e.g. [\"-s\"]). Not applicable when using the language server.",
           "scope": "resource"
         },
-        "go.inferGopath": {
+        "gop.inferGopath": {
           "type": "boolean",
           "default": false,
           "description": "Infer GOPATH from the workspace root. This is ignored when using Go Modules.",
           "scope": "resource"
         },
-        "go.gopath": {
+        "gop.gopath": {
           "type": [
             "string",
             "null"
@@ -1304,7 +1304,7 @@
           "description": "Specify GOPATH here to override the one that is set as environment variable. The inferred GOPATH from workspace root overrides this, if go.inferGopath is set to true.",
           "scope": "machine-overridable"
         },
-        "go.toolsGopath": {
+        "gop.toolsGopath": {
           "type": [
             "string",
             "null"
@@ -1313,7 +1313,7 @@
           "description": "Location to install the Go tools that the extension depends on if you don't want them in your GOPATH.",
           "scope": "machine-overridable"
         },
-        "go.goroot": {
+        "gop.goroot": {
           "type": [
             "string",
             "null"
@@ -1322,34 +1322,34 @@
           "description": "Specifies the GOROOT to use when no environment variable is set.",
           "scope": "machine-overridable"
         },
-        "go.testOnSave": {
+        "gop.testOnSave": {
           "type": "boolean",
           "default": false,
           "description": "Run 'go test' on save for current package. It is not advised to set this to `true` when you have Auto Save enabled.",
           "scope": "resource"
         },
-        "go.coverOnSave": {
+        "gop.coverOnSave": {
           "type": "boolean",
           "default": false,
           "description": "If true, runs 'go test -coverprofile' on save and shows test coverage.",
           "scope": "resource"
         },
-        "go.coverOnTestPackage": {
+        "gop.coverOnTestPackage": {
           "type": "boolean",
           "default": true,
           "description": "If true, shows test coverage when Go: Test Package command is run."
         },
-        "go.coverOnSingleTest": {
+        "gop.coverOnSingleTest": {
           "type": "boolean",
           "default": false,
           "description": "If true, shows test coverage when Go: Test Function at cursor command is run."
         },
-        "go.coverOnSingleTestFile": {
+        "gop.coverOnSingleTestFile": {
           "type": "boolean",
           "default": false,
           "description": "If true, shows test coverage when Go: Test Single File command is run."
         },
-        "go.coverMode": {
+        "gop.coverMode": {
           "type": "string",
           "enum": [
             "default",
@@ -1361,13 +1361,13 @@
           "description": "When generating code coverage, the value for -covermode. 'default' is the default value chosen by the 'go test' command.",
           "scope": "resource"
         },
-        "go.coverShowCounts": {
+        "gop.coverShowCounts": {
           "type": "boolean",
           "default": false,
           "description": "When generating code coverage, should counts be shown as --374--",
           "scope": "resource"
         },
-        "go.coverageOptions": {
+        "gop.coverageOptions": {
           "type": "string",
           "enum": [
             "showCoveredCodeOnly",
@@ -1378,7 +1378,7 @@
           "description": "Use these options to control whether only covered or only uncovered code or both should be highlighted after running test coverage",
           "scope": "resource"
         },
-        "go.coverageDecorator": {
+        "gop.coverageDecorator": {
           "type": "object",
           "properties": {
             "type": {
@@ -1454,25 +1454,25 @@
           "description": "This option lets you choose the way to display code coverage. Choose either to highlight the complete line or to show a decorator in the gutter. You can customize the colors and borders for the former and the style for the latter.",
           "scope": "resource"
         },
-        "go.testTimeout": {
+        "gop.testTimeout": {
           "type": "string",
           "default": "30s",
           "description": "Specifies the timeout for go test in ParseDuration format.",
           "scope": "resource"
         },
-        "go.testEnvVars": {
+        "gop.testEnvVars": {
           "type": "object",
           "default": {},
           "description": "Environment variables that will be passed to the process that runs the Go tests",
           "scope": "resource"
         },
-        "go.testEnvFile": {
+        "gop.testEnvFile": {
           "type": "string",
           "default": null,
           "description": "Absolute path to a file containing environment variables definitions. File contents should be of the form key=value.",
           "scope": "resource"
         },
-        "go.testFlags": {
+        "gop.testFlags": {
           "type": [
             "array",
             "null"
@@ -1484,13 +1484,13 @@
           "description": "Flags to pass to `go test`. If null, then buildFlags will be used. This is not propagated to the language server.",
           "scope": "resource"
         },
-        "go.testExplorer.enable": {
+        "gop.testExplorer.enable": {
           "type": "boolean",
           "default": true,
           "scope": "window",
           "description": "Enable the Go test explorer"
         },
-        "go.testExplorer.packageDisplayMode": {
+        "gop.testExplorer.packageDisplayMode": {
           "type": "string",
           "enum": [
             "flat",
@@ -1500,31 +1500,31 @@
           "description": "Present packages in the test explorer flat or nested.",
           "scope": "resource"
         },
-        "go.testExplorer.alwaysRunBenchmarks": {
+        "gop.testExplorer.alwaysRunBenchmarks": {
           "type": "boolean",
           "default": false,
           "description": "Run benchmarks when running all tests in a file or folder.",
           "scope": "resource"
         },
-        "go.testExplorer.concatenateMessages": {
+        "gop.testExplorer.concatenateMessages": {
           "type": "boolean",
           "default": true,
           "description": "Concatenate all test log messages for a given location into a single message.",
           "scope": "resource"
         },
-        "go.testExplorer.showDynamicSubtestsInEditor": {
+        "gop.testExplorer.showDynamicSubtestsInEditor": {
           "type": "boolean",
           "default": false,
           "description": "Set the source location of dynamically discovered subtests to the location of the containing function. As a result, dynamically discovered subtests will be added to the gutter test widget of the containing function.",
           "scope": "resource"
         },
-        "go.testExplorer.showOutput": {
+        "gop.testExplorer.showOutput": {
           "type": "boolean",
           "default": true,
           "description": "Open the test output terminal when a test run is started.",
           "scope": "window"
         },
-        "go.generateTestsFlags": {
+        "gop.generateTestsFlags": {
           "type": "array",
           "items": {
             "type": "string"
@@ -1533,13 +1533,13 @@
           "description": "Additional command line flags to pass to `gotests` for generating tests.",
           "scope": "resource"
         },
-        "go.toolsEnvVars": {
+        "gop.toolsEnvVars": {
           "type": "object",
           "default": {},
           "description": "Environment variables that will be passed to the tools that run the Go tools (e.g. CGO_CFLAGS) and debuggee process launched by Delve. Format as string key:value pairs. When debugging, merged with `envFile` and `env` values with precedence `env` > `envFile` > `go.toolsEnvVars`.",
           "scope": "resource"
         },
-        "go.gocodeFlags": {
+        "gop.gocodeFlags": {
           "type": "array",
           "items": {
             "type": "string"
@@ -1553,14 +1553,14 @@
           "scope": "resource",
           "markdownDeprecationMessage": "`gocode` is deprecated by the Go language server. Enable the Go language server (`#go.useLanguageServer#`)."
         },
-        "go.gocodeAutoBuild": {
+        "gop.gocodeAutoBuild": {
           "type": "boolean",
           "default": false,
           "description": "Enable gocode's autobuild feature. Not applicable when using the language server.",
           "scope": "resource",
           "markdownDeprecationMessage": "`gocode` is deprecated by the Go language server. Enable the Go language server (`#go.useLanguageServer#`)."
         },
-        "go.gocodePackageLookupMode": {
+        "gop.gocodePackageLookupMode": {
           "type": "string",
           "enum": [
             "go",
@@ -1572,28 +1572,28 @@
           "scope": "resource",
           "markdownDeprecationMessage": "`gocode` is deprecated by the Go language server. Enable the Go language server (`#go.useLanguageServer#`)."
         },
-        "go.useCodeSnippetsOnFunctionSuggest": {
+        "gop.useCodeSnippetsOnFunctionSuggest": {
           "type": "boolean",
           "default": false,
           "description": "Complete functions with their parameter signature, including the variable type. Not propagated to the language server.",
           "scope": "resource",
           "markdownDeprecationMessage": "Code completion without the language server is deprecated. Enable the Go language server (`#go.useLanguageServer#`) and use [`gopls's `ui.completion.usePlaceholders` setting](https://github.com/golang/vscode-go/wiki/settings#uicompletionuseplaceholders) instead."
         },
-        "go.useCodeSnippetsOnFunctionSuggestWithoutType": {
+        "gop.useCodeSnippetsOnFunctionSuggestWithoutType": {
           "type": "boolean",
           "default": false,
           "description": "Complete functions with their parameter signature, excluding the variable types. Use `gopls.usePlaceholders` when using the language server.",
           "scope": "resource",
           "markdownDeprecationMessage": "Code completion without the language server is deprecated. Enable the Go language server (`#go.useLanguageServer#`) and use [`gopls's `ui.completion.usePlaceholders` setting](https://github.com/golang/vscode-go/wiki/settings#uicompletionuseplaceholders) instead."
         },
-        "go.autocompleteUnimportedPackages": {
+        "gop.autocompleteUnimportedPackages": {
           "type": "boolean",
           "default": false,
           "description": "Include unimported packages in auto-complete suggestions. Not applicable when using the language server.",
           "scope": "resource",
           "markdownDeprecationMessage": "Code completion without the language server is deprecated. Enable the Go language server (`#go.useLanguageServer#`)."
         },
-        "go.docsTool": {
+        "gop.docsTool": {
           "type": "string",
           "default": "godoc",
           "description": "Pick 'godoc' or 'gogetdoc' to get documentation. Not applicable when using the language server.",
@@ -1605,17 +1605,17 @@
           ],
           "markdownDeprecationMessage": "Documentation support without the language server is deprecated. Enable the Go language server (`#go.useLanguageServer#`)."
         },
-        "go.useLanguageServer": {
+        "gop.useLanguageServer": {
           "type": "boolean",
           "default": true,
           "description": "Enable intellisense, code navigation, refactoring, formatting & diagnostics for Go. The features are powered by the Go language server \"gopls\"."
         },
-        "go.languageServerFlags": {
+        "gop.languageServerFlags": {
           "type": "array",
           "default": [],
           "description": "Flags like -rpc.trace and -logfile to be used while running the language server."
         },
-        "go.trace.server": {
+        "gop.trace.server": {
           "type": "string",
           "enum": [
             "off",
@@ -1625,7 +1625,7 @@
           "default": "off",
           "description": "Trace the communication between VS Code and the Go language server."
         },
-        "go.logging.level": {
+        "gop.logging.level": {
           "type": "string",
           "default": "error",
           "enum": [
@@ -1637,13 +1637,13 @@
           "description": "The logging level the extension logs at, defaults to 'error'",
           "scope": "machine-overridable"
         },
-        "go.toolsManagement.go": {
+        "gop.toolsManagement.go": {
           "type": "string",
           "default": "",
           "description": "The path to the `go` binary used to install the Go tools. If it's empty, the same `go` binary chosen for the project will be used for tool installation.",
           "scope": "machine-overridable"
         },
-        "go.toolsManagement.checkForUpdates": {
+        "gop.toolsManagement.checkForUpdates": {
           "type": "string",
           "default": "proxy",
           "enum": [
@@ -1658,33 +1658,33 @@
           ],
           "markdownDescription": "Specify whether to prompt about new versions of Go and the Go tools (currently, only `gopls`) the extension depends on"
         },
-        "go.toolsManagement.autoUpdate": {
+        "gop.toolsManagement.autoUpdate": {
           "type": "boolean",
           "default": false,
           "description": "Automatically update the tools used by the extension, without prompting the user.",
           "scope": "resource"
         },
-        "go.useGoProxyToCheckForToolUpdates": {
+        "gop.useGoProxyToCheckForToolUpdates": {
           "type": "boolean",
           "default": true,
           "description": "When enabled, the extension automatically checks the Go proxy if there are updates available for Go and the Go tools (at present, only gopls) it depends on and prompts the user accordingly",
           "markdownDeprecationMessage": "Use `go.toolsManagement.checkForUpdates` instead."
         },
-        "go.gotoSymbol.includeImports": {
+        "gop.gotoSymbol.includeImports": {
           "type": "boolean",
           "default": false,
           "description": "If false, the import statements will be excluded while using the Go to Symbol in File feature. Not applicable when using the language server.",
           "scope": "resource",
           "markdownDeprecationMessage": "Code navigation without the language server is deprecated. Enable the Go language server (`#go.useLanguageServer#`)."
         },
-        "go.gotoSymbol.includeGoroot": {
+        "gop.gotoSymbol.includeGoroot": {
           "type": "boolean",
           "default": false,
           "description": "If false, the standard library located at $GOROOT will be excluded while using the Go to Symbol in File feature. Not applicable when using the language server.",
           "scope": "resource",
           "markdownDeprecationMessage": "Code navigation without the language server is deprecated. Enable the Go language server (`#go.useLanguageServer#`)."
         },
-        "go.enableCodeLens": {
+        "gop.enableCodeLens": {
           "type": "object",
           "properties": {
             "runtest": {
@@ -1700,7 +1700,7 @@
           "description": "Feature level setting to enable/disable code lens for references and run/debug tests",
           "scope": "resource"
         },
-        "go.addTags": {
+        "gop.addTags": {
           "type": "object",
           "properties": {
             "promptForTags": {
@@ -1747,7 +1747,7 @@
           "description": "Tags and options configured here will be used by the Add Tags command to add tags to struct fields. If promptForTags is true, then user will be prompted for tags and options. By default, json tags are added.",
           "scope": "resource"
         },
-        "go.liveErrors": {
+        "gop.liveErrors": {
           "type": "object",
           "properties": {
             "enabled": {
@@ -1770,7 +1770,7 @@
           "scope": "resource",
           "markdownDeprecationMessage": "Real-time diagnostics without the language server is deprecated. Enable the Go language server (`#go.useLanguageServer#`)."
         },
-        "go.removeTags": {
+        "gop.removeTags": {
           "type": "object",
           "properties": {
             "promptForTags": {
@@ -1798,7 +1798,7 @@
           "description": "Tags and options configured here will be used by the Remove Tags command to remove tags to struct fields. If promptForTags is true, then user will be prompted for tags and options. By default, all tags and options will be removed.",
           "scope": "resource"
         },
-        "go.playground": {
+        "gop.playground": {
           "type": "object",
           "properties": {
             "openbrowser": {
@@ -1825,12 +1825,12 @@
             "run": true
           }
         },
-        "go.survey.prompt": {
+        "gop.survey.prompt": {
           "type": "boolean",
           "default": true,
           "description": "Prompt for surveys, including the gopls survey and the Go developer survey."
         },
-        "go.editorContextMenuCommands": {
+        "gop.editorContextMenuCommands": {
           "type": "object",
           "properties": {
             "toggleTestFile": {
@@ -1930,7 +1930,7 @@
           "description": "Experimental Feature: Enable/Disable entries from the context menu in the editor.",
           "scope": "resource"
         },
-        "go.gotoSymbol.ignoreFolders": {
+        "gop.gotoSymbol.ignoreFolders": {
           "type": "array",
           "items": {
             "type": "string"
@@ -1940,7 +1940,7 @@
           "scope": "resource",
           "markdownDeprecationMessage": "Code navigation without the language server is deprecated. Enable the Go language server (`#go.useLanguageServer#`)."
         },
-        "go.delveConfig": {
+        "gop.delveConfig": {
           "type": "object",
           "properties": {
             "dlvLoadConfig": {
@@ -2065,7 +2065,7 @@
           "description": "Delve settings that applies to all debugging sessions. Debug configuration in the launch.json file will override these values.",
           "scope": "resource"
         },
-        "go.alternateTools": {
+        "gop.alternateTools": {
           "type": "object",
           "default": {},
           "description": "Alternate tools or alternate paths for the same tools used by the Go extension. Provide either absolute path or the name of the binary in GOPATH/bin, GOROOT/bin or PATH. Useful when you want to use wrapper script for the Go tools.",
@@ -2094,19 +2094,19 @@
           },
           "additionalProperties": true
         },
-        "go.tasks.provideDefault": {
+        "gop.tasks.provideDefault": {
           "default": true,
           "description": "enable the default go build/test task provider.",
           "scope": "window",
           "type": "boolean"
         },
-        "go.terminal.activateEnvironment": {
+        "gop.terminal.activateEnvironment": {
           "default": true,
           "description": "Apply the Go & PATH environment variables used by the extension to all integrated terminals.",
           "scope": "resource",
           "type": "boolean"
         },
-        "gopls": {
+        "goxls": {
           "type": "object",
           "markdownDescription": "Configure the default Go language server ('gopls'). In most cases, configuring this section is unnecessary. See [the documentation](https://github.com/golang/tools/blob/master/gopls/doc/settings.md) for all available settings.",
           "scope": "resource",
@@ -2709,7 +2709,7 @@
             }
           }
         },
-        "go.diagnostic.vulncheck": {
+        "gop.diagnostic.vulncheck": {
           "type": "string",
           "markdownDescription": "(Experimental) vulncheck enables vulnerability scanning.\n",
           "enum": [
@@ -2723,37 +2723,37 @@
           "default": "Off",
           "scope": "resource"
         },
-        "go.inlayHints.assignVariableTypes": {
+        "gop.inlayHints.assignVariableTypes": {
           "type": "boolean",
           "markdownDescription": "Enable/disable inlay hints for variable types in assign statements:\n```go\n\ti/* int*/, j/* int*/ := 0, len(r)-1\n```",
           "default": false
         },
-        "go.inlayHints.compositeLiteralFields": {
+        "gop.inlayHints.compositeLiteralFields": {
           "type": "boolean",
           "markdownDescription": "Enable/disable inlay hints for composite literal field names:\n```go\n\t{/*in: */\"Hello, world\", /*want: */\"dlrow ,olleH\"}\n```",
           "default": false
         },
-        "go.inlayHints.compositeLiteralTypes": {
+        "gop.inlayHints.compositeLiteralTypes": {
           "type": "boolean",
           "markdownDescription": "Enable/disable inlay hints for composite literal types:\n```go\n\tfor _, c := range []struct {\n\t\tin, want string\n\t}{\n\t\t/*struct{ in string; want string }*/{\"Hello, world\", \"dlrow ,olleH\"},\n\t}\n```",
           "default": false
         },
-        "go.inlayHints.constantValues": {
+        "gop.inlayHints.constantValues": {
           "type": "boolean",
           "markdownDescription": "Enable/disable inlay hints for constant values:\n```go\n\tconst (\n\t\tKindNone   Kind = iota/* = 0*/\n\t\tKindPrint/*  = 1*/\n\t\tKindPrintf/* = 2*/\n\t\tKindErrorf/* = 3*/\n\t)\n```",
           "default": false
         },
-        "go.inlayHints.functionTypeParameters": {
+        "gop.inlayHints.functionTypeParameters": {
           "type": "boolean",
           "markdownDescription": "Enable/disable inlay hints for implicit type parameters on generic functions:\n```go\n\tmyFoo/*[int, string]*/(1, \"hello\")\n```",
           "default": false
         },
-        "go.inlayHints.parameterNames": {
+        "gop.inlayHints.parameterNames": {
           "type": "boolean",
           "markdownDescription": "Enable/disable inlay hints for parameter names:\n```go\n\tparseInt(/* str: */ \"123\", /* radix: */ 8)\n```",
           "default": false
         },
-        "go.inlayHints.rangeVariableTypes": {
+        "gop.inlayHints.rangeVariableTypes": {
           "type": "boolean",
           "markdownDescription": "Enable/disable inlay hints for variable types in range statements:\n```go\n\tfor k/* int*/, v/* string*/ := range []string{} {\n\t\tfmt.Println(k, v)\n\t}\n```",
           "default": false
