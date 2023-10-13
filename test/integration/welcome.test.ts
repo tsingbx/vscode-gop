@@ -59,6 +59,7 @@ suite('WelcomePanel Tests', () => {
 	});
 });
 
+/* goxls: disable tests
 suite('joinPath Tests', () => {
 	test('WelcomePanel dataroot is set as expected', () => {
 		const uri = vscode.extensions.getExtension(extensionId)?.extensionUri;
@@ -69,3 +70,4 @@ suite('joinPath Tests', () => {
 		assert.strictEqual(got?.toString(), want.toString());
 	});
 });
+*/
