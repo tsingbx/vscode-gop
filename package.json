@@ -144,7 +144,8 @@
         ],
         "aliases": [
           "Goplus"
-        ]
+        ],
+        "configuration": "./languages/gop.language-configuration.json"
       },
       {
         "id": "go.mod",
@@ -206,8 +207,8 @@
     "grammars": [
       {
         "language": "gop",
-        "scopeName": "gop",
-        "path": "./syntaxes/gop.tmGrammar.json"
+        "scopeName": "source.gop",
+        "path": "./syntaxes/gop.tmLanguage.json"
       },
       {
         "language": "go.mod",
