@@ -117,7 +117,7 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<ExtensionA
 	if (!goCtx.languageServerIsRunning && activeDoc?.languageId === 'go' && isGoPathSet()) {
 		// Check mod status so that cache is updated and then run build/lint/vet
 		isModSupported(activeDoc.uri).then(() => {
-			vscode.commands.executeCommand('go.builds.run', activeDoc, getGoConfig(activeDoc.uri));
+			vscode.commands.executeCommand('gop.builds.run', activeDoc, getGoConfig(activeDoc.uri));
 		});
 	}
 
@@ -251,22 +251,22 @@ function addOnDidChangeConfigListeners(ctx: vscode.ExtensionContext) {
 			}
 			const updatedGoConfig = getGoConfig();
 
-			if (e.affectsConfiguration('go.goroot')) {
+			if (e.affectsConfiguration('gop.goroot')) {
 				const configGOROOT = updatedGoConfig['goroot'];
 				if (configGOROOT) {
 					await setGOROOTEnvVar(configGOROOT);
 				}
 			}
 			if (
-				e.affectsConfiguration('go.goroot') ||
-				e.affectsConfiguration('go.alternateTools') ||
-				e.affectsConfiguration('go.gopath') ||
-				e.affectsConfiguration('go.toolsEnvVars') ||
-				e.affectsConfiguration('go.testEnvFile')
+				e.affectsConfiguration('gop.goroot') ||
+				e.affectsConfiguration('gop.alternateTools') ||
+				e.affectsConfiguration('gop.gopath') ||
+				e.affectsConfiguration('gop.toolsEnvVars') ||
+				e.affectsConfiguration('gop.testEnvFile')
 			) {
 				updateGoVarsFromConfig(goCtx);
 			}
-			if (e.affectsConfiguration('go.logging')) {
+			if (e.affectsConfiguration('gop.logging')) {
 				setLogConfig(updatedGoConfig['logging']);
 			}
 			// If there was a change in "toolsGopath" setting, then clear cache for go tools
@@ -274,19 +274,19 @@ function addOnDidChangeConfigListeners(ctx: vscode.ExtensionContext) {
 				clearCacheForTools();
 			}
 
-			if (e.affectsConfiguration('go.formatTool')) {
+			if (e.affectsConfiguration('gop.formatTool')) {
 				checkToolExists(getFormatTool(updatedGoConfig));
 			}
-			if (e.affectsConfiguration('go.lintTool')) {
+			if (e.affectsConfiguration('gop.lintTool')) {
 				checkToolExists(updatedGoConfig['lintTool']);
 			}
-			if (e.affectsConfiguration('go.docsTool')) {
+			if (e.affectsConfiguration('gop.docsTool')) {
 				checkToolExists(updatedGoConfig['docsTool']);
 			}
-			if (e.affectsConfiguration('go.coverageDecorator')) {
+			if (e.affectsConfiguration('gop.coverageDecorator')) {
 				updateCodeCoverageDecorators(updatedGoConfig['coverageDecorator']);
 			}
-			if (e.affectsConfiguration('go.toolsEnvVars')) {
+			if (e.affectsConfiguration('gop.toolsEnvVars')) {
 				const env = toolExecutionEnvironment();
 				if (GO111MODULE !== env['GO111MODULE']) {
 					const reloadMsg =
@@ -298,7 +298,7 @@ function addOnDidChangeConfigListeners(ctx: vscode.ExtensionContext) {
 					});
 				}
 			}
-			if (e.affectsConfiguration('go.lintTool')) {
+			if (e.affectsConfiguration('gop.lintTool')) {
 				const lintTool = lintDiagnosticCollectionName(updatedGoConfig['lintTool']);
 				if (goCtx.lintDiagnosticCollection && goCtx.lintDiagnosticCollection.name !== lintTool) {
 					goCtx.lintDiagnosticCollection.dispose();
@@ -307,7 +307,7 @@ function addOnDidChangeConfigListeners(ctx: vscode.ExtensionContext) {
 					// TODO: actively maintain our own disposables instead of keeping pushing to ctx.subscription.
 				}
 			}
-			if (e.affectsConfiguration('go.testExplorer.enable')) {
+			if (e.affectsConfiguration('gop.testExplorer.enable')) {
 				const msg =
 					'Go test explorer has been enabled or disabled. For this change to take effect, the window must be reloaded.';
 				vscode.window.showInformationMessage(msg, 'Reload').then((selected) => {
@@ -346,7 +346,7 @@ function addOnSaveTextDocumentListeners(ctx: vscode.ExtensionContext) {
 				}
 			}
 			if (vscode.window.visibleTextEditors.some((e) => e.document.fileName === document.fileName)) {
-				vscode.commands.executeCommand('go.builds.run', document, getGoConfig(document.uri));
+				vscode.commands.executeCommand('gop.builds.run', document, getGoConfig(document.uri));
 			}
 		},
 		null,
@@ -395,7 +395,7 @@ async function showDeprecationWarning() {
 			const selected = await vscode.window.showInformationMessage(msg, 'Open settings', "Don't show again");
 			switch (selected) {
 				case 'Open settings':
-					vscode.commands.executeCommand('workbench.action.openSettings', 'go.useLanguageServer');
+					vscode.commands.executeCommand('workbench.action.openSettings', 'gop.useLanguageServer');
 					break;
 				case "Don't show again":
 					updateGlobalState(promptKey, true);

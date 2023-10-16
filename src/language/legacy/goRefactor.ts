@@ -28,11 +28,11 @@ export class GoRefactorProvider implements vscode.CodeActionProvider {
 		);
 		extractFunction.command = {
 			title: 'Extract to function in package scope',
-			command: 'go.godoctor.extract'
+			command: 'gop.godoctor.extract'
 		};
 		extractVar.command = {
 			title: 'Extract to variable in local scope',
-			command: 'go.godoctor.var'
+			command: 'gop.godoctor.var'
 		};
 
 		return [extractFunction, extractVar];

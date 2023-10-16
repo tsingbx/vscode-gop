@@ -32,7 +32,7 @@ export class WelcomePanel {
 		}
 
 		// Show the Go welcome page on update.
-		if (!extensionInfo.isInCloudIDE && vscode.workspace.getConfiguration('go.showWelcome')) {
+		if (!extensionInfo.isInCloudIDE && vscode.workspace.getConfiguration('gop.showWelcome')) {
 			showGoWelcomePage();
 		}
 	}
@@ -262,16 +262,16 @@ function showGoWelcomePage() {
 	// TODO(hyangah): use the content hash instead of hard-coded string.
 	// https://github.com/golang/vscode-go/issue/1179
 	let goExtensionVersion = '0.37.0';
-	let goExtensionVersionKey = 'go.extensionVersion';
+	let goExtensionVersionKey = 'gop.extensionVersion';
 	if (extensionInfo.isPreview) {
 		goExtensionVersion = '0.0.0';
-		goExtensionVersionKey = 'go.nightlyExtensionVersion';
+		goExtensionVersionKey = 'gop.nightlyExtensionVersion';
 	}
 
 	const savedGoExtensionVersion = getFromGlobalState(goExtensionVersionKey, '');
 
 	if (shouldShowGoWelcomePage(showVersions, goExtensionVersion, savedGoExtensionVersion)) {
-		vscode.commands.executeCommand('go.welcome');
+		vscode.commands.executeCommand('gop.welcome');
 	}
 	if (goExtensionVersion !== savedGoExtensionVersion) {
 		updateGlobalState(goExtensionVersionKey, goExtensionVersion);

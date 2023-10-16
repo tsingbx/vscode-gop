@@ -225,7 +225,7 @@ suite('Debug Configuration Merge User Settings', () => {
 	suite("merge 'go' config from settings.json", () => {
 		test('default settings are applied', async () => {
 			const defaultConfig = vscode.extensions.getExtension(extensionId)?.packageJSON.contributes.configuration
-				.properties['go.delveConfig'].properties;
+				.properties['gop.delveConfig'].properties;
 
 			// Run resolveDebugConfiguration with the default workspace settings.
 			const cfg1 = {

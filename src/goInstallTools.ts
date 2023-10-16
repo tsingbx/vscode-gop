@@ -117,7 +117,7 @@ export async function getGoForInstall(goVersion: GoVersion, silent?: boolean): P
 	} finally {
 		if (!silent) {
 			outputChannel.appendLine(
-				`Ignoring misconfigured 'go.toolsManagement.go' (${configured}). Provide a valid path to the Go command.`
+				`Ignoring misconfigured 'gop.toolsManagement.go' (${configured}). Provide a valid path to the Go command.`
 			);
 		}
 	}
@@ -198,7 +198,7 @@ export async function installTools(
 			failures.push({ tool, reason: failed });
 		} else if (tool.name === 'gopls') {
 			// Restart the language server if a new binary has been installed.
-			vscode.commands.executeCommand('go.languageserver.restart', RestartReason.INSTALLATION);
+			vscode.commands.executeCommand('gop.languageserver.restart', RestartReason.INSTALLATION);
 		}
 	}
 
@@ -593,7 +593,7 @@ export async function offerToInstallTools() {
 		addGoStatus(
 			STATUS_BAR_ITEM_NAME,
 			'Analysis Tools Missing',
-			'go.promptforinstall',
+			'gop.promptforinstall',
 			'Not all Go tools are available on the GOPATH'
 		);
 		// goxls: conflicts fix

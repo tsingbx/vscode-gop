@@ -121,7 +121,7 @@ suite('Installation Tests', function () {
 			  new GoVersion(getBinPath('go'), `go version ${withGoVersion} amd64/linux`)
 			: await getGoVersion();
 
-		sandbox.stub(vscode.commands, 'executeCommand').withArgs('go.languageserver.restart');
+		sandbox.stub(vscode.commands, 'executeCommand').withArgs('gop.languageserver.restart');
 
 		const failures = await installTools(missingTools, goVersion);
 		assert(!failures || failures.length === 0, `installTools failed: ${JSON.stringify(failures)}`);

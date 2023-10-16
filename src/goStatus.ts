@@ -88,10 +88,10 @@ export const expandGoStatusBar: CommandFactory = (ctx, goCtx) => async () => {
 		if (item) {
 			switch (item.label) {
 				case 'Locate Configured Go Tools':
-					vscode.commands.executeCommand('go.locate.tools');
+					vscode.commands.executeCommand('gop.locate.tools');
 					break;
 				case 'Choose Go Environment':
-					vscode.commands.executeCommand('go.environment.choose');
+					vscode.commands.executeCommand('gop.environment.choose');
 					break;
 				case `${languageServerIcon}Open 'gopls' trace`:
 					if (serverOutputChannel) {
@@ -99,7 +99,7 @@ export const expandGoStatusBar: CommandFactory = (ctx, goCtx) => async () => {
 					}
 					break;
 				case 'Install Go Language Server':
-					vscode.commands.executeCommand('go.tools.install', [allToolsInformation['gopls']]);
+					vscode.commands.executeCommand('gop.tools.install', [allToolsInformation['gopls']]);
 					break;
 				case "Open 'go.work'":
 				case "Open 'go.mod'":
@@ -134,7 +134,7 @@ export async function initGoStatusBar(goCtx: GoExtensionContext) {
 	const goOption = new GoEnvironmentOption(version.binaryPath, formatGoVersion(version));
 
 	goEnvStatusbarItem.text = goOption.label;
-	goEnvStatusbarItem.command = 'go.environment.status';
+	goEnvStatusbarItem.command = 'gop.environment.status';
 
 	// Add an icon to indicate that the 'gopls' server is running.
 	// Assume if it is configured it is already running, since the
