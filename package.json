@@ -3,7 +3,7 @@
   "displayName": "Go+",
   "version": "0.1.0-dev",
   "preview": true,
-  "publisher": "goplus",
+  "publisher": "GoPlus Team",
   "description": "Rich Go/Go+ language support for Visual Studio Code",
   "author": {
     "name": "GoPlus Team"
@@ -144,7 +144,8 @@
         ],
         "aliases": [
           "Goplus"
-        ]
+        ],
+        "configuration": "./languages/gop.language-configuration.json"
       },
       {
         "id": "go.mod",
@@ -204,6 +205,11 @@
       }
     ],
     "grammars": [
+      {
+        "language": "gop",
+        "scopeName": "source.gop",
+        "path": "./syntaxes/gop.tmLanguage.json"
+      },
       {
         "language": "go.mod",
         "scopeName": "go.mod",
