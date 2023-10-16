@@ -52,7 +52,7 @@ export interface GoplsSurveyConfig {
 }
 
 export function maybePromptForGoplsSurvey(goCtx: GoExtensionContext) {
-	// First, check the value of the 'go.survey.prompt' setting to see
+	// First, check the value of the 'gop.survey.prompt' setting to see
 	// if the user has opted out of all survey prompts.
 	const goConfig = getGoConfig();
 	if (goConfig.get('survey.prompt') === false) {
@@ -181,7 +181,7 @@ To opt-out of all survey prompts, please disable the 'Go > Survey: Prompt' setti
 			);
 			switch (selected) {
 				case 'Open Settings':
-					vscode.commands.executeCommand('workbench.action.openSettings', 'go.survey.prompt');
+					vscode.commands.executeCommand('workbench.action.openSettings', 'gop.survey.prompt');
 					break;
 				default:
 					break;

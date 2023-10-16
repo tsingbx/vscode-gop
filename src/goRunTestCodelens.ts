@@ -71,22 +71,22 @@ export class GoRunTestCodeLensProvider extends GoBaseCodeLensProvider {
 		const packageCodeLens = [
 			new CodeLens(range, {
 				title: 'run package tests',
-				command: 'go.test.package'
+				command: 'gop.test.package'
 			}),
 			new CodeLens(range, {
 				title: 'run file tests',
-				command: 'go.test.file'
+				command: 'gop.test.file'
 			})
 		];
 		if (pkg.children.some((sym) => sym.kind === vscode.SymbolKind.Function && this.benchmarkRegex.test(sym.name))) {
 			packageCodeLens.push(
 				new CodeLens(range, {
 					title: 'run package benchmarks',
-					command: 'go.benchmark.package'
+					command: 'gop.benchmark.package'
 				}),
 				new CodeLens(range, {
 					title: 'run file benchmarks',
-					command: 'go.benchmark.file'
+					command: 'gop.benchmark.file'
 				})
 			);
 		}
@@ -110,12 +110,12 @@ export class GoRunTestCodeLensProvider extends GoBaseCodeLensProvider {
 				codelens.push(
 					new CodeLens(f.range, {
 						title: 'run test',
-						command: 'go.test.cursor',
+						command: 'gop.test.cursor',
 						arguments: [{ functionName }]
 					}),
 					new CodeLens(f.range, {
 						title: 'debug test',
-						command: 'go.debug.cursor',
+						command: 'gop.debug.cursor',
 						arguments: [{ functionName }]
 					})
 				);
@@ -133,12 +133,12 @@ export class GoRunTestCodeLensProvider extends GoBaseCodeLensProvider {
 						codelens.push(
 							new CodeLens(line.range, {
 								title: 'run test',
-								command: 'go.subtest.cursor',
+								command: 'gop.subtest.cursor',
 								arguments: [{ functionName, subTestName }]
 							}),
 							new CodeLens(line.range, {
 								title: 'debug test',
-								command: 'go.debug.subtest.cursor',
+								command: 'gop.debug.subtest.cursor',
 								arguments: [{ functionName, subTestName }]
 							})
 						);
@@ -159,14 +159,14 @@ export class GoRunTestCodeLensProvider extends GoBaseCodeLensProvider {
 				codelens.push(
 					new CodeLens(f.range, {
 						title: 'run benchmark',
-						command: 'go.benchmark.cursor',
+						command: 'gop.benchmark.cursor',
 						arguments: [{ functionName: f.name }]
 					})
 				);
 				codelens.push(
 					new CodeLens(f.range, {
 						title: 'debug benchmark',
-						command: 'go.debug.cursor',
+						command: 'gop.debug.cursor',
 						arguments: [{ functionName: f.name }]
 					})
 				);

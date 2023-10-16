@@ -566,7 +566,7 @@ export function getExtensionCommands(): any[] {
 	}
 	const extensionCommands: any[] = vscode.extensions
 		.getExtension(extensionId)
-		?.packageJSON.contributes.commands.filter((x: any) => x.command !== 'go.show.commands');
+		?.packageJSON.contributes.commands.filter((x: any) => x.command !== 'gop.show.commands');
 	return extensionCommands;
 }
 

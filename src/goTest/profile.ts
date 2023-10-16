@@ -65,8 +65,8 @@ export class GoTestProfiler {
 
 	postRun() {
 		// Update the list of tests that have profiles.
-		vscode.commands.executeCommand('setContext', 'go.profiledTests', Array.from(this.runs.keys()));
-		vscode.commands.executeCommand('setContext', 'go.hasProfiles', this.runs.size > 0);
+		vscode.commands.executeCommand('setContext', 'gop.profiledTests', Array.from(this.runs.keys()));
+		vscode.commands.executeCommand('setContext', 'gop.hasProfiles', this.runs.size > 0);
 
 		this.view.fireDidChange();
 	}
@@ -198,7 +198,7 @@ async function show(profile: string) {
 		proc.stderr.on('data', captureStdout);
 	});
 
-	const panel = vscode.window.createWebviewPanel('go.profile', 'Profile', ViewColumn.Active);
+	const panel = vscode.window.createWebviewPanel('gop.profile', 'Profile', ViewColumn.Active);
 	panel.webview.options = { enableScripts: true };
 	panel.webview.html = `<html>
 		<head>
@@ -302,7 +302,7 @@ class ProfileTreeDataProvider implements TreeDataProvider<TreeElement> {
 			item.contextValue = 'go:test:file';
 			item.command = {
 				title: 'Open',
-				command: 'go.test.showProfileFile',
+				command: 'gop.test.showProfileFile',
 				arguments: [element.uri]
 			};
 			return item;

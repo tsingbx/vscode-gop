@@ -32,7 +32,7 @@ const testOutputChannel = vscode.window.createOutputChannel('Go Tests');
 const STATUS_BAR_ITEM_NAME = 'Go Test Cancel';
 const statusBarItem = vscode.window.createStatusBarItem(STATUS_BAR_ITEM_NAME, vscode.StatusBarAlignment.Left);
 statusBarItem.name = STATUS_BAR_ITEM_NAME;
-statusBarItem.command = 'go.test.cancel';
+statusBarItem.command = 'gop.test.cancel';
 statusBarItem.text = '$(x) Cancel Running Tests';
 
 /**

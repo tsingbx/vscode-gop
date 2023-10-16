@@ -796,7 +796,7 @@ export function filterGoplsDefaultConfigValues(workspaceConfig: any, resource?: 
 	return filtered;
 }
 
-// passGoConfigToGoplsConfigValues passes some of the relevant 'go.' settings to gopls settings.
+// passGoConfigToGoplsConfigValues passes some of the relevant 'gop.' settings to gopls settings.
 // This assumes `goplsWorkspaceConfig` is an output of filterGoplsDefaultConfigValues,
 // so it is modifiable and doesn't contain properties that are not explicitly set.
 //   - go.buildTags and go.buildFlags are passed as gopls.build.buildFlags
@@ -906,12 +906,12 @@ function createTestCodeLens(lens: vscode.CodeLens): vscode.CodeLens[] {
 		new vscode.CodeLens(lens.range, {
 			title: '',
 			...lens.command,
-			command: 'go.test.cursor',
+			command: 'gop.test.cursor',
 			arguments: [{ functionName: lens.command?.arguments?.[1][0] }]
 		}),
 		new vscode.CodeLens(lens.range, {
 			title: 'debug test',
-			command: 'go.debug.cursor',
+			command: 'gop.debug.cursor',
 			arguments: [{ functionName: lens.command?.arguments?.[1][0] }]
 		})
 	];
@@ -928,34 +928,34 @@ function createBenchmarkCodeLens(lens: vscode.CodeLens): vscode.CodeLens[] {
 		new vscode.CodeLens(lens.range, {
 			title: '',
 			...lens.command,
-			command: 'go.benchmark.cursor',
+			command: 'gop.benchmark.cursor',
 			arguments: [{ functionName: lens.command?.arguments?.[2][0] }]
 		}),
 		new vscode.CodeLens(lens.range, {
 			title: 'debug benchmark',
-			command: 'go.debug.cursor',
+			command: 'gop.debug.cursor',
 			arguments: [{ functionName: lens.command?.arguments?.[2][0] }]
 		})
 	];
 }
 
 export async function watchLanguageServerConfiguration(goCtx: GoExtensionContext, e: vscode.ConfigurationChangeEvent) {
-	if (!e.affectsConfiguration('go')) {
+	if (!e.affectsConfiguration('gop')) {
 		return;
 	}
 
 	if (
-		e.affectsConfiguration('go.useLanguageServer') ||
-		e.affectsConfiguration('go.languageServerFlags') ||
-		e.affectsConfiguration('go.alternateTools') ||
-		e.affectsConfiguration('go.toolsEnvVars') ||
-		e.affectsConfiguration('go.formatTool')
+		e.affectsConfiguration('gop.useLanguageServer') ||
+		e.affectsConfiguration('gop.languageServerFlags') ||
+		e.affectsConfiguration('gop.alternateTools') ||
+		e.affectsConfiguration('gop.toolsEnvVars') ||
+		e.affectsConfiguration('gop.formatTool')
 		// TODO: Should we check http.proxy too? That affects toolExecutionEnvironment too.
 	) {
-		vscode.commands.executeCommand('go.languageserver.restart', RestartReason.CONFIG_CHANGE);
+		vscode.commands.executeCommand('gop.languageserver.restart', RestartReason.CONFIG_CHANGE);
 	}
 
-	if (e.affectsConfiguration('go.useLanguageServer') && getGoConfig()['useLanguageServer'] === false) {
+	if (e.affectsConfiguration('gop.useLanguageServer') && getGoConfig()['useLanguageServer'] === false) {
 		promptAboutGoplsOptOut(goCtx);
 	}
 }
@@ -1411,7 +1411,7 @@ It is currently set to [${languageServerFlags}]. Please correct the setting by n
 			);
 			switch (selected) {
 				case 'Open settings':
-					await vscode.commands.executeCommand('workbench.action.openSettings', 'go.languageServerFlags');
+					await vscode.commands.executeCommand('workbench.action.openSettings', 'gop.languageServerFlags');
 					return;
 				case 'I need more help':
 					// Fall through the automated issue report.

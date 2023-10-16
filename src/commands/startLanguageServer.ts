@@ -116,7 +116,7 @@ export const startLanguageServer: CommandFactory = (ctx, goCtx) => {
 
 function updateStatus(goCtx: GoExtensionContext, goConfig: vscode.WorkspaceConfiguration, didStart: boolean) {
 	goCtx.languageServerIsRunning = didStart;
-	vscode.commands.executeCommand('setContext', 'go.goplsIsRunning', didStart);
+	vscode.commands.executeCommand('setContext', 'gop.goplsIsRunning', didStart);
 	updateLanguageServerIconGoStatusBar(didStart, goConfig['useLanguageServer'] === true);
 }
 

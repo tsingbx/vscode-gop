@@ -36,7 +36,7 @@ export interface DeveloperSurveyConfig {
 }
 
 export function maybePromptForDeveloperSurvey(goCtx: GoExtensionContext) {
-	// First, check the value of the 'go.survey.prompt' setting to see
+	// First, check the value of the 'gop.survey.prompt' setting to see
 	// if the user has opted out of all survey prompts.
 	const goConfig = getGoConfig();
 	if (goConfig.get('survey.prompt') === false) {
@@ -153,12 +153,12 @@ by participating in this 10-minute Go Developer Survey (2023 H2) before ${endDat
 
 			const selected = await vscode.window.showInformationMessage(
 				`No problem! We won't ask again.
-If you'd like to opt-out of all survey prompts, you can set 'go.survey.prompt' to false.`,
+If you'd like to opt-out of all survey prompts, you can set 'gop.survey.prompt' to false.`,
 				'Open Settings'
 			);
 			switch (selected) {
 				case 'Open Settings':
-					vscode.commands.executeCommand('workbench.action.openSettings', 'go.survey.prompt');
+					vscode.commands.executeCommand('workbench.action.openSettings', 'gop.survey.prompt');
 					break;
 				default:
 					break;

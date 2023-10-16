@@ -558,7 +558,7 @@ export async function offerToInstallLatestGoVersion() {
 		addGoStatus(
 			STATUS_BAR_ITEM_NAME,
 			'Go Update Available',
-			'go.promptforgoinstall',
+			'gop.promptforgoinstall',
 			'A newer version of Go is available'
 		);
 		// goxls: conflicts fix

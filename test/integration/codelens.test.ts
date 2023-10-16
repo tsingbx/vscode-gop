@@ -116,14 +116,14 @@ suite('Code lenses for testing and benchmarking', function () {
 		const codeLenses = await codeLensProvider.provideCodeLenses(document, cancellationTokenSource.token);
 		assert.equal(codeLenses.length, 8);
 		const wantCommands = [
-			'go.test.package',
-			'go.test.file',
-			'go.test.cursor',
-			'go.debug.cursor',
-			'go.subtest.cursor',
-			'go.debug.subtest.cursor',
-			'go.subtest.cursor',
-			'go.debug.subtest.cursor'
+			'gop.test.package',
+			'gop.test.file',
+			'gop.test.cursor',
+			'gop.debug.cursor',
+			'gop.subtest.cursor',
+			'gop.debug.subtest.cursor',
+			'gop.subtest.cursor',
+			'gop.debug.subtest.cursor'
 		];
 		for (let i = 0; i < codeLenses.length; i++) {
 			assert.equal(codeLenses[i].command?.command, wantCommands[i]);
@@ -136,12 +136,12 @@ suite('Code lenses for testing and benchmarking', function () {
 		const codeLenses = await codeLensProvider.provideCodeLenses(benchmarkDocument, cancellationTokenSource.token);
 		assert.equal(codeLenses.length, 6);
 		const wantCommands = [
-			'go.test.package',
-			'go.test.file',
-			'go.benchmark.package',
-			'go.benchmark.file',
-			'go.benchmark.cursor',
-			'go.debug.cursor'
+			'gop.test.package',
+			'gop.test.file',
+			'gop.benchmark.package',
+			'gop.benchmark.file',
+			'gop.benchmark.cursor',
+			'gop.debug.cursor'
 		];
 		for (let i = 0; i < codeLenses.length; i++) {
 			assert.equal(codeLenses[i].command?.command, wantCommands[i]);
@@ -156,7 +156,7 @@ suite('Code lenses for testing and benchmarking', function () {
 		const found = [] as string[];
 		for (let i = 0; i < codeLenses.length; i++) {
 			const lens = codeLenses[i];
-			if (lens.command?.command === 'go.test.cursor') {
+			if (lens.command?.command === 'gop.test.cursor') {
 				found.push(lens.command.arguments?.[0].functionName);
 			}
 		}
@@ -186,7 +186,7 @@ suite('Code lenses for testing and benchmarking', function () {
 		const found = [] as string[];
 		for (let i = 0; i < codeLenses.length; i++) {
 			const lens = codeLenses[i];
-			if (lens.command?.command === 'go.test.cursor') {
+			if (lens.command?.command === 'gop.test.cursor') {
 				found.push(lens.command.arguments?.[0].functionName);
 			}
 		}
@@ -203,7 +203,7 @@ suite('Code lenses for testing and benchmarking', function () {
 		const found = [] as string[];
 		for (let i = 0; i < codeLenses.length; i++) {
 			const lens = codeLenses[i];
-			if (lens.command?.command === 'go.test.cursor') {
+			if (lens.command?.command === 'gop.test.cursor') {
 				found.push(lens.command.arguments?.[0].functionName);
 			}
 		}

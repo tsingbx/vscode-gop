@@ -230,7 +230,7 @@ export class GoTestResolver {
 		for (const item of this.allItems) {
 			items.push(item.id);
 		}
-		vscode.commands.executeCommand('setContext', 'go.tests', items);
+		vscode.commands.executeCommand('setContext', 'gop.tests', items);
 	}
 
 	// Retrieve or create an item for a Go file.

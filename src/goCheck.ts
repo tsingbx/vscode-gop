@@ -23,7 +23,7 @@ import { GoExtensionContext } from './context';
 const STATUS_BAR_ITEM_NAME = 'Go Test';
 const statusBarItem = vscode.window.createStatusBarItem(STATUS_BAR_ITEM_NAME, vscode.StatusBarAlignment.Left);
 statusBarItem.name = STATUS_BAR_ITEM_NAME;
-statusBarItem.command = 'go.test.showOutput';
+statusBarItem.command = 'gop.test.showOutput';
 const neverAgain = { title: "Don't Show Again" };
 
 export function removeTestStatus(e: vscode.TextDocumentChangeEvent) {

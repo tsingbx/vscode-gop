@@ -676,7 +676,7 @@ function getPackageCompletions(
 			item.insertText = pkgName;
 			item.command = {
 				title: 'Import Package',
-				command: 'go.import.add',
+				command: 'gop.import.add',
 				arguments: [{ importPath: pkgPath, from: 'completion' }]
 			};
 			item.kind = vscode.CompletionItemKind.Module;
