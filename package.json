@@ -253,6 +253,13 @@
         "editor.codeActionsOnSave": {
           "source.organizeImports": true
         }
+      },
+      "[gop]": {
+        "editor.insertSpaces": false,
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+          "source.organizeImports": true
+        }
       }
     },
     "commands": [
