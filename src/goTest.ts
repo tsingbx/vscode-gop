@@ -212,6 +212,7 @@ async function runTestAtCursor(
 	}
 
 	const isMod = await isModSupported(editor.document.uri);
+	const isGop = editor.document.fileName.endsWith('.gop'); // goxls: isGop
 	const testConfig: TestConfig = {
 		goConfig,
 		dir: path.dirname(editor.document.fileName),
@@ -219,6 +220,7 @@ async function runTestAtCursor(
 		functions: testConfigFns,
 		isBenchmark: cmd === 'benchmark',
 		isMod,
+		isGop,
 		applyCodeCoverage: goConfig.get<boolean>('coverOnSingleTest')
 	};
 	// Remember this config as the last executed test.
@@ -313,12 +315,14 @@ export function testCurrentPackage(isBenchmark: boolean): CommandFactory {
 		}
 
 		const isMod = await isModSupported(editor.document.uri);
+		const isGop = editor.document.fileName.endsWith('.gop'); // goxls: isGop
 		const testConfig: TestConfig = {
 			goConfig,
 			dir: path.dirname(editor.document.fileName),
 			flags: getTestFlags(goConfig, args),
 			isBenchmark,
 			isMod,
+			isGop,
 			applyCodeCoverage: goConfig.get<boolean>('coverOnTestPackage')
 		};
 		// Remember this config as the last executed test.
@@ -384,6 +388,7 @@ export function testCurrentFile(isBenchmark: boolean, getConfig = getGoConfig): 
 
 		const getFunctions = isBenchmark ? getBenchmarkFunctions : getTestFunctions;
 		const isMod = await isModSupported(editor.document.uri);
+		const isGop = editor.document.fileName.endsWith('.gop'); // goxls: isGop
 
 		return editor.document
 			.save()
@@ -396,6 +401,7 @@ export function testCurrentFile(isBenchmark: boolean, getConfig = getGoConfig): 
 						functions: testFunctions?.map((sym) => sym.name),
 						isBenchmark,
 						isMod,
+						isGop,
 						applyCodeCoverage: goConfig.get<boolean>('coverOnSingleTestFile')
 					};
 					// Remember this config as the last executed test.

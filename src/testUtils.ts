@@ -87,6 +87,8 @@ export interface TestConfig {
 	 * Whether the tests are being run in a project that uses Go modules
 	 */
 	isMod?: boolean;
+	//goxls: Whether this is _test.gop
+	isGop?: boolean;
 	/**
 	 * Whether code coverage should be generated and applied.
 	 */
@@ -277,8 +279,8 @@ export async function goTest(testconfig: TestConfig): Promise<boolean> {
 	if (testconfig.outputChannel) {
 		outputChannel = testconfig.outputChannel;
 	}
-
-	const goRuntimePath = getBinPath('go');
+	// goxls: lookup gop or go
+	const goRuntimePath = getBinPath(testconfig.isGop ? 'gop' : 'go');
 	if (!goRuntimePath) {
 		vscode.window.showErrorMessage(
 			`Failed to run "go test" as the "go" binary cannot be found in either GOROOT(${getCurrentGoRoot()}) or PATH(${getEnvPath()})`
