@@ -889,7 +889,8 @@ async function passLinkifyShowMessageToGopls(cfg: LanguageServerConfig, goplsCon
 	const version = semver.parse(goplsVersion.version);
 	// The linkifyShowMessage option was added in v0.14.0-pre.1.
 	if ((version?.compare('0.13.99') ?? 1) > 0) {
-		goplsConfig['linkifyShowMessage'] = true;
+		// goxls: disable
+		//goplsConfig['linkifyShowMessage'] = true;
 	}
 	return goplsConfig;
 }
