@@ -48,7 +48,7 @@ async function _testAtCursor(
 	if (!editor) {
 		throw new NotFoundError('No editor is active.');
 	}
-	if (!editor.document.fileName.endsWith('_test.go')) {
+	if (!editor.document.fileName.endsWith('_test.go') && !editor.document.fileName.endsWith('_test.gop')) {
 		throw new NotFoundError('No tests found. Current file is not a test file.');
 	}
 
@@ -86,7 +86,7 @@ async function _subTestAtCursor(
 		vscode.window.showInformationMessage('No editor is active.');
 		return;
 	}
-	if (!editor.document.fileName.endsWith('_test.go')) {
+	if (!editor.document.fileName.endsWith('_test.go') && !editor.document.fileName.endsWith('_test.gop')) {
 		vscode.window.showInformationMessage('No tests found. Current file is not a test file.');
 		return;
 	}
@@ -377,7 +377,7 @@ export function testCurrentFile(isBenchmark: boolean, getConfig = getGoConfig): 
 			vscode.window.showInformationMessage('No editor is active.');
 			return false;
 		}
-		if (!editor.document.fileName.endsWith('_test.go')) {
+		if (!editor.document.fileName.endsWith('_test.go') && !editor.document.fileName.endsWith('_test.gop')) {
 			vscode.window.showInformationMessage('No tests found. Current file is not a test file.');
 			return false;
 		}

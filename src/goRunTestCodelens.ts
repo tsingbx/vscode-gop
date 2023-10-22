@@ -14,15 +14,16 @@ import { GoBaseCodeLensProvider } from './goBaseCodelens';
 import { GoDocumentSymbolProvider } from './goDocumentSymbols';
 import { getBenchmarkFunctions, getTestFunctions } from './testUtils';
 import { GoExtensionContext } from './context';
-import { GO_MODE } from './goMode';
+import { GO_MODE, GOP_MODE } from './goMode';
 
 export class GoRunTestCodeLensProvider extends GoBaseCodeLensProvider {
 	static activate(ctx: vscode.ExtensionContext, goCtx: GoExtensionContext) {
 		const testCodeLensProvider = new this(goCtx);
 		ctx.subscriptions.push(vscode.languages.registerCodeLensProvider(GO_MODE, testCodeLensProvider));
+		ctx.subscriptions.push(vscode.languages.registerCodeLensProvider(GOP_MODE, testCodeLensProvider));
 		ctx.subscriptions.push(
 			vscode.workspace.onDidChangeConfiguration(async (e: vscode.ConfigurationChangeEvent) => {
-				if (!e.affectsConfiguration('go')) {
+				if (!e.affectsConfiguration('go') && !e.affectsConfiguration('gop')) {
 					return;
 				}
 				const updatedGoConfig = getGoConfig();
@@ -46,7 +47,7 @@ export class GoRunTestCodeLensProvider extends GoBaseCodeLensProvider {
 		const config = getGoConfig(document.uri);
 		const codeLensConfig = config.get<{ [key: string]: any }>('enableCodeLens');
 		const codelensEnabled = codeLensConfig ? codeLensConfig['runtest'] : false;
-		if (!codelensEnabled || !document.fileName.endsWith('_test.go')) {
+		if (!codelensEnabled || (!document.fileName.endsWith('_test.go') && !document.fileName.endsWith('_test.gop'))) {
 			return [];
 		}
 
