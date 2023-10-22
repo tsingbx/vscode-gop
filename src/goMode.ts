@@ -26,3 +26,17 @@ export function isGoFile(document: vscode.TextDocument): boolean {
 	}
 	return false;
 }
+
+export const GOP_MODE: Filter = { language: 'gop', scheme: 'file' };
+export const GOP_MOD_MODE: Filter = { language: 'gop.mod', scheme: 'file' };
+
+export function isGopFile(document: vscode.TextDocument): boolean {
+	if (
+		vscode.languages.match(GOP_MODE, document) ||
+		vscode.languages.match(GOP_MOD_MODE, document)
+	) {
+		return true;
+	}
+	return false;
+}
+

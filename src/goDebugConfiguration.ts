@@ -323,10 +323,10 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 				// file path instead of the currently active file.
 				filename = debugConfiguration['program'];
 			}
-			debugConfiguration['mode'] = filename?.endsWith('_test.go') ? 'test' : 'debug';
+			debugConfiguration['mode'] = ( filename?.endsWith('_test.go') || filename?.endsWith('_test.gop')) ? 'test' : 'debug';
 		}
 
-		if (debugConfiguration['mode'] === 'test' && debugConfiguration['program'].endsWith('_test.go')) {
+		if (debugConfiguration['mode'] === 'test' && ( debugConfiguration['program'].endsWith('_test.go') || debugConfiguration['program'].endsWith('_test.gop') ) ) {
 			// Running a test file in file mode does not make sense, so change the program
 			// to the directory.
 			debugConfiguration['program'] = path.dirname(debugConfiguration['program']);
