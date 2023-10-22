@@ -212,7 +212,7 @@ async function runTestAtCursor(
 	}
 
 	const isMod = await isModSupported(editor.document.uri);
-	const isGop = editor.document.fileName.endsWith(".gop"); // goxls: isGop
+	const isGop = editor.document.fileName.endsWith('.gop'); // goxls: isGop
 	const testConfig: TestConfig = {
 		goConfig,
 		dir: path.dirname(editor.document.fileName),
@@ -315,7 +315,7 @@ export function testCurrentPackage(isBenchmark: boolean): CommandFactory {
 		}
 
 		const isMod = await isModSupported(editor.document.uri);
-		const isGop = editor.document.fileName.endsWith(".gop"); // goxls: isGop
+		const isGop = editor.document.fileName.endsWith('.gop'); // goxls: isGop
 		const testConfig: TestConfig = {
 			goConfig,
 			dir: path.dirname(editor.document.fileName),
@@ -388,7 +388,7 @@ export function testCurrentFile(isBenchmark: boolean, getConfig = getGoConfig): 
 
 		const getFunctions = isBenchmark ? getBenchmarkFunctions : getTestFunctions;
 		const isMod = await isModSupported(editor.document.uri);
-		const isGop = editor.document.fileName.endsWith(".gop"); // goxls: isGop
+		const isGop = editor.document.fileName.endsWith('.gop'); // goxls: isGop
 
 		return editor.document
 			.save()
