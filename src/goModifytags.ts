@@ -92,7 +92,7 @@ function getCommonArgs(): string[] {
 		vscode.window.showInformationMessage('No editor is active.');
 		return [];
 	}
-	if (!editor.document.fileName.endsWith('.go')) {
+	if (!editor.document.fileName.endsWith('.go') && !editor.document.fileName.endsWith('.gop')) {
 		vscode.window.showInformationMessage('Current file is not a Go file.');
 		return [];
 	}
@@ -162,7 +162,7 @@ function getTagsAndOptions(config: GoTagsConfig, commandArgs: GoTagsConfig): The
 }
 
 function runGomodifytags(args: string[]) {
-	const gomodifytags = getBinPath('gomodifytags');
+	const gomodifytags = getBinPath('gopmodifytags');
 	const editor = vscode.window.activeTextEditor;
 	if (!editor) {
 		return;
@@ -170,14 +170,14 @@ function runGomodifytags(args: string[]) {
 	const input = getFileArchive(editor.document);
 	const p = cp.execFile(gomodifytags, args, { env: toolExecutionEnvironment() }, (err, stdout, stderr) => {
 		if (err && (<any>err).code === 'ENOENT') {
-			promptForMissingTool('gomodifytags');
+			promptForMissingTool('gopmodifytags');
 			return;
 		}
 		if (err && (<any>err).code === 2 && args.indexOf('--template') > 0) {
 			vscode.window.showInformationMessage(
 				'Cannot modify tags: you might be using a' + 'version that does not support --template'
 			);
-			promptForUpdatingTool('gomodifytags');
+			promptForUpdatingTool('gopmodifytags');
 			return;
 		}
 		if (err) {

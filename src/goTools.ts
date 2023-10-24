@@ -158,7 +158,7 @@ export function getConfiguredTools(
 		'guru',
 		'gorename',
 		'gotests',
-		'gomodifytags',
+		'gopmodifytags',
 		'impl',
 		'fillstruct',
 		'goplay',
