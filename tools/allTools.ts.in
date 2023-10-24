@@ -57,14 +57,14 @@ export const allToolsInformation: { [key: string]: Tool } = {
 		isImportant: false,
 		description: 'Rename symbols'
 	},
-	'gomodifytags': {
-		name: 'gomodifytags',
-		importPath: 'github.com/fatih/gomodifytags',
-		modulePath: 'github.com/fatih/gomodifytags',
+	'gopmodifytags': {
+		name: 'gopmodifytags',
+		importPath: 'github.com/goplus/gopmodifytags',
+		modulePath: 'github.com/goplus/gopmodifytags',
 		replacedByGopls: false,
 		isImportant: false,
 		description: 'Modify tags on structs',
-		defaultVersion: 'v1.16.0'
+		defaultVersion: 'v1.0.0'
 	},
 	'goplay': {
 		name: 'goplay',
