@@ -60,6 +60,8 @@ export class GoplsDocumentSymbolProvider implements vscode.DocumentSymbolProvide
 			const start = text.indexOf(packageDecl);
 			pkgDeclRng = new vscode.Range(document.positionAt(start), document.positionAt(start + packageDecl.length));
 			pkgName = packageDecl[1];
+		} else if (document.fileName.endsWith('_test.gop')) {
+			pkgName = 'main'; // goxls: default test pkg
 		}
 		const packageSymbol = new vscode.DocumentSymbol(
 			pkgName,
