@@ -265,8 +265,14 @@ export function applyCodeCoverageToAllEditors(coverProfilePath: string, dir?: st
 				// the source code file can be non-existent or wrong (go.dev/issues/41222).
 				// There is no perfect way to guess whether the line/col in coverage profile
 				// is bogus. At least, we know that 0 or negative values are not true line/col.
+
+				// goxls: shadow main startcol = 0
+				let col = parseInt(parse[3], 10);
+				if (col < 1 && !filename.endsWith('.go')) {
+					col = 1;
+				}
 				const startLine = parseInt(parse[2], 10);
-				const startCol = parseInt(parse[3], 10);
+				const startCol = col;
 				const endLine = parseInt(parse[4], 10);
 				const endCol = parseInt(parse[5], 10);
 				if (startLine < 1 || startCol < 1 || endLine < 1 || endCol < 1) {
@@ -372,7 +378,13 @@ function setCoverageDataByFilePath(filePath: string, data: CoverageData) {
  * @param editor
  */
 export function applyCodeCoverage(editor: vscode.TextEditor | undefined) {
-	if (!editor || editor.document.languageId !== 'go' || editor.document.fileName.endsWith('_test.go')) {
+	// goxls: check go and go+
+	if (
+		!editor ||
+		(editor.document.languageId !== 'go' && editor.document.languageId !== 'gop') ||
+		editor.document.fileName.endsWith('_test.go') ||
+		editor.document.fileName.endsWith('_test.gop')
+	) {
 		return;
 	}
 	let doc = editor.document.fileName;
