@@ -475,7 +475,7 @@ function detailed(editor: vscode.TextEditor, h: Highlight, opts: vscode.Decorati
  * @param e TextDocument
  */
 export function removeCodeCoverageOnFileSave(e: vscode.TextDocument) {
-	if (e.languageId !== 'go' || !isCoverageApplied) {
+	if ((e.languageId !== 'go' && e.languageId !== 'gop') || !isCoverageApplied) {
 		return;
 	}
 
@@ -495,7 +495,11 @@ export function removeCodeCoverageOnFileSave(e: vscode.TextDocument) {
  * @param e TextDocumentChangeEvent
  */
 export function trackCodeCoverageRemovalOnFileChange(e: vscode.TextDocumentChangeEvent) {
-	if (e.document.languageId !== 'go' || !e.contentChanges.length || !isCoverageApplied) {
+	if (
+		(e.document.languageId !== 'go' && e.document.languageId !== 'gop') ||
+		!e.contentChanges.length ||
+		!isCoverageApplied
+	) {
 		return;
 	}
 
