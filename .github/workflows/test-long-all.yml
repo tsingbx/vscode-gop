@@ -29,10 +29,11 @@ jobs:
          node-version: '18'
          cache: 'npm'
 
-      - name: Setup Go
-        uses: actions/setup-go@v3
+      - name: Setup Go/Go+
+        uses: goplus/setup-goplus@v1.1.0
         with:
          go-version: ${{ matrix.go }}
+         gop-version: "main"
          check-latest: true
          cache: true
 
