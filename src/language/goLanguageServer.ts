@@ -1027,7 +1027,9 @@ export function getLanguageServerToolPath(): string | undefined {
 		return;
 	}
 	// Get the path to gopls (getBinPath checks for alternate tools).
-	const goplsBinaryPath = getBinPath('gopls');
+	// goxls: use gopls.proxy for debug
+	// const goplsBinaryPath = getBinPath('gopls');
+	const goplsBinaryPath = getBinPath('gopls.proxy');
 	if (path.isAbsolute(goplsBinaryPath)) {
 		return goplsBinaryPath;
 	}

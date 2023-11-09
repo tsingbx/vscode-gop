@@ -202,9 +202,9 @@ export const allToolsInformation: { [key: string]: Tool } = {
 		defaultVersion: 'v1.3.2'
 	},
 	'gopls': {
-		name: 'gopls',
-		importPath: 'github.com/goplus/tools/goxls', // goxls: Go+
-		modulePath: 'github.com/goplus/tools/goxls',
+		name: 'goxls', // goxls: Go+
+		importPath: 'github.com/goplus/goxls',
+		modulePath: 'github.com/goplus/goxls',
 		replacedByGopls: false, // lol
 		isImportant: true,
 		description: 'Go+ Language Server',
