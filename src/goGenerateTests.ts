@@ -192,6 +192,9 @@ function generateTests(
 		const stdout = cp.execFileSync(gopcmd, gopargs, { env: toolExecutionEnvironment() });
 		outputChannel.appendLine('generateGocode Tests: ' + gopcmd + ' ' + gopargs.join(' ') + ' ' +  stdout );
 		let gofile_autogen = path.dirname(conf.dir) + "/gop_autogen.go";
+		if(fs.existsSync(gofile_autogen) == false){
+			return reject('Cannot gop go generate test due to errors');
+		}
 
 
 		let gofile = path.dirname(conf.dir) +"/"+path.basename(conf.dir).replace(path.extname(conf.dir),'')+".go"
