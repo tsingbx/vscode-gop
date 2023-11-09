@@ -145,6 +145,10 @@
         "aliases": [
           "Goplus"
         ],
+        "icon": {
+          "light": "./media/goplus-file-icon-black.svg",
+          "dark": "./media/goplus-file-icon-white.svg"
+        },
         "configuration": "./languages/gop.language-configuration.json"
       },
       {
