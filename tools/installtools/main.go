@@ -41,7 +41,7 @@ var tools = []struct {
 	// TODO: auto-generate based on allTools.ts.in.
 	// goxls: use goxls instead of gopls
 	// {"golang.org/x/tools/gopls", "", true, nil},
-	{"github.com/goplus/goxls", "", false, []finalVersion{{gopVer, "v1.13.2"}}},
+	{"github.com/goplus/goxls", "", false, []finalVersion{{gopVer, "v0.13.2"}}},
 	{"github.com/acroca/go-symbols", "", false, nil},
 	{"github.com/cweill/gotests/gotests", "", false, nil},
 	{"github.com/davidrjenni/reftools/cmd/fillstruct", "", false, nil},
@@ -158,7 +158,7 @@ func installTools(binDir string, goMinorVersion int) error {
 		cmd := exec.Command(goCmd, install, path)
 		cmd.Env = env
 		cmd.Dir = dir
-		fmt.Println("go", installCmd, path)
+		fmt.Println(goCmd, install, path)
 		if out, err := cmd.CombinedOutput(); err != nil {
 			return fmt.Errorf("installing %v: %s\n%v", path, out, err)
 		}
