@@ -153,7 +153,7 @@ func installTools(binDir string, goMinorVersion int) error {
 		path := tool.path + "@" + ver
 		cmd := exec.Command("go", installCmd, path)
 		if useGop {
-			cmd = exec.Command("gop", "install", "-debug", path)
+			cmd = exec.Command("gop", "install", path)
 		}
 		cmd.Env = env
 		cmd.Dir = dir
