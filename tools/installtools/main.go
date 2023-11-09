@@ -16,6 +16,10 @@ import (
 	"strings"
 )
 
+const (
+	gopVer = 0 // use `gop` instead of `go`
+)
+
 // finalVersion encodes the fact that the specified tool version
 // is the known last version that can be buildable with goMinorVersion.
 type finalVersion struct {
@@ -35,7 +39,9 @@ var tools = []struct {
 	versions []finalVersion
 }{
 	// TODO: auto-generate based on allTools.ts.in.
-	{"golang.org/x/tools/gopls", "", true, nil},
+	// goxls: use goxls instead of gopls
+	// {"golang.org/x/tools/gopls", "", true, nil},
+	{"github.com/goplus/goxls", "", false, []finalVersion{{gopVer, "v1.13.2"}}},
 	{"github.com/acroca/go-symbols", "", false, nil},
 	{"github.com/cweill/gotests/gotests", "", false, nil},
 	{"github.com/davidrjenni/reftools/cmd/fillstruct", "", false, nil},
@@ -55,13 +61,16 @@ var tools = []struct {
 
 // pickVersion returns the version to install based on the supported
 // version list.
-func pickVersion(goMinorVersion int, versions []finalVersion, defaultVersion string) string {
+func pickVersion(goMinorVersion int, versions []finalVersion, defaultVersion string) (string, bool) {
 	for _, v := range versions {
+		if v.goMinorVersion == gopVer {
+			return v.version, true // use gop
+		}
 		if goMinorVersion <= v.goMinorVersion {
-			return v.version
+			return v.version, false
 		}
 	}
-	return defaultVersion
+	return defaultVersion, false
 }
 
 func main() {
@@ -140,9 +149,13 @@ func installTools(binDir string, goMinorVersion int) error {
 	}
 	env := append(os.Environ(), "GO111MODULE=on")
 	for _, tool := range tools {
-		ver := pickVersion(goMinorVersion, tool.versions, pickLatest(tool.path, tool.preferPreview))
+		ver, useGop := pickVersion(goMinorVersion, tool.versions, pickLatest(tool.path, tool.preferPreview))
 		path := tool.path + "@" + ver
-		cmd := exec.Command("go", installCmd, path)
+		goCmd, install := "go", installCmd
+		if useGop {
+			goCmd, install = "gop", "install"
+		}
+		cmd := exec.Command(goCmd, install, path)
 		cmd.Env = env
 		cmd.Dir = dir
 		fmt.Println("go", installCmd, path)
