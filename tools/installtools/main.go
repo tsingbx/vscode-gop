@@ -151,14 +151,13 @@ func installTools(binDir string, goMinorVersion int) error {
 	for _, tool := range tools {
 		ver, useGop := pickVersion(goMinorVersion, tool.versions, pickLatest(tool.path, tool.preferPreview))
 		path := tool.path + "@" + ver
-		goCmd, install := "go", installCmd
+		cmd := exec.Command("go", installCmd, path)
 		if useGop {
-			goCmd, install = "gop", "install"
+			cmd = exec.Command("gop", "install", "-debug", path)
 		}
-		cmd := exec.Command(goCmd, install, path)
 		cmd.Env = env
 		cmd.Dir = dir
-		fmt.Println(goCmd, install, path)
+		fmt.Println(cmd)
 		if out, err := cmd.CombinedOutput(); err != nil {
 			return fmt.Errorf("installing %v: %s\n%v", path, out, err)
 		}
