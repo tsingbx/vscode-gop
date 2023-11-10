@@ -196,7 +196,7 @@ export async function installTools(
 		const failed = await installToolWithGo(tool, goForInstall, envForTools);
 		if (failed) {
 			failures.push({ tool, reason: failed });
-		} else if (tool.name === 'gopls') {
+		} else if (tool.name === 'goxls' || tool.name === 'gopls') {
 			// Restart the language server if a new binary has been installed.
 			vscode.commands.executeCommand('gop.languageserver.restart', RestartReason.INSTALLATION);
 		}
@@ -416,7 +416,11 @@ export async function promptForMissingTool(toolName: string) {
 		// Offer the option to install all tools.
 		installOptions.push('Install All');
 	}
-	const cmd = `go install -v ${getImportPathWithVersion(tool, undefined, goVersion)}`;
+	let goCmd = 'go';
+	if (tool.name == 'goxls') {
+		goCmd = 'gop';
+	}
+	const cmd = `${goCmd} install -v ${getImportPathWithVersion(tool, undefined, goVersion)}`;
 	const selected = await vscode.window.showErrorMessage(
 		`The "${tool.name}" command is not available. Run "${cmd}" to install.`,
 		...installOptions
@@ -466,7 +470,7 @@ export async function promptForUpdatingTool(
 	}
 
 	let choices: string[] = ['Update'];
-	if (toolName === 'gopls') {
+	if (toolName === 'goxls' || toolName === 'gopls') {
 		choices = ['Always Update', 'Update Once', 'Release Notes'];
 	}
 	if (toolName === 'dlv') {
