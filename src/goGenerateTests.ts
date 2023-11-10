@@ -19,6 +19,7 @@ import { outputChannel } from './goStatus';
 import { getBinPath, resolvePath } from './util';
 import { CommandFactory } from './commands';
 import { GoExtensionContext } from './context';
+import fs = require('fs');
 
 const generatedWord = 'Generated ';
 
@@ -31,8 +32,8 @@ function checkActiveEditor(): vscode.TextEditor | undefined {
 		vscode.window.showInformationMessage('Cannot generate unit tests. No editor selected.');
 		return;
 	}
-	if (!editor.document.fileName.endsWith('.go')) {
-		vscode.window.showInformationMessage('Cannot generate unit tests. File in the editor is not a Go file.');
+	if (!editor.document.fileName.endsWith('.go') && !editor.document.fileName.endsWith('.gop')) {
+		vscode.window.showInformationMessage('Cannot generate unit tests. File in the editor is not a Go or Gop file.');
 		return;
 	}
 	if (editor.document.isDirty) {
@@ -52,16 +53,25 @@ export const toggleTestFile: CommandFactory = () => () => {
 		return;
 	}
 	const currentFilePath = editor.document.fileName;
-	if (!currentFilePath.endsWith('.go')) {
+	if (!currentFilePath.endsWith('.go') && !currentFilePath.endsWith('.gop')) {
 		vscode.window.showInformationMessage('Cannot toggle test file. File in the editor is not a Go file.');
 		return;
 	}
 	let targetFilePath = '';
-	if (currentFilePath.endsWith('_test.go')) {
-		targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('_test.go')) + '.go';
+	if (currentFilePath.endsWith('.go')) {
+		if (currentFilePath.endsWith('_test.go')) {
+			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('_test.go')) + '.go';
+		} else {
+			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('.go')) + '_test.go';
+		}
 	} else {
-		targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('.go')) + '_test.go';
+		if (currentFilePath.endsWith('_test.gop')) {
+			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('_test.gop')) + '.gop';
+		} else {
+			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('.gop')) + '_test.gop';
+		}
 	}
+
 	for (const doc of vscode.window.visibleTextEditors) {
 		if (doc.document.fileName === targetFilePath) {
 			vscode.commands.executeCommand('vscode.open', vscode.Uri.file(targetFilePath), doc.viewColumn);
@@ -81,7 +91,7 @@ export const generateTestCurrentPackage: CommandFactory = (ctx, goCtx) => () => 
 		goCtx,
 		{
 			dir: path.dirname(editor.document.uri.fsPath),
-			isTestFile: editor.document.fileName.endsWith('_test.go')
+			isTestFile: editor.document.fileName.endsWith('_test.go') || editor.document.fileName.endsWith('_test.gop')
 		},
 		getGoConfig(editor.document.uri)
 	);
@@ -98,7 +108,7 @@ export const generateTestCurrentFile: CommandFactory = (ctx, goCtx) => () => {
 		goCtx,
 		{
 			dir: editor.document.uri.fsPath,
-			isTestFile: editor.document.fileName.endsWith('_test.go')
+			isTestFile: editor.document.fileName.endsWith('_test.go') || editor.document.fileName.endsWith('_test.gop')
 		},
 		getGoConfig(editor.document.uri)
 	);
@@ -133,7 +143,7 @@ export const generateTestCurrentFunction: CommandFactory = (ctx, goCtx) => async
 		{
 			dir: editor.document.uri.fsPath,
 			func: funcName,
-			isTestFile: editor.document.fileName.endsWith('_test.go')
+			isTestFile: editor.document.fileName.endsWith('_test.go') || editor.document.fileName.endsWith('_test.gop')
 		},
 		getGoConfig(editor.document.uri)
 	);
@@ -165,6 +175,26 @@ function generateTests(
 	goConfig: vscode.WorkspaceConfiguration
 ): Promise<boolean> {
 	return new Promise<boolean>((resolve, reject) => {
+		let gofile = conf.dir;
+		let isdeletegofile = false;
+		if (conf.dir.endsWith('.gop')) {
+			const gopcmd = getBinPath('gop');
+			const gopargs = ['go', path.dirname(conf.dir)];
+			const stdout = cp.execFileSync(gopcmd, gopargs, { env: toolExecutionEnvironment() });
+			console.log('generateGocode Tests: ' + gopcmd + ' ' + gopargs.join(' ') + ' ' + stdout.toString());
+
+			outputChannel.appendLine(
+				'generateGocode Tests: ' + gopcmd + ' ' + gopargs.join(' ') + ' ' + stdout.toString()
+			);
+			const gofile_autogen = path.dirname(conf.dir) + '/gop_autogen.go';
+			if (fs.existsSync(gofile_autogen) == false) {
+				return reject('Cannot gop go generate test due to errors');
+			}
+
+			gofile = path.dirname(conf.dir) + '/' + path.basename(conf.dir).replace(path.extname(conf.dir), '') + '.go';
+			fs.renameSync(gofile_autogen, gofile);
+			isdeletegofile = true;
+		}
 		const cmd = getBinPath('gotests');
 		let args = ['-w'];
 		const goGenerateTestsFlags: string[] = goConfig['generateTestsFlags'] || [];
@@ -188,9 +218,9 @@ function generateTests(
 		}
 
 		if (conf.func) {
-			args = args.concat(['-only', `^${conf.func}$`, conf.dir]);
+			args = args.concat(['-only', `^${conf.func}$`, gofile]);
 		} else {
-			args = args.concat(['-all', conf.dir]);
+			args = args.concat(['-all', gofile]);
 		}
 
 		cp.execFile(cmd, args, { env: toolExecutionEnvironment() }, (err, stdout, stderr) => {
@@ -229,6 +259,9 @@ function generateTests(
 
 				if (testsGenerated && !conf.isTestFile) {
 					toggleTestFile(ctx, goCtx)();
+				}
+				if (isdeletegofile) {
+					fs.unlinkSync(gofile);
 				}
 
 				return resolve(true);
