@@ -1075,7 +1075,10 @@ export async function shouldUpdateLanguageServer(
 		return null;
 	}
 	// Only support updating gopls/goxls for now.
-	if ((tool.name !== 'gopls' && tool.name !== 'goxls') || (!mustCheck && (cfg.checkForUpdates === 'off' || extensionInfo.isInCloudIDE))) {
+	if (
+		(tool.name !== 'gopls' && tool.name !== 'goxls') ||
+		(!mustCheck && (cfg.checkForUpdates === 'off' || extensionInfo.isInCloudIDE))
+	) {
 		return null;
 	}
 	if (!cfg.enabled) {
@@ -1139,7 +1142,7 @@ export async function shouldUpdateLanguageServer(
 
 export const conf = {
 	lsName: 'goxls'
-}
+};
 
 /**
  * suggestUpdateGopls will make sure the user is using the latest version of `gopls`,

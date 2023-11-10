@@ -416,9 +416,9 @@ export async function promptForMissingTool(toolName: string) {
 		// Offer the option to install all tools.
 		installOptions.push('Install All');
 	}
-	let goCmd = 'go'
+	let goCmd = 'go';
 	if (tool.name == 'goxls') {
-		goCmd = 'gop'
+		goCmd = 'gop';
 	}
 	const cmd = `${goCmd} install -v ${getImportPathWithVersion(tool, undefined, goVersion)}`;
 	const selected = await vscode.window.showErrorMessage(
