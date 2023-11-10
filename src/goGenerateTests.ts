@@ -185,23 +185,26 @@ function generateTests(
 
 	return new Promise<boolean>((resolve, reject) => {
 
+		let gofile = conf.dir;
+		
+		if(conf.dir.endsWith('.gop')){
+			const gopcmd = getBinPath('gop');
+			let gopargs = ['go', path.dirname(conf.dir)];
+			const stdout = cp.execFileSync(gopcmd, gopargs, { env: toolExecutionEnvironment() });
+			console.log('generateGocode Tests: ' + gopcmd + ' ' + gopargs.join(' ') + ' ' +  stdout.toString());
+
+			outputChannel.appendLine('generateGocode Tests: ' + gopcmd + ' ' + gopargs.join(' ') + ' ' +  stdout.toString() );
+			let gofile_autogen = path.dirname(conf.dir) + "/gop_autogen.go";
+			if(fs.existsSync(gofile_autogen) == false){
+				return reject('Cannot gop go generate test due to errors');
+			}
 
 
-		const gopcmd = getBinPath('gop');
-		let gopargs = ['go', path.dirname(conf.dir)];
-		const stdout = cp.execFileSync(gopcmd, gopargs, { env: toolExecutionEnvironment() });
-		console.log('generateGocode Tests: ' + gopcmd + ' ' + gopargs.join(' ') + ' ' +  stdout.toString());
+			gofile = path.dirname(conf.dir) +"/"+path.basename(conf.dir).replace(path.extname(conf.dir),'')+".go"
+			fs.moveSync(gofile_autogen, gofile)
 
-		outputChannel.appendLine('generateGocode Tests: ' + gopcmd + ' ' + gopargs.join(' ') + ' ' +  stdout.toString() );
-		let gofile_autogen = path.dirname(conf.dir) + "/gop_autogen.go";
-		if(fs.existsSync(gofile_autogen) == false){
-			return reject('Cannot gop go generate test due to errors');
 		}
-
-
-		let gofile = path.dirname(conf.dir) +"/"+path.basename(conf.dir).replace(path.extname(conf.dir),'')+".go"
-		fs.moveSync(gofile_autogen, gofile)
-
+		
 
 
 		const cmd =  getBinPath('gotests');
