@@ -7,6 +7,8 @@
 import glob from 'glob';
 import Mocha from 'mocha';
 import * as path from 'path';
+import { conf } from '../../src/language/goLanguageServer';
+
 export function run(): Promise<void> {
 	// Create the mocha test
 	const mocha = new Mocha({
@@ -20,6 +22,7 @@ export function run(): Promise<void> {
 	const testsRoot = path.resolve(__dirname, '..');
 
 	return new Promise((c, e) => {
+		conf.lsName = 'gopls'
 		glob('gopls/**.test.js', { cwd: testsRoot }, (err, files) => {
 			if (err) {
 				return e(err);

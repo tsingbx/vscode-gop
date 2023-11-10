@@ -11,6 +11,7 @@ import { GoExtensionContext } from '../context';
 import { outputChannel, updateLanguageServerIconGoStatusBar } from '../goStatus';
 import { getTool } from '../goTools';
 import {
+	conf,
 	buildLanguageClient,
 	buildLanguageClientOption,
 	buildLanguageServerConfig,
@@ -75,7 +76,7 @@ export const startLanguageServer: CommandFactory = (ctx, goCtx) => {
 
 			// If the language server is gopls, we enable a few additional features.
 			if (cfg.serverName === 'gopls') {
-				const tool = getTool(cfg.serverName);
+				const tool = getTool(conf.lsName);
 				if (tool) {
 					// If the language server is turned on because it is enabled by default,
 					// make sure that the user is using a new enough version.

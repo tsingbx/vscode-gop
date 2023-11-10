@@ -170,7 +170,7 @@ export function scheduleGoplsSuggestions(goCtx: GoExtensionContext) {
 	};
 	*/
 	const installGopls = async (cfg: LanguageServerConfig) => {
-		const tool = getTool('gopls');
+		const tool = getTool(conf.lsName);
 		const versionToUpdate = await shouldUpdateLanguageServer(tool, cfg);
 		if (!versionToUpdate) {
 			return;
@@ -184,7 +184,7 @@ export function scheduleGoplsSuggestions(goCtx: GoExtensionContext) {
 				const toolVersion = { ...tool, version: versionToUpdate }; // ToolWithVersion
 				await installTools([toolVersion], goVersion, true);
 			} else {
-				console.log(`gopls ${versionToUpdate} is too new, try to update later`);
+				console.log(`goxls ${versionToUpdate} is too new, try to update later`);
 			}
 		} else {
 			promptForUpdatingTool(tool.name, versionToUpdate);
@@ -1029,7 +1029,7 @@ export function getLanguageServerToolPath(): string | undefined {
 	// Get the path to gopls (getBinPath checks for alternate tools).
 	// goxls: use goxls instead of gopls
 	// const goplsBinaryPath = getBinPath('gopls');
-	const goplsBinaryPath = getBinPath('goxls');
+	const goplsBinaryPath = getBinPath(conf.lsName);
 	if (path.isAbsolute(goplsBinaryPath)) {
 		return goplsBinaryPath;
 	}
@@ -1074,8 +1074,8 @@ export async function shouldUpdateLanguageServer(
 	if (!cfg) {
 		return null;
 	}
-	// Only support updating gopls for now.
-	if (tool.name !== 'gopls' || (!mustCheck && (cfg.checkForUpdates === 'off' || extensionInfo.isInCloudIDE))) {
+	// Only support updating gopls/goxls for now.
+	if ((tool.name !== 'gopls' && tool.name !== 'goxls') || (!mustCheck && (cfg.checkForUpdates === 'off' || extensionInfo.isInCloudIDE))) {
 		return null;
 	}
 	if (!cfg.enabled) {
@@ -1137,6 +1137,10 @@ export async function shouldUpdateLanguageServer(
 	return semver.lt(usersVersionSemver!, latestVersion!) ? latestVersion : null;
 }
 
+export const conf = {
+	lsName: 'goxls'
+}
+
 /**
  * suggestUpdateGopls will make sure the user is using the latest version of `gopls`,
  * when go.useLanguageServer is changed to true by default.
@@ -1165,7 +1169,7 @@ export async function suggestUpdateGopls(tool: Tool, cfg: LanguageServerConfig):
 	}
 
 	const updateMsg =
-		"'gopls' is now enabled by default and you are using an old version. Please [update 'gopls'](https://github.com/golang/tools/blob/master/gopls/README.md#installation) for the best experience.";
+		"'goxls' is now enabled by default and you are using an old version. Please [update 'goxls'](https://github.com/goplus/goxls/blob/main/README.md#installation) for the best experience.";
 	promptForUpdatingTool(tool.name, latestVersion, false, updateMsg);
 }
 
@@ -1364,7 +1368,7 @@ export async function suggestGoplsIssueReport(
 
 	// The user may have an outdated version of gopls, in which case we should
 	// just prompt them to update, not file an issue.
-	const tool = getTool('gopls');
+	const tool = getTool(conf.lsName);
 	if (tool) {
 		const versionToUpdate = await shouldUpdateLanguageServer(tool, goCtx.latestConfig, true);
 		if (versionToUpdate) {

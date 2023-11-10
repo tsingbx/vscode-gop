@@ -201,7 +201,7 @@ export const allToolsInformation: { [key: string]: Tool } = {
 		description: 'Linter',
 		defaultVersion: 'v1.3.2'
 	},
-	'gopls': {
+	'goxls': {
 		name: 'goxls', // goxls: Go+
 		importPath: 'github.com/goplus/goxls',
 		modulePath: 'github.com/goplus/goxls',
@@ -210,10 +210,24 @@ export const allToolsInformation: { [key: string]: Tool } = {
 		description: 'Go+ Language Server',
 		usePrereleaseInPreviewMode: true,
 		minimumGoVersion: semver.coerce('1.18'),
-		latestVersion: semver.parse('v0.1.0'),
-		latestVersionTimestamp: moment('2023-10-11', 'YYYY-MM-DD'),
-		latestPrereleaseVersion: semver.parse('v0.1.0'),
-		latestPrereleaseVersionTimestamp: moment('2023-10-11', 'YYYY-MM-DD')
+		latestVersion: semver.parse('v0.13.2'),
+		latestVersionTimestamp: moment('2023-11-10', 'YYYY-MM-DD'),
+		latestPrereleaseVersion: semver.parse('v0.13.2'),
+		latestPrereleaseVersionTimestamp: moment('2023-11-10', 'YYYY-MM-DD')
+	},
+	'gopls': {
+		name: 'gopls',
+		importPath: 'golang.org/x/tools/gopls',
+		modulePath: 'golang.org/x/tools/gopls',
+		replacedByGopls: false, // lol
+		isImportant: true,
+		description: 'Language Server from Google',
+		usePrereleaseInPreviewMode: true,
+		minimumGoVersion: semver.coerce('1.18'),
+		latestVersion: semver.parse('v0.14.1'),
+		latestVersionTimestamp: moment('2023-10-26', 'YYYY-MM-DD'),
+		latestPrereleaseVersion: semver.parse('v0.14.1'),
+		latestPrereleaseVersionTimestamp: moment('2023-10-26', 'YYYY-MM-DD')
 	},
 	'dlv': {
 		name: 'dlv',
