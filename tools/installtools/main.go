@@ -39,8 +39,7 @@ var tools = []struct {
 	versions []finalVersion
 }{
 	// TODO: auto-generate based on allTools.ts.in.
-	// goxls: use goxls instead of gopls
-	// {"golang.org/x/tools/gopls", "", true, nil},
+	{"golang.org/x/tools/gopls", "", true, nil},
 	{"github.com/goplus/goxls", "", false, []finalVersion{{gopVer, "v0.13.2"}}},
 	{"github.com/acroca/go-symbols", "", false, nil},
 	{"github.com/cweill/gotests/gotests", "", false, nil},
