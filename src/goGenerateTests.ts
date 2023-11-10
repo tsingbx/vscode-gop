@@ -186,7 +186,7 @@ function generateTests(
 	return new Promise<boolean>((resolve, reject) => {
 
 		let gofile = conf.dir;
-		
+		var isdeletegofile = false;
 		if(conf.dir.endsWith('.gop')){
 			const gopcmd = getBinPath('gop');
 			let gopargs = ['go', path.dirname(conf.dir)];
@@ -202,7 +202,7 @@ function generateTests(
 
 			gofile = path.dirname(conf.dir) +"/"+path.basename(conf.dir).replace(path.extname(conf.dir),'')+".go"
 			fs.moveSync(gofile_autogen, gofile)
-
+			isdeletegofile = true;
 		}
 		
 
@@ -272,8 +272,10 @@ function generateTests(
 				if (testsGenerated && !conf.isTestFile) {
 					toggleTestFile(ctx, goCtx)();
 				}
-
-				fs.removeSync(gofile);
+				if(isdeletegofile){
+					fs.removeSync(gofile);
+				}
+				
 
 				return resolve(true);
 			} catch (e) {
