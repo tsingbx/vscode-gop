@@ -210,9 +210,9 @@ export const allToolsInformation: { [key: string]: Tool } = {
 		description: 'Go+ Language Server',
 		usePrereleaseInPreviewMode: true,
 		minimumGoVersion: semver.coerce('1.18'),
-		latestVersion: semver.parse('v0.13.2'),
+		latestVersion: semver.parse('v0.13.3'),
 		latestVersionTimestamp: moment('2023-11-10', 'YYYY-MM-DD'),
-		latestPrereleaseVersion: semver.parse('v0.13.2'),
+		latestPrereleaseVersion: semver.parse('v0.13.3'),
 		latestPrereleaseVersionTimestamp: moment('2023-11-10', 'YYYY-MM-DD')
 	},
 	'gopls': {
