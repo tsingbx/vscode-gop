@@ -558,7 +558,7 @@ export async function buildLanguageClient(
 						}
 						if (command === 'gopls.run_gop_command') {
 							await vscode.workspace.saveAll(false);
-							if (runGopCommand(vscode.Uri.parse(args[0].URI).fsPath,args[0].Command,args[0].Args)) {
+							if (runGopCommand(vscode.Uri.parse(args[0].URI).fsPath, args[0].Command, args[0].Args)) {
 								return;
 							}
 						}
