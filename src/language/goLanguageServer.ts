@@ -62,6 +62,7 @@ import { URI } from 'vscode-uri';
 import { VulncheckReport, writeVulns } from '../goVulncheck';
 import { createHash } from 'crypto';
 import { GoExtensionContext } from '../context';
+import { runGopCommand } from '../gopCommand';
 
 export interface LanguageServerConfig {
 	serverName: string;
@@ -554,6 +555,12 @@ export async function buildLanguageClient(
 						}
 						if (command === 'gopls.tidy') {
 							await vscode.workspace.saveAll(false);
+						}
+						if (command === 'gopls.run_gop_command') {
+							await vscode.workspace.saveAll(false);
+							if (runGopCommand(vscode.Uri.parse(args[0].URI).fsPath,args[0].Command,args[0].Args)) {
+								return;
+							}
 						}
 						const res = await next(command, args);
 						if (command === 'gopls.run_govulncheck') {
