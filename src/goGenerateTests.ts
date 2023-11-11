@@ -60,15 +60,35 @@ export const toggleTestFile: CommandFactory = () => () => {
 	let targetFilePath = '';
 	if (currentFilePath.endsWith('.go')) {
 		if (currentFilePath.endsWith('_test.go')) {
+			//xx_test.go => xx.go
+			//xx_test.go => xx.gop
 			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('_test.go')) + '.go';
+			if (!fs.existsSync(targetFilePath)) {
+				targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('_test.go')) + '.gop';
+			}
 		} else {
+			//xx.go => xx_test.go
+			//xx.go => xx_test.gop
 			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('.go')) + '_test.go';
+			if (!fs.existsSync(targetFilePath)) {
+				targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('.go')) + '_test.gop';
+			}
 		}
 	} else {
 		if (currentFilePath.endsWith('_test.gop')) {
-			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('_test.gop')) + '.gop';
+			//xx_test.gop => xx.go
+			//xx_test.gop => xx.gop
+			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('_test.gop')) + '.go';
+			if (!fs.existsSync(targetFilePath)) {
+				targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('_test.gop')) + '.gop';
+			}
 		} else {
-			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('.gop')) + '_test.gop';
+			//xx.gop => xx_test.go
+			//xx.gop => xx_test.gop
+			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('.gop')) + '_test.go';
+			if (!fs.existsSync(targetFilePath)) {
+				targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('.gop')) + '.gop';
+			}
 		}
 	}
 
