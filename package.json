@@ -2249,6 +2249,11 @@
                   "type": "boolean",
                   "markdownDescription": "Runs `go mod vendor` for a module.",
                   "default": true
+                },
+                "run_gop_command": {
+                  "type": "boolean",
+                  "markdownDescription": "Runs `gop command` for a project.",
+                  "default": true
                 }
               }
             },
