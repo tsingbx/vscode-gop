@@ -60,15 +60,18 @@ export const toggleTestFile: CommandFactory = () => () => {
 	let targetFilePath = '';
 	if (currentFilePath.endsWith('.go')) {
 		if (currentFilePath.endsWith('_test.go')) {
-			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('_test.go')) + '.go';
+			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('_test.go')) + '.gop';
+			if (!fs.existsSync(targetFilePath)) {
+				targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('_test.go')) + '.go';
+			}
 		} else {
 			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('.go')) + '_test.go';
 		}
 	} else {
-		if (currentFilePath.endsWith('_test.gop')) {
-			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('_test.gop')) + '.gop';
+		if (currentFilePath.endsWith('_test.go')) {
+			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('_test.go')) + '.gop';
 		} else {
-			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('.gop')) + '_test.gop';
+			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('.gop')) + '_test.go';
 		}
 	}
 
