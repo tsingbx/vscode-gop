@@ -1,9 +1,9 @@
 {
-  "name": "goplus",
+  "name": "gop",
   "displayName": "Go+",
   "version": "0.1.0-dev",
   "preview": true,
-  "publisher": "GoPlus Team",
+  "publisher": "goplus",
   "description": "Rich Go/Go+ language support for Visual Studio Code",
   "author": {
     "name": "GoPlus Team"
