@@ -5,3 +5,4 @@ node_modules/
 .user-data-dir-test/
 .DS_Store
 *.vsix
+goplus-0.1.0-dev/

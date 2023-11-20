@@ -139,7 +139,7 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<ExtensionA
 
 	// goxls: conflicts fix
 	registerCommand('gop.gopath', commands.getCurrentGoPath);
-	registerCommand('gop.goroot', commands.getCurrentGoRoot);
+	registerCommand('gop.goproot', commands.getCurrentGoRoot);
 	registerCommand('gop.locate.tools', commands.getConfiguredGoTools);
 	registerCommand('gop.add.tags', commands.addTags);
 	registerCommand('gop.remove.tags', commands.removeTags);
