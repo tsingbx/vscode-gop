@@ -273,6 +273,11 @@
         "description": "See the currently set GOPROOT."
       },
       {
+        "command": "gop.gopcurrent",
+        "title": "Go+: Current GOPPATH",
+        "description": "See the currently set GOPPATH."
+      },
+      {
         "command": "gop.locate.tools",
         "title": "Go+: Locate Configured Go Tools",
         "description": "List all the Go+ tools being used by this extension along with their locations."
