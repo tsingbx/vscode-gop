@@ -268,12 +268,12 @@
     },
     "commands": [
       {
-        "command": "gop.goproot",
+        "command": "gop.goroot",
         "title": "Go+: Current GOROOT",
         "description": "See the currently set GOROOT."
       },
       {
-        "command": "gop.gopcurrent",
+        "command": "gop.gopath",
         "title": "Go+: Current GOPATH",
         "description": "See the currently set GOPATH."
       },
