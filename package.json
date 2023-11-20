@@ -268,9 +268,14 @@
     },
     "commands": [
       {
-        "command": "gop.goproot",
-        "title": "Go+: Current GOPROOT",
-        "description": "See the currently set GOPROOT."
+        "command": "gop.goroot",
+        "title": "Go+: Current GOROOT",
+        "description": "See the currently set GOROOT."
+      },
+      {
+        "command": "gop.gopath",
+        "title": "Go+: Current GOPATH",
+        "description": "See the currently set GOPATH."
       },
       {
         "command": "gop.locate.tools",
