@@ -509,6 +509,10 @@ export function substituteEnv(input: string): string {
 	});
 }
 
+export function getCurrentGopRoot(workspaceUri?: vscode.Uri): string {
+	return String(process.env.GOPROOT);
+}
+
 let currentGopath = '';
 export function getCurrentGoPath(workspaceUri?: vscode.Uri): string {
 	const activeEditorUri = vscode.window.activeTextEditor?.document.uri;

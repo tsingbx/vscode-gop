@@ -11,6 +11,7 @@ export { applyCoverprofile } from './applyCoverprofile';
 export { getConfiguredGoTools } from './getConfiguredGoTools';
 export { getCurrentGoPath } from './getCurrentGoPath';
 export { getCurrentGoRoot } from './getCurrentGoRoot';
+export { getCurrentGopRoot } from './getCurrentGopRoot';
 export { extractFunction, extractVariable } from '../goDoctor';
 export { runFillStruct } from '../goFillStruct';
 export { implCursor } from '../goImpl';
