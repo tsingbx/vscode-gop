@@ -510,7 +510,7 @@ export function substituteEnv(input: string): string {
 }
 
 export function getCurrentGopRoot(workspaceUri?: vscode.Uri): string {
-	const buf = cp.execSync("gop env GOPROOT");
+	const buf = cp.execSync('gop env GOPROOT');
 	return buf.toString();
 }
 

@@ -11,8 +11,8 @@ import { getCurrentGopRoot as utilGetCurrentGopRoot } from '../util';
 export const getCurrentGopRoot: CommandFactory = () => {
 	return () => {
 		const goRoot = utilGetCurrentGopRoot();
-		let msg = `${goRoot} is the current GOPROOT.`;
+		const msg = `${goRoot} is the current GOPROOT.`;
 		vscode.window.showInformationMessage(msg);
 		return goRoot;
 	};
-}
+};
