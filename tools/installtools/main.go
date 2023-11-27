@@ -40,7 +40,7 @@ var tools = []struct {
 }{
 	// TODO: auto-generate based on allTools.ts.in.
 	{"golang.org/x/tools/gopls", "", true, nil},
-	{"github.com/goplus/goxls", "", false, []finalVersion{{gopVer, "v0.13.3"}}},
+	{"github.com/goplus/goxls", "", false, []finalVersion{{gopVer, "v0.13.5"}}},
 	{"github.com/acroca/go-symbols", "", false, nil},
 	{"github.com/cweill/gotests/gotests", "", false, nil},
 	{"github.com/davidrjenni/reftools/cmd/fillstruct", "", false, nil},
