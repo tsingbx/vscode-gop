@@ -2108,6 +2108,11 @@
               "default": "gopls",
               "description": "Alternate tool to use instead of the gopls binary or alternate path to use for the gopls binary."
             },
+            "goxls": {
+              "type": "string",
+              "default": "goxls",
+              "description": "Alternate tool to use instead of the goxls binary or alternate path to use for the goxls binary."
+            },
             "dlv": {
               "type": "string",
               "default": "dlv",

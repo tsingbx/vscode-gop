@@ -15,6 +15,7 @@ import { getFormatTool, usingCustomFormatTool } from './language/legacy/goFormat
 import { goLiveErrorsEnabled } from './language/legacy/goLiveErrors';
 import { allToolsInformation } from './goToolsInformation';
 import { getBinPath, GoVersion } from './util';
+import { conf } from './language/goLanguageServer';
 
 export interface Tool {
 	name: string;
@@ -206,7 +207,7 @@ export function getConfiguredTools(
 	// Even though we arranged this to run after the first attempt to start gopls
 	// this is still useful if we've fail to start gopls.
 	if (useLanguageServer) {
-		maybeAddTool('gopls');
+		maybeAddTool(conf.lsName);
 	}
 
 	if (goLiveErrorsEnabled()) {
