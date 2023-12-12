@@ -15,6 +15,7 @@ import { getFormatTool, usingCustomFormatTool } from './language/legacy/goFormat
 import { goLiveErrorsEnabled } from './language/legacy/goLiveErrors';
 import { allToolsInformation } from './goToolsInformation';
 import { getBinPath, GoVersion } from './util';
+import { conf } from './language/goLanguageServer';
 
 export interface Tool {
 	name: string;
