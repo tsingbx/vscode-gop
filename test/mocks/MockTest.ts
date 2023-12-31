@@ -255,7 +255,7 @@ class MockTestDocument implements TextDocument {
 	constructor(
 		public uri: Uri,
 		private _contents: string,
-		public languageId: string = 'go',
+		public languageId: string = 'gop',
 		public isUntitled: boolean = false,
 		public isDirty: boolean = false
 	) {}

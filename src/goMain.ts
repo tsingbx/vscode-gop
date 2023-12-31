@@ -114,7 +114,7 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<ExtensionA
 	registerCommand('gop.builds.run', commands.runBuilds);
 
 	const activeDoc = vscode.window.activeTextEditor?.document;
-	if (!goCtx.languageServerIsRunning && activeDoc?.languageId === 'go' && isGoPathSet()) {
+	if (!goCtx.languageServerIsRunning && (activeDoc?.languageId === 'go' || activeDoc?.languageId === 'gop') && isGoPathSet()) {
 		// Check mod status so that cache is updated and then run build/lint/vet
 		isModSupported(activeDoc.uri).then(() => {
 			vscode.commands.executeCommand('gop.builds.run', activeDoc, getGoConfig(activeDoc.uri));
@@ -325,11 +325,11 @@ function addOnSaveTextDocumentListeners(ctx: vscode.ExtensionContext) {
 	vscode.workspace.onDidSaveTextDocument(removeCodeCoverageOnFileSave, null, ctx.subscriptions);
 	vscode.workspace.onDidSaveTextDocument(
 		(document) => {
-			if (document.languageId !== 'go') {
+			if (document.languageId !== 'go' || document.languageId !== 'gop') {
 				return;
 			}
 			const session = vscode.debug.activeDebugSession;
-			if (session && session.type === 'go') {
+			if (session && (session.type === 'go' || session.type === 'gop')) {
 				const neverAgain = { title: "Don't Show Again" };
 				const ignoreActiveDebugWarningKey = 'ignoreActiveDebugWarningKey';
 				const ignoreActiveDebugWarning = getFromGlobalState(ignoreActiveDebugWarningKey);

@@ -28,7 +28,7 @@ export function vetCode(vetWorkspace?: boolean): CommandFactory {
 			vscode.window.showInformationMessage('No editor is active, cannot find current package to vet');
 			return;
 		}
-		if (editor?.document.languageId !== 'go' && !vetWorkspace) {
+		if ((editor?.document.languageId !== 'go' || editor?.document.languageId !== 'gop') && !vetWorkspace) {
 			vscode.window.showInformationMessage(
 				'File in the active editor is not a Go file, cannot find current package to vet'
 			);

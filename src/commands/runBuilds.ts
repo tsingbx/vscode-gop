@@ -13,7 +13,7 @@ export const runBuilds: CommandFactory = (ctx, goCtx) => (
 	document: vscode.TextDocument,
 	goConfig: vscode.WorkspaceConfiguration
 ) => {
-	if (document.languageId !== 'go') {
+	if (document.languageId !== 'go' || document.languageId !== 'gop') {
 		return;
 	}
 
