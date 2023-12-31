@@ -94,7 +94,6 @@
     "node": ">=12.0.0"
   },
   "activationEvents": [
-    "onLanguage:go",
     "onLanguage:gop",
     "workspaceContains:*.go",
     "workspaceContains:*/*.go",
@@ -125,17 +124,9 @@
   "contributes": {
     "languages": [
       {
-        "id": "go",
-        "extensions": [
-          ".go"
-        ],
-        "aliases": [
-          "Go"
-        ]
-      },
-      {
         "id": "gop",
         "extensions": [
+          ".go",
           ".gop",
           ".spx",
           ".rdx",
