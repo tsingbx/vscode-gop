@@ -37,7 +37,7 @@ let dlvDAPVersionChecked = false;
 export class GoDebugConfigurationProvider implements vscode.DebugConfigurationProvider {
 	static activate(ctx: vscode.ExtensionContext, goCtx: GoExtensionContext) {
 		ctx.subscriptions.push(
-			vscode.debug.registerDebugConfigurationProvider('go', new GoDebugConfigurationProvider('go'))
+			vscode.debug.registerDebugConfigurationProvider('gop', new GoDebugConfigurationProvider('gop'))
 		);
 		const registerCommand = createRegisterCommand(ctx, goCtx);
 		// goxls: conflicts fix
@@ -45,7 +45,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 		registerCommand('gop.debug.pickGoProcess', () => pickGoProcess);
 	}
 
-	constructor(private defaultDebugAdapterType: string = 'go') {}
+	constructor(private defaultDebugAdapterType: string = 'gop') {}
 
 	public async provideDebugConfigurations(
 		folder: vscode.WorkspaceFolder | undefined,
@@ -114,6 +114,66 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 						config.port = port;
 					}
 				}
+			},
+			// for gop
+			{
+				label: 'Gop: Launch Package',
+				description: 'Debug/test the package of the open file',
+				config: {
+					name: 'Launch Package',
+					type: this.defaultDebugAdapterType,
+					request: 'launch',
+					mode: 'auto',
+					program: '${fileDirname}'
+				}
+			},
+			{
+				label: 'Gop: Attach to local process',
+				description: 'Attach to an existing process by process ID',
+				config: {
+					name: 'Attach to Process',
+					type: 'gop',
+					request: 'attach',
+					mode: 'local',
+					processId: 0
+				}
+			},
+			{
+				label: 'Gop: Connect to server',
+				description: 'Connect to a remote headless debug server',
+				config: {
+					name: 'Connect to server',
+					type: 'gop',
+					request: 'attach',
+					mode: 'remote',
+					remotePath: '${workspaceFolder}',
+					port: 2345,
+					host: '127.0.0.1'
+				},
+				fill: async (config: vscode.DebugConfiguration) => {
+					const host = await vscode.window.showInputBox({
+						prompt: 'Enter hostname',
+						value: '127.0.0.1'
+					});
+					if (host) {
+						config.host = host;
+					}
+					const port = Number(
+						await vscode.window.showInputBox({
+							prompt: 'Enter port',
+							value: '2345',
+							validateInput: (value: string) => {
+								if (isNaN(Number(value))) {
+									return 'Please enter a number.';
+								}
+								return '';
+							}
+						})
+					);
+					if (port) {
+						config.port = port;
+					}
+				}
 			}
 		];
 
@@ -138,7 +198,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!debugConfiguration || !debugConfiguration.request) {
 			// if 'request' is missing interpret this as a missing launch.json
-			if (!activeEditor || activeEditor.document.languageId !== 'go') {
+			if (!activeEditor || activeEditor.document.languageId !== 'gop') {
 				return;
 			}
 

@@ -102,7 +102,7 @@
     "workspaceContains:**/*.spx",
     "workspaceContains:**/*.rdx",
     "onDebugInitialConfigurations",
-    "onDebugResolve:go",
+    "onDebugResolve:gop",
     "onWebviewPanel:welcomeGo"
   ],
   "main": "./dist/goMain.js",
@@ -600,51 +600,51 @@
     ],
     "breakpoints": [
       {
-        "language": "go"
+        "language": "gop"
       }
     ],
     "debuggers": [
       {
-        "type": "go",
-        "label": "Go",
+        "type": "gop",
+        "label": "Gop",
         "program": "./dist/debugAdapter.js",
         "runtime": "node",
         "languages": [
-          "go"
+          "gop"
         ],
         "variables": {
-          "pickProcess": "go.debug.pickProcess",
-          "pickGoProcess": "go.debug.pickGoProcess"
+          "pickProcess": "gop.debug.pickProcess",
+          "pickGoProcess": "gop.debug.pickGoProcess"
         },
         "configurationSnippets": [
           {
-            "label": "Go: Launch package",
+            "label": "Gop: Launch package",
             "description": "Debug/test the package in the program attribute",
             "body": {
               "name": "${2:Launch Package}",
-              "type": "go",
+              "type": "gop",
               "request": "launch",
               "mode": "auto",
               "program": "^\"\\${fileDirname}${1:}\""
             }
           },
           {
-            "label": "Go: Launch file",
+            "label": "Gop: Launch file",
             "description": "Debug the file in the program attribute",
             "body": {
               "name": "${2:Launch file}",
-              "type": "go",
+              "type": "gop",
               "request": "launch",
               "mode": "debug",
               "program": "^\"${1:\\${file\\}}\""
             }
           },
           {
-            "label": "Go: Launch test function",
+            "label": "Gop: Launch test function",
             "description": "Debug the test function in the args, ensure program attributes points to right package",
             "body": {
               "name": "${3:Launch test function}",
-              "type": "go",
+              "type": "gop",
               "request": "launch",
               "mode": "test",
               "program": "^\"\\${workspaceFolder}${1:}\"",
@@ -655,22 +655,22 @@
             }
           },
           {
-            "label": "Go: Attach to local process",
+            "label": "Gop: Attach to local process",
             "description": "Attach to an existing process by process ID",
             "body": {
               "name": "${1:Attach to Process}",
-              "type": "go",
+              "type": "gop",
               "request": "attach",
               "mode": "local",
               "processId": 0
             }
           },
           {
-            "label": "Go: Connect to server",
+            "label": "Gop: Connect to server",
             "description": "Connect to a remote headless debug server",
             "body": {
               "name": "${1:Connect to server}",
-              "type": "go",
+              "type": "gop",
               "request": "attach",
               "mode": "remote",
               "remotePath": "^\"\\${workspaceFolder}\"",
