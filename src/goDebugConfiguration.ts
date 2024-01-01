@@ -138,7 +138,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!debugConfiguration || !debugConfiguration.request) {
 			// if 'request' is missing interpret this as a missing launch.json
-			if (!activeEditor || activeEditor.document.languageId !== 'gop') {
+			if (!activeEditor || (activeEditor.document.languageId !== 'gop' && activeEditor.document.languageId !== 'go')) {
 				return;
 			}
 
