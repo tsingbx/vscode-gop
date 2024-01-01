@@ -198,6 +198,8 @@ interface EvalOut {
 }
 
 enum GoVariableFlags {
+	VariableUnknownError = 0,
+	
 	VariableEscaped = 1,
 	VariableShadowed = 2,
 	VariableConstant = 4,
