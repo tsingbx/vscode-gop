@@ -537,7 +537,7 @@ export function parseDebugProgramArgSync(
 			return { program, dirname: program, programIsDirectory: true };
 		}
 		const ext = path.extname(program);
-		if (ext === '.go' || ext === 'gop') {
+		if (ext === '.go' || ext === '.gop') {
 			// TODO(hyangah): .s?
 			return { program, dirname: path.dirname(program), programIsDirectory: false };
 		}
