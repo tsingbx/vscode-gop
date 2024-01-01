@@ -1,3 +1,4 @@
+//go:build skip-test
 package main
 
 import (

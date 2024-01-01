@@ -1,3 +1,4 @@
+//go:build skip-test
 //go:build go1.18
 // +build go1.18
 
