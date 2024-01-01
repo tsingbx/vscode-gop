@@ -54,12 +54,12 @@ export const toggleTestFile: CommandFactory = () => () => {
 	}
 	const currentFilePath = editor.document.fileName;
 	if (!currentFilePath.endsWith('.go') && !currentFilePath.endsWith('.gop')) {
-		vscode.window.showInformationMessage('Cannot toggle test file. File in the editor is not a Go file.');
+		vscode.window.showInformationMessage('Cannot toggle test file. File in the editor is not a Go or Gop file.');
 		return;
 	}
 	let targetFilePath = '';
-	if (currentFilePath.endsWith('.go')) {
-		if (currentFilePath.endsWith('_test.go')) {
+	if (currentFilePath.endsWith('.go') || currentFilePath.endsWith('.gop')) {
+		if (currentFilePath.endsWith('_test.go') || currentFilePath.endsWith('_test.gop')) {
 			//xx_test.go => xx.go
 			//xx_test.go => xx.gop
 			targetFilePath = currentFilePath.substr(0, currentFilePath.lastIndexOf('_test.go')) + '.go';

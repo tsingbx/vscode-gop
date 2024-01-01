@@ -318,7 +318,9 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 
 		if (debugConfiguration['mode'] === 'auto') {
 			let filename = activeEditor?.document?.fileName;
-			if (debugConfiguration['program'] && debugConfiguration['program'].endsWith('.go')) {
+			if ( debugConfiguration['program'] && 
+			     (debugConfiguration['program'].endsWith('.go') || debugConfiguration['program'].endsWith('.gop'))
+			) {
 				// If the 'program' attribute is a file, not a directory, then we will determine the mode from that
 				// file path instead of the currently active file.
 				filename = debugConfiguration['program'];
@@ -535,7 +537,7 @@ export function parseDebugProgramArgSync(
 			return { program, dirname: program, programIsDirectory: true };
 		}
 		const ext = path.extname(program);
-		if (ext === '.go') {
+		if (ext === '.go' || ext === 'gop') {
 			// TODO(hyangah): .s?
 			return { program, dirname: path.dirname(program), programIsDirectory: false };
 		}
