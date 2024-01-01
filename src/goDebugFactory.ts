@@ -18,17 +18,17 @@ import { getWorkspaceFolderPath } from './util';
 import { getEnvPath, getBinPathFromEnvVar } from './utils/pathUtils';
 
 export function activate(ctx: vscode.ExtensionContext) {
-	const debugOutputChannel = vscode.window.createOutputChannel('Go Debug');
+	const debugOutputChannel = vscode.window.createOutputChannel('Gop Debug');
 	ctx.subscriptions.push(debugOutputChannel);
 
 	const factory = new GoDebugAdapterDescriptorFactory(debugOutputChannel);
-	ctx.subscriptions.push(vscode.debug.registerDebugAdapterDescriptorFactory('go', factory));
+	ctx.subscriptions.push(vscode.debug.registerDebugAdapterDescriptorFactory('gop', factory));
 	if ('dispose' in factory) {
 		ctx.subscriptions.push(factory);
 	}
 
 	const tracker = new GoDebugAdapterTrackerFactory(debugOutputChannel);
-	ctx.subscriptions.push(vscode.debug.registerDebugAdapterTrackerFactory('go', tracker));
+	ctx.subscriptions.push(vscode.debug.registerDebugAdapterTrackerFactory('gop', tracker));
 	if ('dispose' in tracker) {
 		ctx.subscriptions.push(tracker);
 	}
@@ -442,7 +442,7 @@ export class DelveDAPOutputAdapter extends ProxyDebugAdapter {
 				command: 'runInTerminal',
 				arguments: {
 					kind: console,
-					title: `Go Debug Terminal (${launchAttachArgs.name})`,
+					title: `Gop Debug Terminal (${launchAttachArgs.name})`,
 					cwd: dir,
 					args: dlvArgs,
 					env: env
