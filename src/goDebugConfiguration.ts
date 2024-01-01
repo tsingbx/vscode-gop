@@ -318,12 +318,12 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 
 		if (debugConfiguration['mode'] === 'auto') {
 			let filename = activeEditor?.document?.fileName;
-			if ( debugConfiguration['program'] && 
-			     (debugConfiguration['program'].endsWith('.go') || debugConfiguration['program'].endsWith('.gop'))
-			) {
+			const program = debugConfiguration['program'];
+			const suportFileType = program.endsWith('.go') || program.endsWith('.gop');
+			if (program && suportFileType) {
 				// If the 'program' attribute is a file, not a directory, then we will determine the mode from that
 				// file path instead of the currently active file.
-				filename = debugConfiguration['program'];
+				filename = program;
 			}
 			debugConfiguration['mode'] =
 				filename?.endsWith('_test.go') || filename?.endsWith('_test.gop') ? 'test' : 'debug';

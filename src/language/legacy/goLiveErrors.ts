@@ -54,7 +54,7 @@ export function parseLiveFile(goCtx: GoExtensionContext, e: vscode.TextDocumentC
 	if (e.document.isUntitled) {
 		return;
 	}
-	if (e.document.languageId !== 'go' && e.document.languageId !=='gop') {
+	if (e.document.languageId !== 'go' && e.document.languageId !== 'gop') {
 		return;
 	}
 	if (!goLiveErrorsEnabled()) {

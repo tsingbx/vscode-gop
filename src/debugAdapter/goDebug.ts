@@ -479,7 +479,7 @@ export class Delve {
 						}
 						dlvCwd = program;
 						isProgramDirectory = true;
-					} else if (mode !== 'exec' && (path.extname(program) !== '.go' || path.extname(program) !== '.gop')) {
+					} else if (mode !== 'exec' && path.extname(program) !== '.go' && path.extname(program) !== '.gop') {
 						logError(`The program "${program}" must be a valid go file in debug mode`);
 						return reject('The program attribute must be a directory or .go file in debug mode');
 					}

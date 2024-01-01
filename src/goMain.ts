@@ -114,7 +114,8 @@ export async function activate(ctx: vscode.ExtensionContext): Promise<ExtensionA
 	registerCommand('gop.builds.run', commands.runBuilds);
 
 	const activeDoc = vscode.window.activeTextEditor?.document;
-	if (!goCtx.languageServerIsRunning && (activeDoc?.languageId === 'go' || activeDoc?.languageId === 'gop') && isGoPathSet()) {
+	const supportLanguageId = activeDoc?.languageId === 'go' || activeDoc?.languageId === 'gop';
+	if (!goCtx.languageServerIsRunning && supportLanguageId && isGoPathSet()) {
 		// Check mod status so that cache is updated and then run build/lint/vet
 		isModSupported(activeDoc.uri).then(() => {
 			vscode.commands.executeCommand('gop.builds.run', activeDoc, getGoConfig(activeDoc.uri));

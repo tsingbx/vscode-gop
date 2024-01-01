@@ -347,7 +347,7 @@ export async function getGoVersion(goBinPath?: string): Promise<GoVersion> {
 		error(`cached Go version (${JSON.stringify(cachedGoVersion)}) is invalid, recomputing`);
 	}
 	const docUri = vscode.window.activeTextEditor?.document.uri;
-	const cond = (docUri && (docUri.fsPath.endsWith('.go') || docUri.fsPath.endsWith('.gop')))
+	const cond = docUri && (docUri.fsPath.endsWith('.go') || docUri.fsPath.endsWith('.gop'));
 	const cwd = getWorkspaceFolderPath(cond ? docUri : undefined);
 
 	let goVersion: GoVersion | undefined;
@@ -690,7 +690,7 @@ export function guessPackageNameFromFile(filePath: string): Promise<string[]> {
 		const directoryPath = path.dirname(filePath);
 		const dirName = path.basename(directoryPath);
 		let segments = dirName.split(/[.-]/);
-		segments = segments.filter((val) => (val !== 'go' && val !== 'gop'));
+		segments = segments.filter((val) => val !== 'go' && val !== 'gop');
 
 		if (segments.length === 0 || !/[a-zA-Z_]\w*/.test(segments[segments.length - 1])) {
 			return reject();
