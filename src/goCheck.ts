@@ -36,7 +36,7 @@ export function removeTestStatus(e: vscode.TextDocumentChangeEvent) {
 
 export function notifyIfGeneratedFile(this: void, e: vscode.TextDocumentChangeEvent) {
 	const ctx: any = this;
-	if (e.document.isUntitled || e.document.languageId !== 'go' || e.document.languageId !== 'gop') {
+	if (e.document.isUntitled || e.document.languageId !== 'go' && e.document.languageId !== 'gop') {
 		return;
 	}
 	if (

@@ -23,7 +23,7 @@ export function lintCode(scope?: string): CommandFactory {
 				vscode.window.showInformationMessage('No editor is active, cannot find current package to lint');
 				return;
 			}
-			if (editor.document.languageId !== 'go' || editor.document.languageId !== 'gop') {
+			if (editor.document.languageId !== 'go' && editor.document.languageId !== 'gop') {
 				vscode.window.showInformationMessage(
 					'File in the active editor is not a Go file, cannot find current package to lint'
 				);

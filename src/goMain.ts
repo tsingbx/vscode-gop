@@ -325,7 +325,7 @@ function addOnSaveTextDocumentListeners(ctx: vscode.ExtensionContext) {
 	vscode.workspace.onDidSaveTextDocument(removeCodeCoverageOnFileSave, null, ctx.subscriptions);
 	vscode.workspace.onDidSaveTextDocument(
 		(document) => {
-			if (document.languageId !== 'go' || document.languageId !== 'gop') {
+			if (document.languageId !== 'go' && document.languageId !== 'gop') {
 				return;
 			}
 			const session = vscode.debug.activeDebugSession;
