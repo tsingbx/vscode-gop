@@ -1097,6 +1097,7 @@ export class GoDebugSession extends LoggingDebugSession {
 	}
 
 	protected async toDebuggerPath(filePath: string): Promise<string> {
+
 		if (this.substitutePath?.length === 0) {
 			if (this.delve?.isRemoteDebugging) {
 				// The user trusts us to infer the remote path mapping!
@@ -1113,10 +1114,11 @@ export class GoDebugSession extends LoggingDebugSession {
 		// The filePath may have a different path separator than the localPath
 		// So, update it to use the same separator for ease in path replacement.
 		filePath = normalizeSeparators(filePath);
+		const ext = path.extname(filePath);
 		let substitutedPath = filePath;
 		let substituteRule: { from: string; to: string };
 		this.substitutePath?.forEach((value) => {
-			if (filePath.startsWith(value.from)) {
+			if (ext === ".gop" && filePath.startsWith(value.from)) {
 				if (substituteRule) {
 					log(
 						`Substitutition rule ${value.from}:${value.to} applies to local path ${filePath} but it was already mapped to debugger path using rule ${substituteRule.from}:${substituteRule.to}`
