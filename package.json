@@ -136,7 +136,6 @@
       {
         "id": "gop",
         "extensions": [
-          ".go",
           ".gop",
           ".spx",
           ".rdx",
@@ -638,7 +637,8 @@
               "type": "gop",
               "request": "launch",
               "mode": "auto",
-              "program": "^\"\\${fileDirname}${1:}\""
+              "program": "^\"\\${fileDirname}${1:}\"",
+              "substitutePath": [{"from": "^\"\\${fileDirname}\"", "to": ""}]
             }
           },
           {
@@ -649,7 +649,8 @@
               "type": "gop",
               "request": "launch",
               "mode": "debug",
-              "program": "^\"${1:\\${file\\}}\""
+              "program": "^\"${1:\\${file\\}}\"",
+              "substitutePath": [{"from": "^\"\\${fileDirname}\"", "to": ""}]
             }
           },
           {

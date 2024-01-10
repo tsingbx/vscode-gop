@@ -64,7 +64,8 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 					type: this.defaultDebugAdapterType,
 					request: 'launch',
 					mode: 'auto',
-					program: '${fileDirname}'
+					program: '${fileDirname}',
+					substitutePath: [{from: "${fileDirname}", to: ""}]
 				}
 			},
 			{
@@ -147,7 +148,8 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 				type: this.defaultDebugAdapterType,
 				request: 'launch',
 				mode: 'auto',
-				program: path.dirname(activeEditor.document.fileName) // matches ${fileDirname}
+				program: path.dirname(activeEditor.document.fileName), // matches ${fileDirname}
+				substitutePath: [{from: "${fileDirname}", to: ""}]
 			});
 		}
 
