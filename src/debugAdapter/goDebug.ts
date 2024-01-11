@@ -1118,7 +1118,7 @@ export class GoDebugSession extends LoggingDebugSession {
 		let substitutedPath = filePath;
 		let substituteRule: { from: string; to: string };
 		this.substitutePath?.forEach((value) => {
-			if (ext === ".gop" && filePath.startsWith(value.from)) {
+			if (filePath.startsWith(value.from)) {
 				if (substituteRule) {
 					log(
 						`Substitutition rule ${value.from}:${value.to} applies to local path ${filePath} but it was already mapped to debugger path using rule ${substituteRule.from}:${substituteRule.to}`
