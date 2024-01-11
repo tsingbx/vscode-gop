@@ -622,7 +622,8 @@ function spawnDlvDapServerProcess(
 function getSpawnConfig(launchAttachArgs: vscode.DebugConfiguration, logErr: (msg: string) => void) {
 	// launchArgsEnv is user-requested env vars (envFiles + env + toolsEnvVars).
 	const env = launchAttachArgs.env;
-	const dlvPath = launchAttachArgs.dlvToolPath ?? 'dlv';
+	const dlvName = 'gopdlv';
+	const dlvPath = launchAttachArgs.dlvToolPath ?? dlvName;
 
 	if (!fs.existsSync(dlvPath)) {
 		const envPath = getEnvPath();
@@ -630,9 +631,9 @@ function getSpawnConfig(launchAttachArgs: vscode.DebugConfiguration, logErr: (ms
 			`Couldn't find ${dlvPath} at the Go tools path, ${process.env['GOPATH']}${
 				env['GOPATH'] ? ', ' + env['GOPATH'] : ''
 			} or ${envPath}\n` +
-				'Follow the setup instruction in https://github.com/golang/vscode-go/blob/master/docs/debugging.md#getting-started.\n'
+				'Follow the setup instruction in https://github.com/goplus/vscode-gop/blob/goplus/docs/debugging.md#getting-started.\n'
 		);
-		throw new Error('Cannot find Delve debugger (dlv dap)');
+		throw new Error('Cannot find Gop/go debugger (gopdlv dap)');
 	}
 	let dir = getWorkspaceFolderPath();
 	if (launchAttachArgs.request === 'launch' && launchAttachArgs['__buildDir']) {

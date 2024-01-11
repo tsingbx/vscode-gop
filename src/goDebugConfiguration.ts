@@ -218,11 +218,14 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 		if (!debugConfiguration.hasOwnProperty('apiVersion') && dlvConfig.hasOwnProperty('apiVersion')) {
 			debugConfiguration['apiVersion'] = dlvConfig['apiVersion'];
 		}
+
+		const dlvLoadConfigName = 'dlvLoadConfig';
+		const dlvLoadConfigInspectKey = dlvLoadConfigName + '.dlvLoadConfig'; //delveConfig.dlvLoadConfig
 		if (
 			debugAdapter === 'dlv-dap' &&
-			(debugConfiguration.hasOwnProperty('dlvLoadConfig') ||
-				goConfig.inspect('delveConfig.dlvLoadConfig')?.globalValue !== undefined ||
-				goConfig.inspect('delveConfig.dlvLoadConfig')?.workspaceValue !== undefined)
+			(debugConfiguration.hasOwnProperty(dlvLoadConfigName) ||
+				goConfig.inspect(dlvLoadConfigInspectKey)?.globalValue !== undefined ||
+				goConfig.inspect(dlvLoadConfigInspectKey)?.workspaceValue !== undefined)
 		) {
 			this.showWarning(
 				'ignoreDebugDlvConfigWithDlvDapWarning',
@@ -241,7 +244,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 			'hideSystemGoroutines'
 		];
 		if (debugAdapter !== 'dlv-dap') {
-			dlvProperties.push('dlvLoadConfig');
+			dlvProperties.push(dlvLoadConfigName);
 		}
 		dlvProperties.forEach((p) => {
 			if (!debugConfiguration.hasOwnProperty(p)) {
@@ -286,13 +289,14 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 			}
 		}
 
-		const dlvToolPath = getBinPath('dlv');
+		const dlvName = 'gopdlv';
+		const dlvToolPath = getBinPath(dlvName);
 		if (!path.isAbsolute(dlvToolPath)) {
 			// If user has not already declined to install this tool,
 			// prompt for it. Otherwise continue and have the lack of
 			// dlv binary be caught later.
-			if (!declinedToolInstall('dlv')) {
-				await promptForMissingTool('dlv');
+			if (!declinedToolInstall(dlvName)) {
+				await promptForMissingTool(dlvName);
 				return;
 			}
 		}
@@ -300,7 +304,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 
 		// For dlv-dap mode, check if the dlv is recent enough to support DAP.
 		if (debugAdapter === 'dlv-dap' && !dlvDAPVersionChecked) {
-			const tool = getToolAtVersion('dlv');
+			const tool = getToolAtVersion(dlvName);
 			if (await shouldUpdateTool(tool, dlvToolPath)) {
 				// If the user has opted in to automatic tool updates, we can update
 				// without prompting.

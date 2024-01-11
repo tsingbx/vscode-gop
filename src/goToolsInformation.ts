@@ -240,6 +240,17 @@ export const allToolsInformation: { [key: string]: Tool } = {
 		latestVersionTimestamp: moment('2021-05-19', 'YYYY-MM-DD'),
 		minimumGoVersion: semver.coerce('1.12') // dlv requires 1.12+ for build
 	},
+	'gopdlv': {
+		name: 'gopdlv',
+		importPath: 'github.com/goplus/delve/cmd/gopdlv',
+		modulePath: 'github.com/goplus/gopdlv',
+		replacedByGopls: false,
+		isImportant: true,
+		description: 'Go/Go+ Debugger',
+		latestVersion: semver.parse('1.18'), // minimum version that supports DAP
+		latestVersionTimestamp: moment('2021-05-19', 'YYYY-MM-DD'),
+		minimumGoVersion: semver.coerce('1.12') // dlv requires 1.12+ for build
+	},
 	'fillstruct': {
 		name: 'fillstruct',
 		importPath: 'github.com/davidrjenni/reftools/cmd/fillstruct',

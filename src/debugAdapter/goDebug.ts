@@ -481,12 +481,12 @@ export class Delve {
 						dlvCwd = program;
 						isProgramDirectory = true;
 					} else if (mode !== 'exec' && path.extname(program) !== '.go' && path.extname(program) !== '.gop') {
-						logError(`The program "${program}" must be a valid go file in debug mode`);
-						return reject('The program attribute must be a directory or .go file in debug mode');
+						logError(`The program "${program}" must be a valid go or gop file in debug mode`);
+						return reject('The program attribute must be a directory or .go or .gop file in debug mode');
 					}
 				} catch (e) {
 					logError(`The program "${program}" does not exist: ${e}`);
-					return reject('The program attribute must point to valid directory, .go file or executable.');
+					return reject('The program attribute must point to valid directory, .go or .gop file or executable.');
 				}
 
 				// read env from disk and merge into env variables
@@ -528,12 +528,12 @@ export class Delve {
 							build.push(program);
 						}
 
-						const goExe = getBinPathWithPreferredGopathGoroot('go', []);
+						const gopExe = getBinPathWithPreferredGopathGoroot('gop', []);
 						log(`Current working directory: ${dirname}`);
-						log(`Building: ${goExe} ${build.join(' ')}`);
+						log(`Building: ${gopExe} ${build.join(' ')}`);
 
 						// Use spawnSync to ensure that the binary exists before running it.
-						const buffer = spawnSync(goExe, build, buildOptions);
+						const buffer = spawnSync(gopExe, build, buildOptions);
 						if (buffer.stderr && buffer.stderr.length > 0) {
 							const str = buffer.stderr.toString();
 							if (this.onstderr) {
@@ -608,24 +608,24 @@ export class Delve {
 
 				if (!existsSync(launchArgs.dlvToolPath)) {
 					log(
-						`Couldn't find dlv at the Go tools path, ${process.env['GOPATH']}${
+						`Couldn't find gopdlv at the Go tools path, ${process.env['GOPATH']}${
 							env['GOPATH'] ? ', ' + env['GOPATH'] : ''
 						} or ${getEnvPath()}`
 					);
 					return reject(
-						'Cannot find Delve debugger. Install from https://github.com/go-delve/delve & ensure it is in your Go tools path, "GOPATH/bin" or "PATH".'
+						'Cannot find Gop/go debugger. Install from https://github.com/goplus/gopdlv & ensure it is in your Go tools path, "GOPATH/bin" or "PATH".'
 					);
 				}
 
-				const currentGOWorkspace = getCurrentGoWorkspaceFromGOPATH(env['GOPATH'], dirname);
+				const currentGOPWorkspace = getCurrentGoWorkspaceFromGOPATH(env['GOPATH'], dirname);
 				if (!launchArgs.packagePathToGoModPathMap) {
 					launchArgs.packagePathToGoModPathMap = {};
 				}
 				dlvArgs.push(mode || 'debug');
 				if (mode === 'exec' || (mode === 'debug' && !isProgramDirectory)) {
 					dlvArgs.push(program);
-				} else if (currentGOWorkspace && !launchArgs.packagePathToGoModPathMap[dirname]) {
-					dlvArgs.push(dirname.substr(currentGOWorkspace.length + 1));
+				} else if (currentGOPWorkspace && !launchArgs.packagePathToGoModPathMap[dirname]) {
+					dlvArgs.push(dirname.substr(currentGOPWorkspace.length + 1));
 				}
 				// add user-specified dlv flags first. When duplicate flags are specified,
 				// dlv doesn't mind but accepts the last flag value.
@@ -668,7 +668,7 @@ export class Delve {
 
 				if (!existsSync(launchArgs.dlvToolPath)) {
 					return reject(
-						'Cannot find Delve debugger. Install from https://github.com/go-delve/delve & ensure it is in your Go tools path, "GOPATH/bin" or "PATH".'
+						'Cannot find Gop/go debugger. Install from https://github.com/goplus/gopdlv & ensure it is in your Go tools path, "GOPATH/bin" or "PATH".'
 					);
 				}
 
