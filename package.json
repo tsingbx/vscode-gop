@@ -637,8 +637,7 @@
               "type": "gop",
               "request": "launch",
               "mode": "auto",
-              "program": "^\"\\${fileDirname}${1:}\"",
-              "substitutePath": [{"from": "^\"\\${fileDirname}\"", "to": ""}]
+              "program": "^\"\\${fileDirname}${1:}\""
             }
           },
           {
@@ -649,8 +648,7 @@
               "type": "gop",
               "request": "launch",
               "mode": "debug",
-              "program": "^\"${1:\\${file\\}}\"",
-              "substitutePath": [{"from": "^\"\\${fileDirname}\"", "to": ""}]
+              "program": "^\"${1:\\${file\\}}\""
             }
           },
           {

@@ -64,8 +64,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 					type: this.defaultDebugAdapterType,
 					request: 'launch',
 					mode: 'auto',
-					program: '${fileDirname}',
-					substitutePath: [{from: "${fileDirname}", to: ""}]
+					program: '${fileDirname}'
 				}
 			},
 			{
@@ -149,7 +148,6 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 				request: 'launch',
 				mode: 'auto',
 				program: path.dirname(activeEditor.document.fileName), // matches ${fileDirname}
-				substitutePath: [{from: "${fileDirname}", to: ""}]
 			});
 		}
 
@@ -220,7 +218,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 		}
 
 		const dlvLoadConfigName = 'dlvLoadConfig';
-		const dlvLoadConfigInspectKey = dlvLoadConfigName + '.dlvLoadConfig'; //delveConfig.dlvLoadConfig
+		const dlvLoadConfigInspectKey = 'delveConfig.dlvLoadConfig';
 		if (
 			debugAdapter === 'dlv-dap' &&
 			(debugConfiguration.hasOwnProperty(dlvLoadConfigName) ||
