@@ -242,7 +242,7 @@ export const allToolsInformation: { [key: string]: Tool } = {
 	},
 	'gopdlv': {
 		name: 'gopdlv',
-		importPath: 'github.com/goplus/delve/cmd/gopdlv',
+		importPath: 'github.com/goplus/gopdlv',
 		modulePath: 'github.com/goplus/gopdlv',
 		replacedByGopls: false,
 		isImportant: true,

@@ -193,7 +193,7 @@ export async function installTools(
 
 	const failures: { tool: ToolAtVersion; reason: string }[] = [];
 	for (const tool of missing) {
-		const failed = await installToolWithGo(tool, goForInstall, envForTools, tool.name === 'goxls');
+		const failed = await installToolWithGo(tool, goForInstall, envForTools, tool.name === 'goxls' || tool.name === 'gopdlv');
 		if (failed) {
 			failures.push({ tool, reason: failed });
 		} else if (tool.name === 'goxls' || tool.name === 'gopls') {
@@ -434,7 +434,7 @@ export async function promptForMissingTool(toolName: string) {
 		installOptions.push('Install All');
 	}
 	let goCmd = 'go';
-	if (tool.name == 'goxls') {
+	if (tool.name == 'goxls' || tool.name == 'gopdlv') {
 		goCmd = 'gop';
 	}
 	const cmd = `${goCmd} install -v ${getImportPathWithVersion(tool, undefined, goVersion)}`;
@@ -490,7 +490,7 @@ export async function promptForUpdatingTool(
 	if (toolName === 'goxls') {
 		choices = ['Always Update', 'Update Once', 'Release Notes'];
 	}
-	if (toolName === 'dlv') {
+	if (toolName === 'gopdlv') {
 		choices = ['Always Update', 'Update Once'];
 	}
 
