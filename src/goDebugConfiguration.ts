@@ -197,7 +197,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 			} else if (debugConfiguration['port']) {
 				this.showWarning(
 					'ignorePortUsedInDlvDapWarning',
-					"`port` with 'dlv-dap' debugAdapter connects to [an external `dlv dap` server](https://github.com/golang/vscode-go/blob/master/docs/debugging.md#running-debugee-externally) to launch a program or attach to a process. Remove 'host' and 'port' from your launch.json if you have not launched a 'dlv dap' server."
+					"`port` with 'dlv-dap' debugAdapter connects to [an external `dlv dap` server](https://github.com/goplus/vscode-gop/blob/goplus/docs/debugging.md#running-debugee-externally) to launch a program or attach to a process. Remove 'host' and 'port' from your launch.json if you have not launched a 'dlv dap' server."
 				);
 			}
 		}
