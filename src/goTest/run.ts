@@ -137,7 +137,8 @@ export class GoTestRunner {
 
 	async debug(request: TestRunRequest, token?: CancellationToken) {
 		if (!request.include) {
-			await vscode.window.showErrorMessage('The Go test explorer does not support debugging multiple tests');
+			//await vscode.window.showErrorMessage('The Go test explorer does not support debugging multiple tests');
+			vscode.window.showErrorMessage('The Go+ test explorer does not support debugging multiple tests');
 			return;
 		}
 
@@ -149,7 +150,8 @@ export class GoTestRunner {
 
 		const tests = Array.from(collected.values()).reduce((a, b) => a.concat(b), []);
 		if (tests.length > 1) {
-			await vscode.window.showErrorMessage('The Go test explorer does not support debugging multiple tests');
+			//await vscode.window.showErrorMessage('The Go test explorer does not support debugging multiple tests');
+			vscode.window.showErrorMessage('The Go+ test explorer does not support debugging multiple tests');
 			return;
 		}
 
