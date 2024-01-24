@@ -131,7 +131,9 @@
         "extensions": [
           ".go"
         ],
-        "aliases": ["Go"]
+        "aliases": [
+          "Go"
+        ]
       },
       {
         "id": "gop",
