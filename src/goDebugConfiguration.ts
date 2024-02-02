@@ -138,7 +138,10 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!debugConfiguration || !debugConfiguration.request) {
 			// if 'request' is missing interpret this as a missing launch.json
-			if (!activeEditor || (activeEditor.document.languageId !== 'gop' && activeEditor.document.languageId !== 'go')) {
+			if (
+				!activeEditor ||
+				(activeEditor.document.languageId !== 'gop' && activeEditor.document.languageId !== 'go')
+			) {
 				return;
 			}
 
@@ -147,7 +150,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 				type: this.defaultDebugAdapterType,
 				request: 'launch',
 				mode: 'auto',
-				program: path.dirname(activeEditor.document.fileName), // matches ${fileDirname}
+				program: path.dirname(activeEditor.document.fileName) // matches ${fileDirname}
 			});
 		}
 

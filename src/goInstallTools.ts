@@ -193,7 +193,12 @@ export async function installTools(
 
 	const failures: { tool: ToolAtVersion; reason: string }[] = [];
 	for (const tool of missing) {
-		const failed = await installToolWithGo(tool, goForInstall, envForTools, tool.name === 'goxls' || tool.name === 'gopdlv');
+		const failed = await installToolWithGo(
+			tool,
+			goForInstall,
+			envForTools,
+			tool.name === 'goxls' || tool.name === 'gopdlv'
+		);
 		if (failed) {
 			failures.push({ tool, reason: failed });
 		} else if (tool.name === 'goxls' || tool.name === 'gopls') {

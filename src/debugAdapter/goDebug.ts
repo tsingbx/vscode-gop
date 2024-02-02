@@ -486,7 +486,7 @@ export class Delve {
 					}
 				} catch (e) {
 					logError(`The program "${program}" does not exist: ${e}`);
-					return reject('The program attribute must point to valid directory, .go or .gop file or executable.');
+					return reject(`The program "${program}" does not exist: ${e}`);
 				}
 
 				// read env from disk and merge into env variables
@@ -1097,7 +1097,6 @@ export class GoDebugSession extends LoggingDebugSession {
 	}
 
 	protected async toDebuggerPath(filePath: string): Promise<string> {
-
 		if (this.substitutePath?.length === 0) {
 			if (this.delve?.isRemoteDebugging) {
 				// The user trusts us to infer the remote path mapping!
