@@ -486,7 +486,7 @@ export class Delve {
 					}
 				} catch (e) {
 					logError(`The program "${program}" does not exist: ${e}`);
-					return reject(`The program "${program}" does not exist: ${e}`);
+					return reject('The program attribute must point to valid directory, .go/.gop file or executable.');
 				}
 
 				// read env from disk and merge into env variables
