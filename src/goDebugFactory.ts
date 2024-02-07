@@ -18,7 +18,7 @@ import { getWorkspaceFolderPath } from './util';
 import { getEnvPath, getBinPathFromEnvVar } from './utils/pathUtils';
 
 export function activate(ctx: vscode.ExtensionContext) {
-	const debugOutputChannel = vscode.window.createOutputChannel('Gop Debug');
+	const debugOutputChannel = vscode.window.createOutputChannel('Go+ Debug');
 	ctx.subscriptions.push(debugOutputChannel);
 
 	const factory = new GoDebugAdapterDescriptorFactory(debugOutputChannel);
@@ -442,7 +442,7 @@ export class DelveDAPOutputAdapter extends ProxyDebugAdapter {
 				command: 'runInTerminal',
 				arguments: {
 					kind: console,
-					title: `Gop Debug Terminal (${launchAttachArgs.name})`,
+					title: `Go+ Debug Terminal (${launchAttachArgs.name})`,
 					cwd: dir,
 					args: dlvArgs,
 					env: env
@@ -633,7 +633,7 @@ function getSpawnConfig(launchAttachArgs: vscode.DebugConfiguration, logErr: (ms
 			} or ${envPath}\n` +
 				'Follow the setup instruction in https://github.com/goplus/vscode-gop/blob/goplus/docs/debugging.md#getting-started.\n'
 		);
-		throw new Error('Cannot find Gop/go debugger (gopdlv dap)');
+		throw new Error('Cannot find Go/Go+ debugger (gopdlv dap)');
 	}
 	let dir = getWorkspaceFolderPath();
 	if (launchAttachArgs.request === 'launch' && launchAttachArgs['__buildDir']) {

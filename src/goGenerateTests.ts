@@ -33,7 +33,7 @@ function checkActiveEditor(): vscode.TextEditor | undefined {
 		return;
 	}
 	if (!editor.document.fileName.endsWith('.go') && !editor.document.fileName.endsWith('.gop')) {
-		vscode.window.showInformationMessage('Cannot generate unit tests. File in the editor is not a Go or Gop file.');
+		vscode.window.showInformationMessage('Cannot generate unit tests. File in the editor is not a Go or Go+ file.');
 		return;
 	}
 	if (editor.document.isDirty) {
@@ -54,7 +54,7 @@ export const toggleTestFile: CommandFactory = () => () => {
 	}
 	const currentFilePath = editor.document.fileName;
 	if (!currentFilePath.endsWith('.go') && !currentFilePath.endsWith('.gop')) {
-		vscode.window.showInformationMessage('Cannot toggle test file. File in the editor is not a Go or Gop file.');
+		vscode.window.showInformationMessage('Cannot toggle test file. File in the editor is not a Go or Go+ file.');
 		return;
 	}
 	let targetFilePath = '';

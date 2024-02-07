@@ -620,7 +620,7 @@
     "debuggers": [
       {
         "type": "gop",
-        "label": "Gop",
+        "label": "Go+",
         "program": "./dist/debugAdapter.js",
         "runtime": "node",
         "languages": [
@@ -632,7 +632,7 @@
         },
         "configurationSnippets": [
           {
-            "label": "Gop: Launch package",
+            "label": "Go+: Launch package",
             "description": "Debug/test the package in the program attribute",
             "body": {
               "name": "${2:Launch Package}",
@@ -643,7 +643,7 @@
             }
           },
           {
-            "label": "Gop: Launch file",
+            "label": "Go+: Launch file",
             "description": "Debug the file in the program attribute",
             "body": {
               "name": "${2:Launch file}",
@@ -654,7 +654,7 @@
             }
           },
           {
-            "label": "Gop: Launch test function",
+            "label": "Go+: Launch test function",
             "description": "Debug the test function in the args, ensure program attributes points to right package",
             "body": {
               "name": "${3:Launch test function}",
@@ -669,7 +669,7 @@
             }
           },
           {
-            "label": "Gop: Attach to local process",
+            "label": "Go+: Attach to local process",
             "description": "Attach to an existing process by process ID",
             "body": {
               "name": "${1:Attach to Process}",
@@ -680,7 +680,7 @@
             }
           },
           {
-            "label": "Gop: Connect to server",
+            "label": "Go+: Connect to server",
             "description": "Connect to a remote headless debug server",
             "body": {
               "name": "${1:Connect to server}",

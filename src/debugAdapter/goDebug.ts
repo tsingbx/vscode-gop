@@ -613,7 +613,7 @@ export class Delve {
 						} or ${getEnvPath()}`
 					);
 					return reject(
-						'Cannot find Gop/go debugger. Install from https://github.com/goplus/gopdlv & ensure it is in your Go tools path, "GOPATH/bin" or "PATH".'
+						'Cannot find Go/Go+ debugger. Install from https://github.com/goplus/gopdlv & ensure it is in your Go tools path, "GOPATH/bin" or "PATH".'
 					);
 				}
 
@@ -668,7 +668,7 @@ export class Delve {
 
 				if (!existsSync(launchArgs.dlvToolPath)) {
 					return reject(
-						'Cannot find Gop/go debugger. Install from https://github.com/goplus/gopdlv & ensure it is in your Go tools path, "GOPATH/bin" or "PATH".'
+						'Cannot find Go/Go+ debugger. Install from https://github.com/goplus/gopdlv & ensure it is in your Go tools path, "GOPATH/bin" or "PATH".'
 					);
 				}
 

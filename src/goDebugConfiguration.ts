@@ -57,7 +57,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 	public async pickConfiguration(): Promise<vscode.DebugConfiguration[]> {
 		const debugConfigurations = [
 			{
-				label: 'Gop: Launch Package',
+				label: 'Go+: Launch Package',
 				description: 'Debug/test the package of the open file',
 				config: {
 					name: 'Launch Package',
@@ -68,7 +68,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 				}
 			},
 			{
-				label: 'Gop: Attach to local process',
+				label: 'Go+: Attach to local process',
 				description: 'Attach to an existing process by process ID',
 				config: {
 					name: 'Attach to Process',
@@ -79,7 +79,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 				}
 			},
 			{
-				label: 'Gop: Connect to server',
+				label: 'Go+: Connect to server',
 				description: 'Connect to a remote headless debug server',
 				config: {
 					name: 'Connect to server',
