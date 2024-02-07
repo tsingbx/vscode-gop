@@ -13,7 +13,9 @@ import { fileExists } from '../utils/pathUtils';
 
 export const applyCoverprofile: CommandFactory = () => {
 	return () => {
-		if (!vscode.window.activeTextEditor || !vscode.window.activeTextEditor.document.fileName.endsWith('.go')) {
+		const fileName = vscode.window.activeTextEditor?.document.fileName;
+		const notSuportFile = !fileName?.endsWith('.go') && !fileName?.endsWith('.gop');
+		if (!vscode.window.activeTextEditor || notSuportFile) {
 			vscode.window.showErrorMessage('Cannot apply coverage profile when no Go file is open.');
 			return;
 		}

@@ -34,7 +34,7 @@ export function buildCode(buildWorkspace?: boolean): CommandFactory {
 				vscode.window.showInformationMessage('No editor is active, cannot find current package to build');
 				return;
 			}
-			if (editor.document.languageId !== 'go') {
+			if (editor.document.languageId !== 'go' && editor.document.languageId !== 'gop') {
 				vscode.window.showInformationMessage(
 					'File in the active editor is not a Go file, cannot find current package to build'
 				);

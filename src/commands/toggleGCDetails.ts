@@ -16,7 +16,7 @@ export const toggleGCDetails: CommandFactory = (ctx, goCtx) => {
 			return;
 		}
 		const doc = vscode.window.activeTextEditor?.document.uri.toString();
-		if (!doc || !doc.endsWith('.go')) {
+		if (!doc || !(doc.endsWith('.go') || doc.endsWith('.gop'))) {
 			vscode.window.showErrorMessage('"Go: Toggle gc details" command cannot run when no Go file is open.');
 			return;
 		}

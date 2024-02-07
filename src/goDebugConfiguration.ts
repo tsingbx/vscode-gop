@@ -37,7 +37,7 @@ let dlvDAPVersionChecked = false;
 export class GoDebugConfigurationProvider implements vscode.DebugConfigurationProvider {
 	static activate(ctx: vscode.ExtensionContext, goCtx: GoExtensionContext) {
 		ctx.subscriptions.push(
-			vscode.debug.registerDebugConfigurationProvider('go', new GoDebugConfigurationProvider('go'))
+			vscode.debug.registerDebugConfigurationProvider('gop', new GoDebugConfigurationProvider('gop'))
 		);
 		const registerCommand = createRegisterCommand(ctx, goCtx);
 		// goxls: conflicts fix
@@ -45,7 +45,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 		registerCommand('gop.debug.pickGoProcess', () => pickGoProcess);
 	}
 
-	constructor(private defaultDebugAdapterType: string = 'go') {}
+	constructor(private defaultDebugAdapterType: string = 'gop') {}
 
 	public async provideDebugConfigurations(
 		folder: vscode.WorkspaceFolder | undefined,
@@ -57,7 +57,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 	public async pickConfiguration(): Promise<vscode.DebugConfiguration[]> {
 		const debugConfigurations = [
 			{
-				label: 'Go: Launch Package',
+				label: 'Go+: Launch Package',
 				description: 'Debug/test the package of the open file',
 				config: {
 					name: 'Launch Package',
@@ -68,22 +68,22 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 				}
 			},
 			{
-				label: 'Go: Attach to local process',
+				label: 'Go+: Attach to local process',
 				description: 'Attach to an existing process by process ID',
 				config: {
 					name: 'Attach to Process',
-					type: 'go',
+					type: 'gop',
 					request: 'attach',
 					mode: 'local',
 					processId: 0
 				}
 			},
 			{
-				label: 'Go: Connect to server',
+				label: 'Go+: Connect to server',
 				description: 'Connect to a remote headless debug server',
 				config: {
 					name: 'Connect to server',
-					type: 'go',
+					type: 'gop',
 					request: 'attach',
 					mode: 'remote',
 					remotePath: '${workspaceFolder}',
@@ -138,7 +138,10 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 		const activeEditor = vscode.window.activeTextEditor;
 		if (!debugConfiguration || !debugConfiguration.request) {
 			// if 'request' is missing interpret this as a missing launch.json
-			if (!activeEditor || activeEditor.document.languageId !== 'go') {
+			if (
+				!activeEditor ||
+				(activeEditor.document.languageId !== 'gop' && activeEditor.document.languageId !== 'go')
+			) {
 				return;
 			}
 
@@ -197,7 +200,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 			} else if (debugConfiguration['port']) {
 				this.showWarning(
 					'ignorePortUsedInDlvDapWarning',
-					"`port` with 'dlv-dap' debugAdapter connects to [an external `dlv dap` server](https://github.com/golang/vscode-go/blob/master/docs/debugging.md#running-debugee-externally) to launch a program or attach to a process. Remove 'host' and 'port' from your launch.json if you have not launched a 'dlv dap' server."
+					"`port` with 'dlv-dap' debugAdapter connects to [an external `dlv dap` server](https://github.com/goplus/vscode-gop/blob/goplus/docs/debugging.md#running-debugee-externally) to launch a program or attach to a process. Remove 'host' and 'port' from your launch.json if you have not launched a 'dlv dap' server."
 				);
 			}
 		}
@@ -216,11 +219,14 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 		if (!debugConfiguration.hasOwnProperty('apiVersion') && dlvConfig.hasOwnProperty('apiVersion')) {
 			debugConfiguration['apiVersion'] = dlvConfig['apiVersion'];
 		}
+
+		const dlvLoadConfigName = 'dlvLoadConfig';
+		const dlvLoadConfigInspectKey = 'delveConfig.dlvLoadConfig';
 		if (
 			debugAdapter === 'dlv-dap' &&
-			(debugConfiguration.hasOwnProperty('dlvLoadConfig') ||
-				goConfig.inspect('delveConfig.dlvLoadConfig')?.globalValue !== undefined ||
-				goConfig.inspect('delveConfig.dlvLoadConfig')?.workspaceValue !== undefined)
+			(debugConfiguration.hasOwnProperty(dlvLoadConfigName) ||
+				goConfig.inspect(dlvLoadConfigInspectKey)?.globalValue !== undefined ||
+				goConfig.inspect(dlvLoadConfigInspectKey)?.workspaceValue !== undefined)
 		) {
 			this.showWarning(
 				'ignoreDebugDlvConfigWithDlvDapWarning',
@@ -239,7 +245,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 			'hideSystemGoroutines'
 		];
 		if (debugAdapter !== 'dlv-dap') {
-			dlvProperties.push('dlvLoadConfig');
+			dlvProperties.push(dlvLoadConfigName);
 		}
 		dlvProperties.forEach((p) => {
 			if (!debugConfiguration.hasOwnProperty(p)) {
@@ -284,13 +290,14 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 			}
 		}
 
-		const dlvToolPath = getBinPath('dlv');
+		const dlvName = 'gopdlv';
+		const dlvToolPath = getBinPath(dlvName);
 		if (!path.isAbsolute(dlvToolPath)) {
 			// If user has not already declined to install this tool,
 			// prompt for it. Otherwise continue and have the lack of
 			// dlv binary be caught later.
-			if (!declinedToolInstall('dlv')) {
-				await promptForMissingTool('dlv');
+			if (!declinedToolInstall(dlvName)) {
+				await promptForMissingTool(dlvName);
 				return;
 			}
 		}
@@ -298,7 +305,7 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 
 		// For dlv-dap mode, check if the dlv is recent enough to support DAP.
 		if (debugAdapter === 'dlv-dap' && !dlvDAPVersionChecked) {
-			const tool = getToolAtVersion('dlv');
+			const tool = getToolAtVersion(dlvName);
 			if (await shouldUpdateTool(tool, dlvToolPath)) {
 				// If the user has opted in to automatic tool updates, we can update
 				// without prompting.
@@ -318,10 +325,12 @@ export class GoDebugConfigurationProvider implements vscode.DebugConfigurationPr
 
 		if (debugConfiguration['mode'] === 'auto') {
 			let filename = activeEditor?.document?.fileName;
-			if (debugConfiguration['program'] && debugConfiguration['program'].endsWith('.go')) {
+			const program = debugConfiguration['program'];
+			const suportFileType = program.endsWith('.go') || program.endsWith('.gop');
+			if (program && suportFileType) {
 				// If the 'program' attribute is a file, not a directory, then we will determine the mode from that
 				// file path instead of the currently active file.
-				filename = debugConfiguration['program'];
+				filename = program;
 			}
 			debugConfiguration['mode'] =
 				filename?.endsWith('_test.go') || filename?.endsWith('_test.gop') ? 'test' : 'debug';
@@ -535,7 +544,7 @@ export function parseDebugProgramArgSync(
 			return { program, dirname: program, programIsDirectory: true };
 		}
 		const ext = path.extname(program);
-		if (ext === '.go') {
+		if (ext === '.go' || ext === '.gop') {
 			// TODO(hyangah): .s?
 			return { program, dirname: path.dirname(program), programIsDirectory: false };
 		}
