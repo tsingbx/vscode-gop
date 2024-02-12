@@ -40,7 +40,7 @@ var tools = []struct {
 }{
 	// TODO: auto-generate based on allTools.ts.in.
 	{"golang.org/x/tools/gopls", "", true, nil},
-	{"github.com/goplus/goxls", "", false, []finalVersion{{gopVer, "v0.13.5"}}},
+	{"github.com/goplus/goxls", "", false, []finalVersion{{gopVer, "latest"}}},
 	{"github.com/acroca/go-symbols", "", false, nil},
 	{"github.com/cweill/gotests/gotests", "", false, nil},
 	{"github.com/davidrjenni/reftools/cmd/fillstruct", "", false, nil},
@@ -56,6 +56,7 @@ var tools = []struct {
 	{"golang.org/x/tools/cmd/gorename", "", false, nil},
 	// TODO(golang/vscode-go#2999): v1.21.1 breaks dlv-dap testing.
 	{"github.com/go-delve/delve/cmd/dlv", "", false, []finalVersion{{16, "v1.8.3"}, {17, "v1.9.1"}, {100, "v1.21.0"}}},
+	{"github.com/goplus/gopdlv", "", false, []finalVersion{{gopVer, "latest"}}},
 }
 
 // pickVersion returns the version to install based on the supported
