@@ -18,17 +18,17 @@ import { getWorkspaceFolderPath } from './util';
 import { getEnvPath, getBinPathFromEnvVar } from './utils/pathUtils';
 
 export function activate(ctx: vscode.ExtensionContext) {
-	const debugOutputChannel = vscode.window.createOutputChannel('Go Debug');
+	const debugOutputChannel = vscode.window.createOutputChannel('Go+ Debug');
 	ctx.subscriptions.push(debugOutputChannel);
 
 	const factory = new GoDebugAdapterDescriptorFactory(debugOutputChannel);
-	ctx.subscriptions.push(vscode.debug.registerDebugAdapterDescriptorFactory('go', factory));
+	ctx.subscriptions.push(vscode.debug.registerDebugAdapterDescriptorFactory('gop', factory));
 	if ('dispose' in factory) {
 		ctx.subscriptions.push(factory);
 	}
 
 	const tracker = new GoDebugAdapterTrackerFactory(debugOutputChannel);
-	ctx.subscriptions.push(vscode.debug.registerDebugAdapterTrackerFactory('go', tracker));
+	ctx.subscriptions.push(vscode.debug.registerDebugAdapterTrackerFactory('gop', tracker));
 	if ('dispose' in tracker) {
 		ctx.subscriptions.push(tracker);
 	}
@@ -442,7 +442,7 @@ export class DelveDAPOutputAdapter extends ProxyDebugAdapter {
 				command: 'runInTerminal',
 				arguments: {
 					kind: console,
-					title: `Go Debug Terminal (${launchAttachArgs.name})`,
+					title: `Go+ Debug Terminal (${launchAttachArgs.name})`,
 					cwd: dir,
 					args: dlvArgs,
 					env: env
@@ -622,7 +622,8 @@ function spawnDlvDapServerProcess(
 function getSpawnConfig(launchAttachArgs: vscode.DebugConfiguration, logErr: (msg: string) => void) {
 	// launchArgsEnv is user-requested env vars (envFiles + env + toolsEnvVars).
 	const env = launchAttachArgs.env;
-	const dlvPath = launchAttachArgs.dlvToolPath ?? 'dlv';
+	const dlvName = 'gopdlv';
+	const dlvPath = launchAttachArgs.dlvToolPath ?? dlvName;
 
 	if (!fs.existsSync(dlvPath)) {
 		const envPath = getEnvPath();
@@ -630,9 +631,9 @@ function getSpawnConfig(launchAttachArgs: vscode.DebugConfiguration, logErr: (ms
 			`Couldn't find ${dlvPath} at the Go tools path, ${process.env['GOPATH']}${
 				env['GOPATH'] ? ', ' + env['GOPATH'] : ''
 			} or ${envPath}\n` +
-				'Follow the setup instruction in https://github.com/golang/vscode-go/blob/master/docs/debugging.md#getting-started.\n'
+				'Follow the setup instruction in https://github.com/goplus/vscode-gop/blob/goplus/docs/debugging.md#getting-started.\n'
 		);
-		throw new Error('Cannot find Delve debugger (dlv dap)');
+		throw new Error('Cannot find Go/Go+ debugger (gopdlv dap)');
 	}
 	let dir = getWorkspaceFolderPath();
 	if (launchAttachArgs.request === 'launch' && launchAttachArgs['__buildDir']) {

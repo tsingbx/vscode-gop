@@ -347,7 +347,8 @@ export async function getGoVersion(goBinPath?: string): Promise<GoVersion> {
 		error(`cached Go version (${JSON.stringify(cachedGoVersion)}) is invalid, recomputing`);
 	}
 	const docUri = vscode.window.activeTextEditor?.document.uri;
-	const cwd = getWorkspaceFolderPath(docUri && docUri.fsPath.endsWith('.go') ? docUri : undefined);
+	const cond = docUri && (docUri.fsPath.endsWith('.go') || docUri.fsPath.endsWith('.gop'));
+	const cwd = getWorkspaceFolderPath(cond ? docUri : undefined);
 
 	let goVersion: GoVersion | undefined;
 	try {
@@ -682,14 +683,14 @@ export function getImportPath(text: string): string {
 export function guessPackageNameFromFile(filePath: string): Promise<string[]> {
 	return new Promise((resolve, reject) => {
 		const goFilename = path.basename(filePath);
-		if (goFilename === 'main.go') {
+		if (goFilename === 'main.go' || goFilename === 'main.gop') {
 			return resolve(['main']);
 		}
 
 		const directoryPath = path.dirname(filePath);
 		const dirName = path.basename(directoryPath);
 		let segments = dirName.split(/[.-]/);
-		segments = segments.filter((val) => val !== 'go');
+		segments = segments.filter((val) => val !== 'go' && val !== 'gop');
 
 		if (segments.length === 0 || !/[a-zA-Z_]\w*/.test(segments[segments.length - 1])) {
 			return reject();
@@ -848,7 +849,7 @@ export function handleDiagnosticErrors(
 	// Also add other open .go files known to vscode for fast lookup.
 	vscode.workspace.textDocuments.forEach((t) => {
 		const fileName = t.uri.toString();
-		if (!fileName.endsWith('.go')) {
+		if (!fileName.endsWith('.go') && !fileName.endsWith('.gop')) {
 			return;
 		}
 		textDocumentMap.set(fileName, t);

@@ -15,6 +15,7 @@ import { getFormatTool, usingCustomFormatTool } from './language/legacy/goFormat
 import { goLiveErrorsEnabled } from './language/legacy/goLiveErrors';
 import { allToolsInformation } from './goToolsInformation';
 import { getBinPath, GoVersion } from './util';
+import { conf } from './language/goLanguageServer';
 
 export interface Tool {
 	name: string;
@@ -171,7 +172,7 @@ export function getConfiguredTools(
 	// There doesn't seem to be a good way to check if the mips and s390
 	// families are 64-bit, so just try to install it and hope for the best.
 	if (process.arch.match(/^(mips|mipsel|ppc64|s390|s390x|x64|arm64)$/)) {
-		maybeAddTool('dlv');
+		maybeAddTool('gopdlv');
 	}
 
 	// gocode-gomod needed in go 1.11 & higher
@@ -206,7 +207,7 @@ export function getConfiguredTools(
 	// Even though we arranged this to run after the first attempt to start gopls
 	// this is still useful if we've fail to start gopls.
 	if (useLanguageServer) {
-		maybeAddTool('gopls');
+		maybeAddTool(conf.lsName);
 	}
 
 	if (goLiveErrorsEnabled()) {

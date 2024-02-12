@@ -268,7 +268,7 @@ export function applyCodeCoverageToAllEditors(coverProfilePath: string, dir?: st
 
 				// goxls: shadow main startcol = 0
 				let col = parseInt(parse[3], 10);
-				if (col < 1 && !filename.endsWith('.go')) {
+				if (col < 1 && !(filename.endsWith('.go') || filename.endsWith('.gop'))) {
 					col = 1;
 				}
 				const startLine = parseInt(parse[2], 10);

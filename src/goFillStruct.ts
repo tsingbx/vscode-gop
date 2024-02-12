@@ -35,8 +35,8 @@ function getCommonArgs(editor: vscode.TextEditor): string[] | undefined {
 		vscode.window.showInformationMessage('No editor is active.');
 		return;
 	}
-	if (!editor.document.fileName.endsWith('.go')) {
-		vscode.window.showInformationMessage('Current file is not a Go file.');
+	if (!(editor.document.fileName.endsWith('.go') || editor.document.fileName.endsWith('.gop'))) {
+		vscode.window.showInformationMessage('Current file is not a Go or Go+ file.');
 		return;
 	}
 	const args = ['-modified', '-file', editor.document.fileName];

@@ -1,7 +1,7 @@
 {
   "name": "gop",
   "displayName": "Go+ (beta)",
-  "version": "0.8.1",
+  "version": "0.8.2-dev",
   "preview": false,
   "publisher": "goplus",
   "description": "Rich Go/Go+ language support for Visual Studio Code",
@@ -57,6 +57,7 @@
     "glob": "7.1.7",
     "json-rpc2": "2.0.0",
     "moment": "2.29.4",
+    "package": "^1.0.1",
     "semver": "7.3.4",
     "tree-kill": "file:third_party/tree-kill",
     "vscode-debugadapter": "1.45.0",
@@ -76,7 +77,7 @@
     "@types/sinon": "9.0.11",
     "@types/vscode": "1.67.0",
     "@vscode/debugadapter-testsupport": "1.58.0",
-    "@vscode/test-electron": "2.2.0",
+    "@vscode/test-electron": "2.3.8",
     "@vscode/vsce": "2.19.0",
     "adm-zip": "0.4.16",
     "esbuild": "0.17.10",
@@ -104,6 +105,7 @@
     "workspaceContains:**/*.rdx",
     "onDebugInitialConfigurations",
     "onDebugResolve:go",
+    "onDebugResolve:gop",
     "onWebviewPanel:welcomeGo"
   ],
   "main": "./dist/goMain.js",
@@ -125,7 +127,7 @@
   "contributes": {
     "languages": [
       {
-        "id": "go",
+        "id":"go",
         "extensions": [
           ".go"
         ],
@@ -609,51 +611,54 @@
     ],
     "breakpoints": [
       {
+        "language": "gop"
+      },
+      {
         "language": "go"
       }
     ],
     "debuggers": [
       {
-        "type": "go",
-        "label": "Go",
+        "type": "gop",
+        "label": "Go+",
         "program": "./dist/debugAdapter.js",
         "runtime": "node",
         "languages": [
-          "go"
+          "gop", "go"
         ],
         "variables": {
-          "pickProcess": "go.debug.pickProcess",
-          "pickGoProcess": "go.debug.pickGoProcess"
+          "pickProcess": "gop.debug.pickProcess",
+          "pickGoProcess": "gop.debug.pickGoProcess"
         },
         "configurationSnippets": [
           {
-            "label": "Go: Launch package",
+            "label": "Go+: Launch package",
             "description": "Debug/test the package in the program attribute",
             "body": {
               "name": "${2:Launch Package}",
-              "type": "go",
+              "type": "gop",
               "request": "launch",
               "mode": "auto",
               "program": "^\"\\${fileDirname}${1:}\""
             }
           },
           {
-            "label": "Go: Launch file",
+            "label": "Go+: Launch file",
             "description": "Debug the file in the program attribute",
             "body": {
               "name": "${2:Launch file}",
-              "type": "go",
+              "type": "gop",
               "request": "launch",
               "mode": "debug",
               "program": "^\"${1:\\${file\\}}\""
             }
           },
           {
-            "label": "Go: Launch test function",
+            "label": "Go+: Launch test function",
             "description": "Debug the test function in the args, ensure program attributes points to right package",
             "body": {
               "name": "${3:Launch test function}",
-              "type": "go",
+              "type": "gop",
               "request": "launch",
               "mode": "test",
               "program": "^\"\\${workspaceFolder}${1:}\"",
@@ -664,22 +669,22 @@
             }
           },
           {
-            "label": "Go: Attach to local process",
+            "label": "Go+: Attach to local process",
             "description": "Attach to an existing process by process ID",
             "body": {
               "name": "${1:Attach to Process}",
-              "type": "go",
+              "type": "gop",
               "request": "attach",
               "mode": "local",
               "processId": 0
             }
           },
           {
-            "label": "Go: Connect to server",
+            "label": "Go+: Connect to server",
             "description": "Connect to a remote headless debug server",
             "body": {
               "name": "${1:Connect to server}",
-              "type": "go",
+              "type": "gop",
               "request": "attach",
               "mode": "remote",
               "remotePath": "^\"\\${workspaceFolder}\"",
@@ -785,7 +790,7 @@
               },
               "dlvFlags": {
                 "type": "array",
-                "description": "Extra flags for `dlv`. See `dlv help` for the full list of supported. Flags such as `--log-output`, `--log`, `--log-dest`, `--api-version`, `--output`, `--backend` already have corresponding properties in the debug configuration, and flags such as `--listen` and `--headless` are used internally. If they are specified in `dlvFlags`, they may be ignored or cause an error.",
+                "description": "Extra flags for `gopdlv`. See `gopdlv help` for the full list of supported. Flags such as `--log-output`, `--log`, `--log-dest`, `--api-version`, `--output`, `--backend` already have corresponding properties in the debug configuration, and flags such as `--listen` and `--headless` are used internally. If they are specified in `dlvFlags`, they may be ignored or cause an error.",
                 "items": {
                   "type": "string"
                 },
@@ -833,7 +838,7 @@
                   "lldb",
                   "rr"
                 ],
-                "description": "Backend used by delve. Maps to `dlv`'s `--backend` flag."
+                "description": "Backend used by delve. Maps to `gopdlv`'s `--backend` flag."
               },
               "output": {
                 "type": "string",
@@ -986,7 +991,7 @@
               },
               "dlvFlags": {
                 "type": "array",
-                "description": "Extra flags for `dlv`. See `dlv help` for the full list of supported. Flags such as `--log-output`, `--log`, `--log-dest`, `--api-version`, `--output`, `--backend` already have corresponding properties in the debug configuration, and flags such as `--listen` and `--headless` are used internally. If they are specified in `dlvFlags`, they may be ignored or cause an error.",
+                "description": "Extra flags for `gopdlv`. See `gopdlv help` for the full list of supported. Flags such as `--log-output`, `--log`, `--log-dest`, `--api-version`, `--output`, `--backend` already have corresponding properties in the debug configuration, and flags such as `--listen` and `--headless` are used internally. If they are specified in `dlvFlags`, they may be ignored or cause an error.",
                 "items": {
                   "type": "string"
                 },
@@ -1059,7 +1064,7 @@
                   "lldb",
                   "rr"
                 ],
-                "description": "Backend used by delve. Maps to `dlv`'s `--backend` flag."
+                "description": "Backend used by delve. Maps to `gopdlv`'s `--backend` flag."
               },
               "logOutput": {
                 "type": "string",
@@ -2061,7 +2066,7 @@
             },
             "dlvFlags": {
               "type": "array",
-              "description": "Extra flags for `dlv`. See `dlv help` for the full list of supported. Flags such as `--log-output`, `--log`, `--log-dest`, `--api-version`, `--output`, `--backend` already have corresponding properties in the debug configuration, and flags such as `--listen` and `--headless` are used internally. If they are specified in `dlvFlags`, they may be ignored or cause an error.",
+              "description": "Extra flags for `gopdlv`. See `gopdlv help` for the full list of supported. Flags such as `--log-output`, `--log`, `--log-dest`, `--api-version`, `--output`, `--backend` already have corresponding properties in the debug configuration, and flags such as `--listen` and `--headless` are used internally. If they are specified in `dlvFlags`, they may be ignored or cause an error.",
               "items": {
                 "type": "string"
               },
@@ -2098,15 +2103,20 @@
           "description": "Alternate tools or alternate paths for the same tools used by the Go extension. Provide either absolute path or the name of the binary in GOPATH/bin, GOROOT/bin or PATH. Useful when you want to use wrapper script for the Go tools.",
           "scope": "resource",
           "properties": {
-            "go": {
+            "gop": {
               "type": "string",
-              "default": "go",
-              "description": "Alternate tool to use instead of the go binary or alternate path to use for the go binary."
+              "default": "gop",
+              "description": "Alternate tool to use instead of the gop binary or alternate path to use for the go binary."
             },
             "gopls": {
               "type": "string",
               "default": "gopls",
               "description": "Alternate tool to use instead of the gopls binary or alternate path to use for the gopls binary."
+            },
+            "goxls": {
+              "type": "string",
+              "default": "goxls",
+              "description": "Alternate tool to use instead of the goxls binary or alternate path to use for the goxls binary."
             },
             "dlv": {
               "type": "string",

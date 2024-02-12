@@ -284,7 +284,7 @@ export async function debugTestAtCursor(
 	const workspaceFolder = vscode.workspace.getWorkspaceFolder(doc.uri);
 	const debugConfig: vscode.DebugConfiguration = {
 		name: 'Debug Test',
-		type: 'go',
+		type: 'gop',
 		request: 'launch',
 		mode: 'test',
 		program: path.dirname(doc.fileName),
