@@ -1,7 +1,8 @@
-## v0.8.2
+## v0.8.3
 
 features:
 * support to debug Go+ files (#49)
+* add gsh ext as Go+ files (#58)
 * Go/Go+ language server [goxls v0.13.7](https://github.com/goplus/tools/releases/tag/v0.13.7)
 
 changes:
