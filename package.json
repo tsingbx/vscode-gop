@@ -1,7 +1,7 @@
 {
   "name": "gop",
   "displayName": "Go+ (beta)",
-  "version": "0.8.2",
+  "version": "0.8.3-dev",
   "preview": false,
   "publisher": "goplus",
   "description": "Rich Go/Go+ language support for Visual Studio Code",
@@ -103,6 +103,9 @@
     "workspaceContains:**/*.gop",
     "workspaceContains:**/*.spx",
     "workspaceContains:**/*.rdx",
+    "workspaceContains:**/*.gmx",
+    "workspaceContains:**/*.gox",
+    "workspaceContains:**/*.gsh",
     "onDebugInitialConfigurations",
     "onDebugResolve:go",
     "onDebugResolve:gop",
@@ -142,7 +145,8 @@
           ".spx",
           ".rdx",
           ".gmx",
-          ".gox"
+          ".gox",
+          ".gsh"
         ],
         "aliases": [
           "Goplus"
